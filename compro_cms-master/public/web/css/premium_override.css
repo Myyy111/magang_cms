@@ -2805,7 +2805,62 @@ body {
         font-size: 16px !important;
         padding: 16px !important;
         border-radius: 12px !important;
-        box-shadow: 0 10px 30px rgba(29, 209, 161, 0.2) !important;
+        box-shadow: 0 10px 30px rgba(248, 190, 20, 0.3) !important;
         border: none !important;
+    }
+
+    /* ==========================================================================
+       HERO SECTION (BAGIAN 2)
+       ========================================================================== */
+    .banner-section {
+        height: 80vh !important;
+        min-height: 480px !important;
+    }
+
+    .banner-section .slide-item {
+        padding-top: 80px !important;
+        padding-bottom: 60px !important;
+    }
+
+    .banner-section .content-box {
+        padding-left: 0 !important;
+        text-align: center !important;
+    }
+
+    .banner-section .slide-item h1 {
+        font-size: 28px !important;
+        line-height: 1.3 !important;
+        margin-bottom: 15px !important;
+        text-align: center !important;
+    }
+
+    .banner-section .slide-item .text p {
+        font-size: 15px !important;
+        line-height: 1.7 !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        text-align: center !important;
+    }
+
+    .banner-section .slide-item .link-box {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .banner-section .slide-item .link-box .btn-secondary-premium {
+        width: 100% !important;
+        max-width: 280px;
+        justify-content: center !important;
+        font-size: 15px !important;
+        padding: 14px 25px !important;
+        border-radius: 12px !important;
+    }
+
+    .banner-carousel .owl-dots {
+        bottom: 30px !important;
+    }
+
+    .scroll-indicator {
+        display: none !important;
     }
 }
