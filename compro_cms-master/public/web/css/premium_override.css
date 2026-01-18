@@ -2685,24 +2685,30 @@ body {
         padding: 0 20px !important;
     }
 
-    /* 2. Logo Optimization */
-    .logo-box {
+    /* 2. Logo Optimization - LEFT ALIGNED & COLORED (Aggressive Fix) */
+    .logo-box,
+    .main-header-premium .logo-box {
         margin-right: auto !important;
-        flex-grow: 1;
+        flex-grow: 0 !important;
         padding: 0 !important;
     }
 
-    .logo-box a {
-        display: flex;
-        align-items: center;
+    .logo-box a,
+    .main-header-premium .logo-box a {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
     }
 
-    .logo-box img {
-        height: 36px !important;
+    /* Target specifically to override the global :not(.scrolled) rule */
+    .main-header-premium .logo-box img,
+    .main-header-premium:not(.scrolled) .logo-box img {
+        height: 42px !important;
         width: auto !important;
-        object-fit: contain;
-        filter: brightness(0) invert(1) !important;
-        /* Always white on blue bg */
+        object-fit: contain !important;
+        filter: none !important;
+        /* Force original colors */
+        opacity: 1 !important;
     }
 
     /* 3. Hide Desktop Elements */
