@@ -2805,79 +2805,107 @@ body {
         font-size: 16px !important;
         padding: 16px !important;
         border-radius: 12px !important;
-        box-shadow: 0 10px 30px rgba(248, 190, 20, 0.3) !important;
-        border: none !important;
     }
 
     /* ==========================================================================
-       HERO SECTION (BAGIAN 2) - FINAL POLISH
+       HERO SECTION (BAGIAN 2) - UNIFIED HEIGHT FINAL FIX
        ========================================================================== */
     .banner-section {
-        height: 90vh !important;
-        /* Taller for better visual impact */
-        min-height: 560px !important;
+        height: 600px !important;
+        min-height: 600px !important;
+        background-color: #0a3d62 !important;
+        /* Brand blue fallback */
+        overflow: hidden !important;
+        position: relative !important;
     }
 
-    /* Remove the conflicting white gradient and scroll indicator */
-    .banner-section::after,
-    .scroll-indicator,
-    .scroll-indicator *,
-    .banner-section .scroll-indicator {
-        display: none !important;
-        opacity: 0 !important;
-        visibility: hidden !important;
+    /* Force all carousel parts to fill the 600px block */
+    .banner-carousel,
+    .banner-carousel .owl-stage-outer,
+    .banner-carousel .owl-stage,
+    .banner-carousel .owl-item {
+        height: 100% !important;
+        min-height: 600px !important;
     }
 
     .banner-section .slide-item {
-        padding-top: 160px !important;
-        /* Extra clearance for fixed header */
-        padding-bottom: 100px !important;
-        display: flex !important;
-        align-items: flex-start !important;
-        /* Align to top of padding area for more Predictable spacing */
-        justify-content: center !important;
-    }
-
-    /* Extra dark overlay for professional look */
-    .banner-section .slide-item::before {
-        background: linear-gradient(180deg,
-                rgba(0, 74, 173, 0.7) 0%,
-                rgba(0, 58, 138, 0.85) 60%,
-                #0a3d62 100%) !important;
-        /* Matches mobile header */
-    }
-
-    .banner-section .content-box {
-        text-align: center !important;
-        padding: 0 20px !important;
-        width: 100% !important;
+        height: 100% !important;
+        min-height: 600px !important;
+        position: relative !important;
         display: flex !important;
         flex-direction: column !important;
-        align-items: center !important;
+        justify-content: flex-start !important;
+        padding-top: 140px !important;
+        padding-bottom: 80px !important;
+        overflow: hidden !important;
+    }
+
+    /* FORCE BACKGROUND IMAGE COVERAGE */
+    .banner-section .bg-image {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background-size: cover !important;
+        background-position: center !important;
+        z-index: 1 !important;
+    }
+
+    /* FORCE OVERLAY COVERAGE */
+    .banner-section .slide-item::before {
+        content: "" !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: linear-gradient(180deg,
+                rgba(0, 58, 138, 0.6) 0%,
+                rgba(10, 61, 98, 0.85) 70%,
+                #0a3d62 100%) !important;
+        z-index: 2 !important;
+        display: block !important;
+    }
+
+    /* Content on top of everything */
+    .banner-section .content-box {
+        position: relative !important;
+        z-index: 10 !important;
+        text-align: center !important;
+        padding: 0 25px !important;
+        width: 100% !important;
+    }
+
+    /* Remove extra elements */
+    .banner-section::after,
+    .scroll-indicator {
+        display: none !important;
     }
 
     .banner-section .slide-item h1 {
-        font-size: 34px !important;
-        letter-spacing: -1px !important;
-        text-align: center !important;
-        margin-bottom: 15px !important;
+        font-size: 32px !important;
+        font-weight: 900 !important;
+        color: #ffffff !important;
+        text-shadow: 0 2px 15px rgba(0, 0, 0, 0.4) !important;
+        margin-bottom: 20px !important;
     }
 
     .banner-section .slide-item .text p {
         font-size: 15px !important;
-        max-width: 100% !important;
-        text-align: center !important;
-    }
-
-    .banner-section .slide-item .link-box {
-        display: flex !important;
-        justify-content: center !important;
-        width: 100% !important;
-        margin-top: 20px !important;
+        line-height: 1.6 !important;
+        color: #ffffff !important;
+        opacity: 0.95 !important;
+        margin-bottom: 30px !important;
     }
 
     .banner-carousel .owl-dots {
-        bottom: 40px !important;
+        bottom: 35px !important;
+        z-index: 20 !important;
     }
 
     /* ==========================================================================
