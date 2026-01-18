@@ -2829,10 +2829,12 @@ body {
     }
 
     .banner-section .slide-item {
-        padding-top: 60px !important;
+        padding-top: 160px !important;
+        /* Extra clearance for fixed header */
         padding-bottom: 100px !important;
         display: flex !important;
-        align-items: center !important;
+        align-items: flex-start !important;
+        /* Align to top of padding area for more Predictable spacing */
         justify-content: center !important;
     }
 
