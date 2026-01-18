@@ -2808,35 +2808,40 @@ body {
     }
 
     /* ==========================================================================
-       HERO SECTION (BAGIAN 2) - UNIFIED HEIGHT FINAL FIX
+       HERO SECTION (BAGIAN 2) - FULL SCREEN MOBILE FIX
        ========================================================================== */
     .banner-section {
-        height: 600px !important;
-        min-height: 600px !important;
+        height: 100vh !important;
+        height: 100svh !important;
+        /* Support for modern mobile viewports */
+        min-height: 100vh !important;
         background-color: #0a3d62 !important;
-        /* Brand blue fallback */
         overflow: hidden !important;
         position: relative !important;
     }
 
-    /* Force all carousel parts to fill the 600px block */
+    /* Force all carousel parts to fill the viewport height */
     .banner-carousel,
     .banner-carousel .owl-stage-outer,
     .banner-carousel .owl-stage,
     .banner-carousel .owl-item {
         height: 100% !important;
-        min-height: 600px !important;
+        min-height: 100vh !important;
+        min-height: 100svh !important;
     }
 
     .banner-section .slide-item {
         height: 100% !important;
-        min-height: 600px !important;
+        min-height: 100vh !important;
+        min-height: 100svh !important;
         position: relative !important;
         display: flex !important;
         flex-direction: column !important;
-        justify-content: flex-start !important;
-        padding-top: 140px !important;
-        padding-bottom: 80px !important;
+        justify-content: center !important;
+        /* Centered vertically in full screen */
+        padding-top: 100px !important;
+        /* Room for header */
+        padding-bottom: 60px !important;
         overflow: hidden !important;
     }
 
