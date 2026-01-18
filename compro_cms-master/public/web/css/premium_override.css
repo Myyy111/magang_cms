@@ -2749,20 +2749,20 @@ body {
         transform: scale(0.95);
     }
 
-    /* 5. Mobile Menu Overlay Refinement - 75% WIDTH */
+    /* 5. Mobile Menu Overlay Refinement - 75% WIDTH & WHITE BG */
     #mobileMenuOverlay {
         width: 75% !important;
         left: auto !important;
         right: 0 !important;
-        background: #0A3D62 !important;
-        /* Primary Blue */
+        background: #ffffff !important;
+        /* White Background */
         padding: 80px 25px 40px !important;
         justify-content: flex-start !important;
         overflow-y: auto !important;
         gap: 0 !important;
         /* Reset gap, use margins */
-        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3) !important;
-        border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+        box-shadow: -15px 0 40px rgba(0, 0, 0, 0.1) !important;
+        border-left: 1px solid rgba(0, 0, 0, 0.05) !important;
     }
 
     /* Close Button */
@@ -2772,9 +2772,9 @@ body {
         font-size: 24px !important;
         width: 42px;
         height: 42px;
-        background: rgba(255, 255, 255, 0.1) !important;
-        border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        color: #ffffff !important;
+        background: rgba(10, 61, 98, 0.05) !important;
+        border: 1px solid rgba(10, 61, 98, 0.1) !important;
+        color: #0A3D62 !important;
         border-radius: 50% !important;
         display: flex !important;
         align-items: center;
@@ -2788,16 +2788,17 @@ body {
         transform: rotate(90deg);
     }
 
-    /* Menu Items */
+    /* Menu Items - DARK TEXT ON WHITE BG */
     .mobile-nav-item {
         font-family: 'Inter', sans-serif !important;
         font-size: 16px !important;
-        font-weight: 500 !important;
-        color: #ffffff !important;
+        font-weight: 600 !important;
+        color: #0A3D62 !important;
+        /* Primary Blue */
         padding: 16px 0 !important;
         width: 100% !important;
         text-align: center !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
         opacity: 0.9;
         text-decoration: none !important;
         letter-spacing: 0.5px;
@@ -2810,7 +2811,7 @@ body {
 
     .mobile-nav-item:active {
         opacity: 1;
-        background: rgba(255, 255, 255, 0.03);
+        background: rgba(10, 61, 98, 0.03) !important;
         color: var(--accent-yellow) !important;
     }
 
