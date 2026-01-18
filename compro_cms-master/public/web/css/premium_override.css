@@ -2910,9 +2910,12 @@ body {
         /* Force left align for children like buttons */
     }
 
-    /* Remove extra elements */
+    /* Remove extra elements & Navigation Arrows */
     .banner-section::after,
-    .scroll-indicator {
+    .scroll-indicator,
+    .owl-nav,
+    .nav-controls,
+    .nav-btn {
         display: none !important;
     }
 
