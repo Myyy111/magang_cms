@@ -2810,57 +2810,119 @@ body {
     }
 
     /* ==========================================================================
-       HERO SECTION (BAGIAN 2)
+       HERO SECTION (BAGIAN 2) - FINAL POLISH
        ========================================================================== */
     .banner-section {
-        height: 80vh !important;
-        min-height: 480px !important;
+        height: 90vh !important;
+        /* Taller for better visual impact */
+        min-height: 560px !important;
+    }
+
+    /* Remove the conflicting white gradient and scroll indicator */
+    .banner-section::after,
+    .scroll-indicator,
+    .scroll-indicator *,
+    .banner-section .scroll-indicator {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
     }
 
     .banner-section .slide-item {
-        padding-top: 80px !important;
-        padding-bottom: 60px !important;
+        padding-top: 60px !important;
+        padding-bottom: 100px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    /* Extra dark overlay for professional look */
+    .banner-section .slide-item::before {
+        background: linear-gradient(180deg,
+                rgba(0, 74, 173, 0.7) 0%,
+                rgba(0, 58, 138, 0.85) 60%,
+                #0a3d62 100%) !important;
+        /* Matches mobile header */
     }
 
     .banner-section .content-box {
-        padding-left: 0 !important;
         text-align: center !important;
+        padding: 0 20px !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
     }
 
     .banner-section .slide-item h1 {
-        font-size: 28px !important;
-        line-height: 1.3 !important;
-        margin-bottom: 15px !important;
+        font-size: 34px !important;
+        letter-spacing: -1px !important;
         text-align: center !important;
+        margin-bottom: 15px !important;
     }
 
     .banner-section .slide-item .text p {
         font-size: 15px !important;
-        line-height: 1.7 !important;
-        color: rgba(255, 255, 255, 0.9) !important;
+        max-width: 100% !important;
         text-align: center !important;
     }
 
     .banner-section .slide-item .link-box {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-    }
-
-    .banner-section .slide-item .link-box .btn-secondary-premium {
-        width: 100% !important;
-        max-width: 280px;
+        display: flex !important;
         justify-content: center !important;
-        font-size: 15px !important;
-        padding: 14px 25px !important;
-        border-radius: 12px !important;
+        width: 100% !important;
+        margin-top: 20px !important;
     }
 
     .banner-carousel .owl-dots {
-        bottom: 30px !important;
+        bottom: 40px !important;
     }
 
-    .scroll-indicator {
-        display: none !important;
+    /* ==========================================================================
+       TEAM SECTION (BAGIAN 3) - MOBILE REFINEMENT
+       ========================================================================== */
+    #team-section-root,
+    .team-section-wrapper,
+    section#team {
+        background: #0a3d62 !important;
+        /* Seamless match with hero bottom */
+        padding-top: 40px !important;
+        padding-bottom: 60px !important;
+    }
+
+    /* Force Title Centering - Aggressive targeting */
+    .team-section-wrapper .title-wrapper,
+    .team-section-wrapper .header-content,
+    .team-section-wrapper h2.section-title,
+    #team-section-root h2 {
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        margin-bottom: 25px !important;
+        color: #ffffff !important;
+    }
+
+    /* Small Adjustments for Team Cards on Mobile */
+    .team-section-wrapper .card-container,
+    #team-section-root .card-container {
+        padding: 5px !important;
+    }
+
+    .team-section-wrapper .card-inner,
+    #team-section-root .card-inner {
+        height: 460px !important;
+        /* Slightly smaller for mobile */
+        min-height: 460px !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        backdrop-filter: blur(10px);
+    }
+
+    .team-section-wrapper .image-wrapper,
+    #team-section-root .image-wrapper {
+        height: 320px !important;
+        min-height: 320px !important;
     }
 }
