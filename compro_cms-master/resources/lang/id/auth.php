@@ -1,0 +1,28 @@
+<?php
+
+return array (
+    'login_title' => 'Masuk ke Panel Admin.',
+    'register_title' => 'Buat Akun Anda.',
+    'verify_title' => 'Silakan Periksa Email Anda untuk Verifikasi.',
+    'email_title' => 'Masukkan Alamat Email Akun Anda.',
+    'reset_title' => 'Masukkan Kata Sandi Baru Anda.',
+    'login' => 'Masuk',
+    'register' => 'Daftar',
+    'verify' => 'Verifikasi',
+    'reset' => 'Atur Ulang Kata Sandi',
+    'name' => 'Nama',
+    'email' => 'Alamat E-Mail',
+    'password' => 'Kata Sandi',
+    'confirm_password' => 'Konfirmasi Kata Sandi',
+    'remember' => 'Ingat Saya',
+    'forgot_password' => 'Lupa Kata Sandi Anda?',
+    'dont_have_account' => 'Belum Punya Akun?',
+    'verify_your_email' => 'Verifikasi Alamat Email Anda',
+    'verify_email_sent' => 'Tautan verifikasi baru telah dikirim ke alamat email Anda.',
+    'check_your_email' => 'Sebelum melanjutkan, silakan periksa email Anda untuk tautan verifikasi.',
+    'not_receive_email' => 'Jika Anda tidak menerima email tersebut',
+    'send_another_request' => 'klik di sini untuk meminta yang lain',
+    'send_reset_link' => 'Kirim Tautan Atur Ulang Kata Sandi',
+    'failed' => 'Kredensial ini tidak cocok dengan catatan kami.',
+    'throttle' => 'Terlalu banyak percobaan masuk. Silakan coba lagi dalam :seconds detik.',
+);
