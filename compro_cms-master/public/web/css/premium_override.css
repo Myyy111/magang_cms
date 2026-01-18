@@ -2877,13 +2877,20 @@ body {
         display: block !important;
     }
 
-    /* Content on top of everything */
+    /* Content Alignment Fix - LEFT ALIGNED */
     .banner-section .content-box {
         position: relative !important;
         z-index: 10 !important;
-        text-align: center !important;
-        padding: 0 25px !important;
+        text-align: left !important;
+        /* Force left text align */
+        padding: 0 30px !important;
         width: 100% !important;
+        max-width: 500px !important;
+        margin-right: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        /* Force left align for children like buttons */
     }
 
     /* Remove extra elements */
