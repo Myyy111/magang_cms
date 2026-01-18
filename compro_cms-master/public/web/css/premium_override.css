@@ -2749,8 +2749,11 @@ body {
         transform: scale(0.95);
     }
 
-    /* 5. Mobile Menu Overlay Refinement */
+    /* 5. Mobile Menu Overlay Refinement - 75% WIDTH */
     #mobileMenuOverlay {
+        width: 75% !important;
+        left: auto !important;
+        right: 0 !important;
         background: #0A3D62 !important;
         /* Primary Blue */
         padding: 80px 25px 40px !important;
@@ -2758,6 +2761,8 @@ body {
         overflow-y: auto !important;
         gap: 0 !important;
         /* Reset gap, use margins */
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3) !important;
+        border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
     }
 
     /* Close Button */
