@@ -3143,3 +3143,247 @@ body {
         min-height: 320px !important;
     }
 }
+
+/* ==========================================================================
+   HERO SECTION - MOBILE & TABLET OPTIMIZATION
+   ========================================================================== */
+@media (max-width: 991px) {
+
+    /* Hero Container */
+    .hero-enterprise-style {
+        height: 100vh !important;
+        /* Back to full screen for immersive background */
+        min-height: 600px !important;
+        padding-bottom: 0 !important;
+        background: #000 !important;
+        /* Fallback */
+    }
+
+    .hero-enterprise-style .slide-item {
+        height: 100vh !important;
+        /* Ensure slide fills the viewport height */
+        padding-top: 140px;
+        padding-bottom: 80px;
+        text-align: left;
+        /* Alignment changed to left */
+        flex-direction: column;
+        justify-content: center;
+        /* Center content vertically in the full-height slide */
+        background-image: var(--mobile-bg-image) !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+    }
+
+    .hero-enterprise-style .slide-item::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.7) 100%) !important;
+        z-index: 1;
+        display: block !important;
+    }
+
+    .hero-enterprise-style .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-enterprise-style .container {
+        max-width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    /* Content Box */
+    .hero-content-box {
+        max-width: 100%;
+        margin: 0 0 30px 0;
+        /* Changed from centered margin */
+        padding: 0;
+    }
+
+    .hero-enterprise-style h1 {
+        font-size: 36px !important;
+        line-height: 1.2 !important;
+        margin-bottom: 20px !important;
+        color: #ffffff !important;
+        /* White text for contrast on background */
+    }
+
+    .hero-enterprise-style h1 .text-accent {
+        color: #f8be14 !important;
+    }
+
+    .text-description {
+        min-height: auto;
+        margin-bottom: 30px !important;
+    }
+
+    .text-description p {
+        font-size: 16px !important;
+        line-height: 1.6 !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        /* Light text for contrast */
+        -webkit-line-clamp: 6;
+        line-clamp: 6;
+    }
+
+    /* Buttons */
+    .hero-cta-group {
+        display: flex;
+        justify-content: flex-start;
+        /* Align buttons to the left */
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .btn-primary-enterprise,
+    .btn-whatsapp-hero {
+        padding: 14px 25px;
+        width: auto !important;
+        /* Not full width anymore */
+        min-width: 180px;
+        /* Decent click area */
+        justify-content: center;
+    }
+
+    /* Hide Image Column on Mobile - as it's now the background */
+    .hero-enterprise-style .col-lg-6:has(.hero-showcase-container) {
+        display: none !important;
+    }
+
+    /* Floating Cards - Hide on Mobile to reduce clutter */
+    .floating-data-card {
+        display: none !important;
+    }
+}
+
+/* ==========================================================================
+   GLOBAL MODERN MOBILE REFINEMENTS (NON-DESTRUCTIVE)
+   ========================================================================== */
+@media (max-width: 767px) {
+
+    /* 1. Global Section Headers - Compact & Tidy */
+    .sec-title h2,
+    .about-title-wrapper h2,
+    .section-title {
+        font-size: 28px !important;
+        line-height: 1.2 !important;
+        text-align: center !important;
+        margin-bottom: 12px !important;
+        width: 100% !important;
+    }
+
+    .yellow-separator,
+    .sec-title .rounded,
+    .title-box .yellow-separator {
+        margin: 0 auto 20px auto !important;
+        /* Force center separators */
+        width: 50px !important;
+    }
+
+    .sec-title div[style*="color: #666666"] {
+        text-align: center !important;
+        font-size: 14px !important;
+        line-height: 1.6 !important;
+    }
+
+    /* 2. Global Section Padding - Reduce waste */
+    section,
+    .py-5 {
+        padding-top: 50px !important;
+        padding-bottom: 50px !important;
+    }
+
+    /* 3. Page Titles - Compact */
+    .page-title-premium {
+        padding: 100px 0 60px 0 !important;
+        min-height: auto !important;
+    }
+
+    .page-title-premium h1 {
+        font-size: 32px !important;
+    }
+
+    /* 4. Counters (Fun Facts) - Clean 2-Column Grid */
+    .fun-fact-section-premium .row {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px !important;
+    }
+
+    .fun-fact-section-premium .col-md-6,
+    .fun-fact-section-premium .col-sm-12 {
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    .counter-card-premium {
+        padding: 25px 15px !important;
+        border-radius: 15px !important;
+    }
+
+    .counter-card-premium .count {
+        font-size: 32px !important;
+    }
+
+    .counter-card-premium .counter-title {
+        font-size: 11px !important;
+        letter-spacing: 0.5px !important;
+    }
+
+    /* 5. Services & Layanan - Tidy Stack */
+    .service-card-premium,
+    .process-card-premium {
+        padding: 25px !important;
+        border-radius: 20px !important;
+        margin-bottom: 10px !important;
+    }
+
+    /* 6. Portfolio Filters - No Overlap */
+    .portfolio-filter-buttons {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        padding: 0 10px !important;
+    }
+
+    .portfolio-filter-buttons button {
+        padding: 8px 16px !important;
+        font-size: 13px !important;
+        white-space: nowrap !important;
+    }
+
+    /* 7. About Section - Mobile Align */
+    .about-section-premium {
+        text-align: center !important;
+    }
+
+    .about-section-premium .about-title-wrapper {
+        text-align: center !important;
+    }
+
+    .about-text div {
+        text-align: left !important;
+        /* Keep description legible */
+        font-size: 15px !important;
+    }
+
+    .vision-mission-box {
+        text-align: left !important;
+        padding: 20px !important;
+        border-radius: 15px !important;
+    }
+
+    .vision-mission-box h3 {
+        font-size: 20px !important;
+    }
+
+    /* 8. Spacing Fix for Bootstrap Gaps */
+    .g-5,
+    .g-4 {
+        --bs-gutter-y: 1.5rem !important;
+    }
+}

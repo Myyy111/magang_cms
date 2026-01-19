@@ -55,7 +55,7 @@
                 <div class="banner-carousel owl-carousel owl-theme">
                     @foreach($sliders as $slider)
                     <!-- Slide Item -->
-                    <div class="slide-item">
+                    <div class="slide-item" style="--mobile-bg-image: url('{{ asset('uploads/slider/'.$slider->image_path) }}')">
                         <div class="container h-100">
                             <div class="row align-items-center h-100">
                                 <!-- Content Column -->
@@ -81,7 +81,7 @@
                                     </div>
                                 </div>
                                 <!-- Image Column -->
-                                <div class="col-lg-6 col-md-12 d-none d-lg-block">
+                                <div class="col-lg-6 col-md-12">
                                     <div class="hero-showcase-container wow fadeInRight" data-wow-delay="0.9s">
                                         <div class="main-mockup-wrapper">
                                             <img src="{{ asset('uploads/slider/'.$slider->image_path) }}" alt="{{ $slider->title }}" class="hero-main-img">

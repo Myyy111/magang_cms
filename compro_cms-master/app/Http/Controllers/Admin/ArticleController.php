@@ -89,7 +89,9 @@ class ArticleController extends Controller
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
 
             //Crete Folder Location
-            $path = public_path('uploads/'.$this->path.'/');
+            // Check if 'public' folder exists and use it, otherwise use default public_path
+            $base_path = is_dir(base_path('public')) ? base_path('public') : public_path();
+            $path = $base_path . '/uploads/' . $this->path . '/';
             if (! File::exists($path)) {
                 File::makeDirectory($path, 0777, true, true);
             }
@@ -108,12 +110,12 @@ class ArticleController extends Controller
 
 
         // Get content with media file
-        $content=$request->input('description');
+        $content = $request->input('description');
         
-        $dom = new \DomDocument();
+        $dom = new \DOMDocument();
         libxml_use_internal_errors(true);
-        $dom->encoding = 'utf-8';
-        $dom->loadHtml(utf8_decode($content), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
+        // Modern way to handle UTF-8 in DOMDocument
+        $dom->loadHTML('<?xml encoding="utf-8" ?>' . $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
         $images = $dom->getElementsByTagName('img');
        // foreach <img> in the submited content
         foreach($images as $img){
@@ -161,9 +163,11 @@ class ArticleController extends Controller
         $article->title = $request->title;
         $article->slug = Str::slug($request->title, '-');
         $article->category_id = $request->category;
-        $article->description = $dom->saveHTML();
+        // Save only inner HTML to avoid <html><body> tags
+        $article->description = $dom->saveHTML($dom->documentElement);
         $article->image_path = $fileNameToStore;
         $article->video_id = $request->video_id;
+        $article->status = 1; // Explicitly active on create
         $article->save();
 
 
@@ -245,7 +249,9 @@ class ArticleController extends Controller
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
 
             //Crete Folder Location
-            $path = public_path('uploads/'.$this->path.'/');
+            // Check if 'public' folder exists and use it, otherwise use default public_path
+            $base_path = is_dir(base_path('public')) ? base_path('public') : public_path();
+            $path = $base_path . '/uploads/' . $this->path . '/';
             if (! File::exists($path)) {
                 File::makeDirectory($path, 0777, true, true);
             }
@@ -265,12 +271,12 @@ class ArticleController extends Controller
 
 
         // Get content with media file
-        $content=$request->input('description');
+        $content = $request->input('description');
         
-        $dom = new \DomDocument();
+        $dom = new \DOMDocument();
         libxml_use_internal_errors(true);
-        $dom->encoding = 'utf-8';
-        $dom->loadHtml(utf8_decode($content), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
+        // Modern way to handle UTF-8 in DOMDocument
+        $dom->loadHTML('<?xml encoding="utf-8" ?>' . $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
         $images = $dom->getElementsByTagName('img');
        // foreach <img> in the submited content
         foreach($images as $img){
@@ -317,7 +323,8 @@ class ArticleController extends Controller
         $article->title = $request->title;
         $article->slug = Str::slug($request->title, '-');
         $article->category_id = $request->category;
-        $article->description = $dom->saveHTML();
+        // Save only inner HTML to avoid <html><body> tags
+        $article->description = $dom->saveHTML($dom->documentElement);
         $article->image_path = $fileNameToStore;
         $article->video_id = $request->video_id;
         $article->status = $request->status;

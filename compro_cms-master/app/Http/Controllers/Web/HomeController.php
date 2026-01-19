@@ -73,7 +73,7 @@ class HomeController extends Controller
 
         // Articles                                
         $data['articles'] = Article::where('status', '1')
-                            ->orderBy('id', 'desc')
+                            ->orderBy('updated_at', 'desc')
                             ->take(3)
                             ->get();
 
