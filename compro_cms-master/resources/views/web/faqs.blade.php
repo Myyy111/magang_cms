@@ -25,8 +25,8 @@
 
 @section('content')
 
-    <!--Page Title-->
-    <section class="page-title">
+    <!--Page Title (Premium Cut)-->
+    <section class="page-title-premium text-center">
         <!-- Floating Elements for Premium Feel -->
         <div class="floating-element element-1"></div>
         <div class="floating-element element-2"></div>
@@ -34,7 +34,7 @@
         <div class="container">
             <div class="inner-container clearfix">
                 <div class="title-box">
-                    <h1>{{ __('navbar.faqs') }}</h1>
+                    <h1>{{ __('navbar.faqs') }} @if(isset($current_category)) - {{ $current_category->title }} @endif</h1>
                 </div>
                 <div class="bread-crumb">
                     <ul>
@@ -44,7 +44,6 @@
                 </div>
             </div>
         </div>
-        <div class="page-title-bottom-shape"></div>
     </section>
     <!--End Page Title-->
 

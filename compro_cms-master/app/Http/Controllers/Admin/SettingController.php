@@ -169,6 +169,10 @@ class SettingController extends Controller
             $data->favicon_path = $faviconNameToStore;
             $data->google_analytics = $request->google_analytics;
             $data->footer_text = $request->footer_text;
+            $data->hero_stat_1_value = $request->hero_stat_1_value;
+            $data->hero_stat_1_label = $request->hero_stat_1_label;
+            $data->hero_stat_2_value = $request->hero_stat_2_value;
+            $data->hero_stat_2_label = $request->hero_stat_2_label;
             $data->save();
         }
         else{
@@ -181,6 +185,10 @@ class SettingController extends Controller
             $data->favicon_path = $faviconNameToStore;
             $data->google_analytics = $request->google_analytics;
             $data->footer_text = $request->footer_text;
+            $data->hero_stat_1_value = $request->hero_stat_1_value;
+            $data->hero_stat_1_label = $request->hero_stat_1_label;
+            $data->hero_stat_2_value = $request->hero_stat_2_value;
+            $data->hero_stat_2_label = $request->hero_stat_2_label;
             $data->save();
         }
 

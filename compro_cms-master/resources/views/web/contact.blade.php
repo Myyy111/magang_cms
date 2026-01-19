@@ -25,14 +25,18 @@
 
 @section('content')
 
-    <!--Page Title-->
-    <section class="page-title">
+    <!--Page Title (Premium Cut)-->
+    <section class="page-title-premium text-center">
+        <!-- Floating Elements for Premium Feel -->
+        <div class="floating-element element-1"></div>
+        <div class="floating-element element-2"></div>
+        
         <div class="container">
             <div class="inner-container">
-                <div class="title-box wow fadeInUp">
+                <div class="title-box">
                     <h1>{{ __('navbar.contact') }}</h1>
                 </div>
-                <div class="bread-crumb wow fadeInUp" data-wow-delay="0.2s">
+                <div class="bread-crumb">
                     <ul>
                         <li><a href="{{ route('home') }}">{{ __('navbar.home') }}</a></li>
                         <li>{{ __('navbar.contact') }}</li>
@@ -40,7 +44,6 @@
                 </div>
             </div>
         </div>
-        <div class="page-title-bottom-shape"></div>
     </section>
     <!--End Page Title-->
 

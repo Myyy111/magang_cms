@@ -47,25 +47,62 @@
 @section('content')
 
     @if(count($sliders) > 0)
-    <!-- Bnner Section -->
-    <section class="banner-section">
+    <!-- Banner Section - BRI Inspired Enterprise Concept -->
+    <section class="banner-section hero-enterprise-style">
+        
         <div class="carousel-column">
             <div class="carousel-outer">
                 <div class="banner-carousel owl-carousel owl-theme">
                     @foreach($sliders as $slider)
                     <!-- Slide Item -->
                     <div class="slide-item">
-                        <div class="bg-image" style="background-image: url({{ asset('uploads/slider/'.$slider->image_path) }});"></div>
-                        <div class="container">
-                            <div class="content-box">
-                                <h1 class="wow fadeInUp" data-wow-delay="0.3s">{{ $slider->title }}</h1>
-                                <div class="text wow fadeInUp" data-wow-delay="0.5s">
-                                    <p>{!! strip_tags($slider->description) !!}</p>
+                        <div class="container h-100">
+                            <div class="row align-items-center h-100">
+                                <!-- Content Column -->
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="hero-content-box">
+
+                                        <h1 class="wow fadeInUp" data-wow-delay="0.3s">
+                                            @php
+                                                $words = explode(' ', $slider->title);
+                                                $lastWord = array_pop($words);
+                                                $mainWords = implode(' ', $words);
+                                            @endphp
+                                            {{ $mainWords }} <span class="text-accent">{{ $lastWord }}</span>
+                                        </h1>
+                                        <div class="text-description wow fadeInUp" data-wow-delay="0.5s">
+                                            <p>{!! strip_tags($slider->description) !!}</p>
+                                        </div>
+                                        <div class="hero-cta-group wow fadeInUp" data-wow-delay="0.7s">
+                                            <a href="https://wa.me/6281188022717" target="_blank" class="btn-whatsapp-hero">
+                                                <i class="fab fa-whatsapp me-2"></i> Hubungi Kami
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="link-box wow fadeInUp" data-wow-delay="0.7s">
-                                    <a href="{{ route('contact') }}" class="btn-secondary-premium">
-                                        Hubungi Kami <i class="fas fa-phone" style="margin-left: 10px;"></i>
-                                    </a>
+                                <!-- Image Column -->
+                                <div class="col-lg-6 col-md-12 d-none d-lg-block">
+                                    <div class="hero-showcase-container wow fadeInRight" data-wow-delay="0.9s">
+                                        <div class="main-mockup-wrapper">
+                                            <img src="{{ asset('uploads/slider/'.$slider->image_path) }}" alt="{{ $slider->title }}" class="hero-main-img">
+                                            <!-- Floating Card 1 -->
+                                            <div class="floating-data-card card-top">
+                                                <div class="icon-box"><i class="fas fa-chart-line"></i></div>
+                                                <div class="details">
+                                                    <span class="label">{{ $setting->hero_stat_1_label ?? 'Growth' }}</span>
+                                                    <span class="value">{{ $setting->hero_stat_1_value ?? '+24%' }}</span>
+                                                </div>
+                                            </div>
+                                            <!-- Floating Card 2 -->
+                                            <div class="floating-data-card card-bottom">
+                                                <div class="icon-box"><i class="fas fa-shield-alt"></i></div>
+                                                <div class="details">
+                                                    <span class="label">{{ $setting->hero_stat_2_label ?? 'Security' }}</span>
+                                                    <span class="value">{{ $setting->hero_stat_2_value ?? 'Verified' }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -73,21 +110,14 @@
                     @endforeach
                 </div>
 
-                <!-- Scroll Down Indicator -->
-                <div class="scroll-indicator">
-                    <div class="mouse">
-                        <div class="wheel"></div>
-                    </div>
-                    <div class="arrows">
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
+
+
+                <!-- Custom Navigation Lines (BRI Style) -->
+                <div class="hero-nav-lines"></div>
             </div>
         </div>
     </section>
-    <!-- End Bnner Section -->
-
+    <!-- End Banner Section -->
     @endif
 
     @php
@@ -698,27 +728,7 @@
     </section>
 
     <style>
-        /* Gradient Overlay for Banner to Blend into Content */
-        .banner-section {
-            position: relative;
-        }
-        .banner-section::after {
-            content: "";
-            position: absolute;
-            bottom: -1px; /* Overlap slightly to prevent sub-pixel gaps */
-            left: 0;
-            width: 100%;
-            height: 20rem; /* Increased height for smoother transition */
-            background: linear-gradient(to bottom, rgba(8, 45, 73, 0) 0%, rgba(8, 45, 73, 0.8) 60%, #082d49 100%);
-            z-index: 2;
-            pointer-events: none;
-        }
-        
-        /* Ensure content stands out */
-        .banner-section .content-box {
-            position: relative;
-            z-index: 3;
-        }
+        /* Portfolio and Section Title adjustments if needed */
     </style>
   @section('scripts')
     <!-- jQuery -->

@@ -32,6 +32,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="#hero-stats-tab" data-toggle="tab" aria-expanded="false" class="nav-link">
+                            Hero Stats
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="#contact-tab" data-toggle="tab" aria-expanded="true" class="nav-link">
                             {{ __('dashboard.contact_info') }}
                         </a>
@@ -137,6 +142,44 @@
                       </form>
                       <!-- Form End -->
 
+                    </div>
+                    <div class="tab-pane" id="hero-stats-tab">
+                        <form class="needs-validation" novalidate action="{{ route($route.'.siteinfo') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input name="id" type="hidden" value="{{ (isset($row->id))?$row->id:-1 }}">
+                            <h4 class="header-title">Hero Statistics</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="hero_stat_1_value">Stat 1 Value (e.g. +24%)</label>
+                                        <input type="text" class="form-control" name="hero_stat_1_value" id="hero_stat_1_value" value="{{ isset($row->hero_stat_1_value)?$row->hero_stat_1_value:'' }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="hero_stat_1_label">Stat 1 Label (e.g. Growth)</label>
+                                        <input type="text" class="form-control" name="hero_stat_1_label" id="hero_stat_1_label" value="{{ isset($row->hero_stat_1_label)?$row->hero_stat_1_label:'' }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="hero_stat_2_value">Stat 2 Value (e.g. Verified)</label>
+                                        <input type="text" class="form-control" name="hero_stat_2_value" id="hero_stat_2_value" value="{{ isset($row->hero_stat_2_value)?$row->hero_stat_2_value:'' }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="hero_stat_2_label">Stat 2 Label (e.g. Security)</label>
+                                        <input type="text" class="form-control" name="hero_stat_2_label" id="hero_stat_2_label" value="{{ isset($row->hero_stat_2_label)?$row->hero_stat_2_label:'' }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">{{ __('dashboard.update') }}</button>
+                            </div>
+                        </form>
                     </div>
                     <div class="tab-pane" id="contact-tab">
                         

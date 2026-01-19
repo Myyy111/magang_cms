@@ -268,10 +268,7 @@ export default {
 <style scoped>
 .team-section-wrapper {
   position: relative;
-  background-color: #082d49; /* Slightly darker than Deep Navy for depth */
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(29, 209, 161, 0.05) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(10, 61, 98, 0.1) 0px, transparent 50%);
+  background-color: #082d49; /* Solid Deep Navy */
   font-family: 'Inter', sans-serif !important;
   overflow: hidden;
   padding: 100px 0;
@@ -344,7 +341,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fbce07; /* Yellow for arrows */
+  color: #ffffff; /* White for arrows */
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   backdrop-filter: blur(10px);

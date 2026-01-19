@@ -25,8 +25,12 @@
 
 @section('content')
 
-    <!--Page Title-->
-    <section class="page-title">
+    <!--Page Title (Premium Cut)-->
+    <section class="page-title-premium text-center">
+        <!-- Floating Elements for Premium Feel -->
+        <div class="floating-element element-1"></div>
+        <div class="floating-element element-2"></div>
+        
         <div class="container">
             <div class="inner-container clearfix">
                 <div class="title-box">
@@ -40,7 +44,6 @@
                 </div>
             </div>
         </div>
-        <div class="page-title-bottom-shape"></div>
     </section>
     <!--End Page Title-->
 
@@ -50,7 +53,7 @@
     @endphp
     @if(count($services) > 0 && isset($section_services))
     <!-- Services Section -->
-    <section class="services-section style-four" style="background-image: url({{ asset('web/images/background/services-bg.png') }});">
+    <section class="services-section style-four" style="background: #ffffff;">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -87,40 +90,5 @@
     <!--End Services Section -->
     @endif
 
-
-    @php
-        $section_process = \App\Models\Section::section('process');
-    @endphp
-    @if(count($processes) > 0 && isset($section_process))
-    <!--Feautred Section -->
-    <section class="feautred-section style-two" style="background-image: url({{ asset('web/images/background/process-bg.png') }});">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="sec-title left">
-                        <h2>{{ $section_process->title }}</h2>
-                        <div class="text">{!! $section_process->description !!}</div>
-                        <div class="yellow-separator left"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="featured-box row clearfix">
-                @foreach($processes as $key => $process)
-                <div class="col-lg-3 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="{{ ($key + 1) * 200 }}ms">
-                    <div class="inner-box">
-                        <div class="title-box">
-                            <h4><span class="numbe-post">{{ $key + 1 }}</span>{{ $process->title }}</h4>
-                        </div>
-                        <div class="lower-content">
-                            <div class="text">{!! $process->description !!}</div> 
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-    <!--End Feautred Section -->
-    @endif
 
 @endsection
