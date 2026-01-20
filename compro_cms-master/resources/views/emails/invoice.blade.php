@@ -355,7 +355,7 @@ p {
                         <tr>
                             <td colspan="2">
                                 <center>
-                                    @if(is_file('uploads/invoice/'.$data['invoice']->attach))
+                                    @if(file_exists(public_path('uploads/invoice/'.$data['invoice']->attach)))
                                     <a href="{{ asset('uploads/invoice/'.$data['invoice']->attach) }}" class="attach-btn" target="_blank" download>{{ __('email.attach_btn') }}</a>
                                     @endif
                                     <a href="{{ route('make.payment', $data['invoice']->id) }}" class="payment-btn">{{ __('email.pay_btn') }}</a>

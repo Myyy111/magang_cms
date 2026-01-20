@@ -48,7 +48,7 @@
                             <tr>
                                 <td>{{ $key + 1 }}</td>
                                 <td>
-                                    @if(is_file('uploads/'.$path.'/'.$row->image_path))
+                                    @if(file_exists(public_path('uploads/'.$path.'/'.$row->image_path)))
                                     <img src="{{ asset('uploads/'.$path.'/'.$row->image_path) }}" class="img-fluid" alt="Logo">
                                     @endif
                                 </td>

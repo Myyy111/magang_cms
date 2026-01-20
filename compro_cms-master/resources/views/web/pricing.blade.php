@@ -25,10 +25,14 @@
 
 @section('content')
 
-    <!--Page Title-->
-    <section class="page-title">
+    <!--Page Title (Premium Cut)-->
+    <section class="page-title-premium text-center">
+        <!-- Floating Elements for Premium Feel -->
+        <div class="floating-element element-1"></div>
+        <div class="floating-element element-2"></div>
+        
         <div class="container">
-            <div class="inner-container clearfix">
+            <div class="inner-container">
                 <div class="title-box">
                     <h1>{{ __('navbar.pricing') }}</h1>
                 </div>
@@ -40,7 +44,6 @@
                 </div>
             </div>
         </div>
-        <div class="page-title-bottom-shape"></div>
     </section>
     <!--End Page Title-->
 
@@ -52,9 +55,9 @@
     <section class="price-section" style="background-image: url({{ asset('web/images/background/pricetable-bg.jpg') }});">
         <div class="container">
             <div class="sec-title centered">
-                <h2>{{ $section_pricing->title }}</h2>
-                <div class="text">{!! $section_pricing->description !!}</div>
-                <div class="separater"></div>
+                <h2 class="fw-bold" style="color: #000000 !important; font-size: 42px !important;">{{ $section_pricing->title }}</h2>
+                <div class="yellow-separator centered"></div>
+                <div class="text mt-3" style="color: #666666 !important; font-size: 16px;">{!! $section_pricing->description !!}</div>
             </div>
             <div class="outer-container pricing-tabs">
                 <div class="clearfix">
@@ -98,9 +101,9 @@
                                                 $page_contact = \App\Models\PageSetup::page('contact-us');
                                             @endphp
                                             @if(isset($page_quote))
-                                            <a href="{{ route('get-quote') }}" class="purchased btn-style-three">{{ __('common.get_start') }}</a>
+                                            <a href="{{ route('get-quote') }}" class="purchased btn-premium">{{ __('common.get_start') }}</a>
                                             @elseif(isset($page_contact))
-                                            <a href="{{ route('contact') }}" class="purchased btn-style-three">{{ __('common.get_start') }}</a>
+                                            <a href="{{ route('contact') }}" class="purchased btn-premium">{{ __('common.get_start') }}</a>
                                             @endif
                                         </div>
                                     </div>

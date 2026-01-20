@@ -96,7 +96,7 @@
                           <div class="form-group col-md-6">
 
                             @if(isset($row->logo_path))
-                            @if(is_file('uploads/'.$path.'/'.$row->logo_path))
+                            @if(file_exists(public_path('uploads/'.$path.'/'.$row->logo_path)))
                             <img src="{{ asset('uploads/'.$path.'/'.$row->logo_path) }}" class="img-fluid site-image" alt="{{ __('dashboard.site_logo') }}">
                             @endif
                             @endif
@@ -112,7 +112,7 @@
                           <div class="form-group col-md-6">
 
                             @if(isset($row->favicon_path))
-                            @if(is_file('uploads/'.$path.'/'.$row->favicon_path))
+                            @if(file_exists(public_path('uploads/'.$path.'/'.$row->favicon_path)))
                             <img src="{{ asset('uploads/'.$path.'/'.$row->favicon_path) }}" class="img-fluid site-image" alt="{{ __('dashboard.site_favicon') }}">
                             @endif
                             @endif

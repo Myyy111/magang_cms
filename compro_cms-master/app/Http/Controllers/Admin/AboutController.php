@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\About;
+use App\Traits\ContentProcessor;
 use Toastr;
 use Image;
 use File;
 
 class AboutController extends Controller
 {
+    use ContentProcessor;
     /**
      * Create a new controller instance.
      *
@@ -110,51 +112,7 @@ class AboutController extends Controller
 
 
         // Get content with media file
-        $content=$request->input('description');
-        
-        $dom = new \DomDocument();
-        libxml_use_internal_errors(true);
-        $dom->encoding = 'utf-8';
-        $dom->loadHtml(utf8_decode($content), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
-        $images = $dom->getElementsByTagName('img');
-       // foreach <img> in the submited content
-        foreach($images as $img){
-            $src = $img->getAttribute('src');
-            
-            // if the img source is 'data-url'
-            if(preg_match('/data:image/', $src)){                
-                // get the mimetype
-                preg_match('/data:image\/(?<mime>.*?)\;/', $src, $groups);
-                $mimetype = $groups['mime'];                
-                // Generating a random filename
-                $filename = uniqid().'_'.time();
-
-                //Crete Folder Location
-                $path = public_path('uploads/media/');
-                if (! File::exists($path)) {
-                    File::makeDirectory($path, 0777, true, true);
-                }
-
-                $filepath = "/uploads/media/$filename.$mimetype";    
-                if (extension_loaded('gd') || extension_loaded('imagick')) {
-                    $image = Image::make($src)
-                      // resize if required
-                      //->resize(500, null) 
-                      ->resize(800, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                            $constraint->upsize();
-                        })
-                      ->encode($mimetype, 100)  // encode file to the specified mimetype
-                      ->save(public_path($filepath));
-                } else {
-                    $data = explode(',', $src);
-                    file_put_contents(public_path($filepath), base64_decode($data[1]));
-                }
-                $new_src = asset($filepath);
-                $img->removeAttribute('src');
-                $img->setAttribute('src', $new_src);
-            } // <!--endif
-        } // <!-
+        $processed_description = $this->processInnerImages($request->input('description'));
 
 
 
@@ -164,7 +122,7 @@ class AboutController extends Controller
             $data = new About;
             $data->title = $request->title;
             $data->slug = Str::slug($request->title, '-');
-            $data->description = $dom->saveHTML();
+            $data->description = $processed_description;
             $data->image_path = $fileNameToStore;
             $data->video_id = $request->video_id;
             $data->mission_title = $request->mission_title;
@@ -179,7 +137,7 @@ class AboutController extends Controller
             $data = About::find($id);
             $data->title = $request->title;
             $data->slug = Str::slug($request->title, '-');
-            $data->description = $dom->saveHTML();
+            $data->description = $processed_description;
             $data->image_path = $fileNameToStore;
             $data->video_id = $request->video_id;
             $data->mission_title = $request->mission_title;

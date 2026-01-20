@@ -101,7 +101,7 @@
 
                         @if(isset($row->image_path))
                         <br/>
-                        @if(is_file('uploads/'.$path.'/'.$row->image_path))
+                        @if(file_exists(public_path('uploads/'.$path.'/'.$row->image_path)))
                         <img src="{{ asset('uploads/'.$path.'/'.$row->image_path) }}" class="img-fluid" alt="Thumb">
                         @endif
                         @endif

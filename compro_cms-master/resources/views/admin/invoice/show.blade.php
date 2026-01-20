@@ -156,7 +156,7 @@
                     <!-- Include Delete modal -->
                     @include('admin.inc.delete')
 
-                    @if(is_file('uploads/invoice/'.$row->attach))
+                    @if(file_exists(public_path('uploads/invoice/'.$row->attach)))
                     <a href="{{ asset('uploads/invoice/'.$row->attach) }}" class="btn btn-sm btn-warning waves-effect waves-light" download>{{ __('dashboard.attach') }}</a>
                     @endif
 

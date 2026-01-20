@@ -32,10 +32,14 @@
 @section('content')
     
     @if(isset($page))
-    <!--Page Title-->
-    <section class="page-title">
+    <!--Page Title (Premium Cut)-->
+    <section class="page-title-premium text-center">
+        <!-- Floating Elements for Premium Feel -->
+        <div class="floating-element element-1"></div>
+        <div class="floating-element element-2"></div>
+        
         <div class="container">
-            <div class="inner-container clearfix">
+            <div class="inner-container">
                 <div class="title-box">
                     <h1>{{ $page->title }}</h1>
                 </div>
@@ -47,7 +51,6 @@
                 </div>
             </div>
         </div>
-        <div class="page-title-bottom-shape"></div>
     </section>
     <!--End Page Title-->
     @endif
@@ -63,7 +66,7 @@
                         <!-- News Block -->
                         <div class="news-block">
                             <div class="inner-box">
-                                @if(is_file('uploads/page/'.$page->image_path))
+                                @if(file_exists(public_path('uploads/page/'.$page->image_path)))
                                 <div class="image-box">
                                     <figure class="image"><img src="{{ asset('uploads/page/'.$page->image_path) }}" alt="{{ $page->title }}"></figure>
                                 </div>

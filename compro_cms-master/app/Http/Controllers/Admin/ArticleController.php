@@ -7,12 +7,14 @@ use App\Models\ArticleCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Article;
+use App\Traits\ContentProcessor;
 use Toastr;
 use Image;
 use File;
 
 class ArticleController extends Controller
 {
+    use ContentProcessor;
     /**
      * Create a new controller instance.
      *
@@ -88,10 +90,8 @@ class ArticleController extends Controller
             $extension = $request->file('image')->getClientOriginalExtension();
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
 
-            //Crete Folder Location
-            // Check if 'public' folder exists and use it, otherwise use default public_path
-            $base_path = is_dir(base_path('public')) ? base_path('public') : public_path();
-            $path = $base_path . '/uploads/' . $this->path . '/';
+            // Crete Folder Location
+            $path = public_path('uploads/'.$this->path.'/');
             if (! File::exists($path)) {
                 File::makeDirectory($path, 0777, true, true);
             }
@@ -110,52 +110,7 @@ class ArticleController extends Controller
 
 
         // Get content with media file
-        $content = $request->input('description');
-        
-        $dom = new \DOMDocument();
-        libxml_use_internal_errors(true);
-        // Modern way to handle UTF-8 in DOMDocument
-        $dom->loadHTML('<?xml encoding="utf-8" ?>' . $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
-        $images = $dom->getElementsByTagName('img');
-       // foreach <img> in the submited content
-        foreach($images as $img){
-            $src = $img->getAttribute('src');
-            
-            // if the img source is 'data-url'
-            if(preg_match('/data:image/', $src)){                
-                // get the mimetype
-                preg_match('/data:image\/(?<mime>.*?)\;/', $src, $groups);
-                $mimetype = $groups['mime'];                
-                // Generating a random filename
-                $filename = uniqid().'_'.time();
-
-                //Crete Folder Location
-                $path = public_path('uploads/media/');
-                if (! File::exists($path)) {
-                    File::makeDirectory($path, 0777, true, true);
-                }
-
-                $filepath = "/uploads/media/$filename.$mimetype";    
-                // @see http://image.intervention.io/api/
-                if (extension_loaded('gd') || extension_loaded('imagick')) {
-                    $image = Image::make($src)
-                      // resize if required
-                      //->resize(500, null) 
-                      ->resize(800, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                            $constraint->upsize();
-                        })
-                      ->encode($mimetype, 100)  // encode file to the specified mimetype
-                      ->save(public_path($filepath));
-                } else {
-                    $data = explode(',', $src);
-                    file_put_contents(public_path($filepath), base64_decode($data[1]));
-                }
-                $new_src = asset($filepath);
-                $img->removeAttribute('src');
-                $img->setAttribute('src', $new_src);
-            } // <!--endif
-        } // <!-
+        $processed_description = $this->processInnerImages($request->input('description'));
 
 
         // Insert Data
@@ -164,7 +119,7 @@ class ArticleController extends Controller
         $article->slug = Str::slug($request->title, '-');
         $article->category_id = $request->category;
         // Save only inner HTML to avoid <html><body> tags
-        $article->description = $dom->saveHTML($dom->documentElement);
+        $article->description = $processed_description;
         $article->image_path = $fileNameToStore;
         $article->video_id = $request->video_id;
         $article->status = 1; // Explicitly active on create
@@ -248,10 +203,8 @@ class ArticleController extends Controller
             $extension = $request->file('image')->getClientOriginalExtension();
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
 
-            //Crete Folder Location
-            // Check if 'public' folder exists and use it, otherwise use default public_path
-            $base_path = is_dir(base_path('public')) ? base_path('public') : public_path();
-            $path = $base_path . '/uploads/' . $this->path . '/';
+            // Crete Folder Location
+            $path = public_path('uploads/'.$this->path.'/');
             if (! File::exists($path)) {
                 File::makeDirectory($path, 0777, true, true);
             }
@@ -271,52 +224,7 @@ class ArticleController extends Controller
 
 
         // Get content with media file
-        $content = $request->input('description');
-        
-        $dom = new \DOMDocument();
-        libxml_use_internal_errors(true);
-        // Modern way to handle UTF-8 in DOMDocument
-        $dom->loadHTML('<?xml encoding="utf-8" ?>' . $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
-        $images = $dom->getElementsByTagName('img');
-       // foreach <img> in the submited content
-        foreach($images as $img){
-            $src = $img->getAttribute('src');
-            
-            // if the img source is 'data-url'
-            if(preg_match('/data:image/', $src)){                
-                // get the mimetype
-                preg_match('/data:image\/(?<mime>.*?)\;/', $src, $groups);
-                $mimetype = $groups['mime'];                
-                // Generating a random filename
-                $filename = uniqid().'_'.time();
-
-                //Crete Folder Location
-                $path = public_path('uploads/media/');
-                if (! File::exists($path)) {
-                    File::makeDirectory($path, 0777, true, true);
-                }
-
-                $filepath = "/uploads/media/$filename.$mimetype";    
-                // @see http://image.intervention.io/api/
-                if (extension_loaded('gd') || extension_loaded('imagick')) {
-                    $image = Image::make($src)
-                      // resize if required
-                      //->resize(500, null) 
-                      ->resize(800, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                            $constraint->upsize();
-                        })
-                      ->encode($mimetype, 100)  // encode file to the specified mimetype
-                      ->save(public_path($filepath));
-                } else {
-                    $data = explode(',', $src);
-                    file_put_contents(public_path($filepath), base64_decode($data[1]));
-                }
-                $new_src = asset($filepath);
-                $img->removeAttribute('src');
-                $img->setAttribute('src', $new_src);
-            } // <!--endif
-        } // <!-
+        $processed_description = $this->processInnerImages($request->input('description'));
 
 
         // Update Data
@@ -324,7 +232,7 @@ class ArticleController extends Controller
         $article->slug = Str::slug($request->title, '-');
         $article->category_id = $request->category;
         // Save only inner HTML to avoid <html><body> tags
-        $article->description = $dom->saveHTML($dom->documentElement);
+        $article->description = $processed_description;
         $article->image_path = $fileNameToStore;
         $article->video_id = $request->video_id;
         $article->status = $request->status;

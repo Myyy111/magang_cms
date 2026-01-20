@@ -56,7 +56,7 @@
                             <td>{{ __('dashboard.city') }}</td>
                             <td>: {{ $row->city }}</td>
                         </tr>
-                        @if(is_file('uploads/quote/'.$row->file_path))
+                        @if(file_exists(public_path('uploads/quote/'.$row->file_path)))
                         <tr>
                             <td>{{ __('dashboard.quote_files') }}</td>
                             <td>: <a href="{{ asset('uploads/quote/'.$row->file_path) }}" target="_blank" download><span class="btn btn-sm btn-primary">{{ __('dashboard.download') }}</span></a></td>
