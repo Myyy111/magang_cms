@@ -323,6 +323,21 @@
                 transition: all 0.3s ease !important;
             }
 
+            @media (max-width: 768px) {
+                .team-section-wrapper .card-inner,
+                #team-section-root .card-inner {
+                    height: auto !important;
+                    min-height: auto !important;
+                    max-height: none !important;
+                }
+                .team-section-wrapper .image-wrapper,
+                #team-section-root .image-wrapper {
+                    height: 300px !important;
+                    min-height: 300px !important;
+                    max-height: 300px !important;
+                }
+            }
+
             #team-section-root .card-container:hover .card-inner {
                 transform: translateY(-8px) !important;
                 border-color: #1DD1A1 !important;
@@ -419,7 +434,7 @@
                         <!-- Left Column: Content -->
                         <div class="col-lg-6 col-md-12 mb-5 mb-lg-0 wow fadeInLeft">
                             <div class="about-title-wrapper start mb-4" style="text-align: left !important; opacity: 1 !important; visibility: visible !important; transform: none !important; position: relative !important; z-index: 10 !important;">
-                                <h2 style="color: #000000 !important; font-size: 42px !important; font-weight: 900 !important; font-family: 'Inter', sans-serif !important; letter-spacing: -0.02em !important; margin-bottom: 15px !important; display: block;">Tentang Kami</h2>
+                                <h2 class="section-title-premium-dynamic" style="color: #000000 !important; font-weight: 900 !important; font-family: 'Inter', sans-serif !important; letter-spacing: -0.02em !important; margin-bottom: 15px !important; display: block;">Tentang Kami</h2>
                             </div>
                             <div class="about-text">
                                 <p style="color: #000000 !important;">
@@ -506,7 +521,7 @@
 <section id="services" class="services-section py-4">
     <div class="container">
         <div class="sec-title centered mb-4" style="text-align: center !important; opacity: 1 !important; visibility: visible !important; transform: none !important; position: relative !important; z-index: 10 !important;">
-            <h2 class="fw-bold" style="color: #000000 !important; font-size: 42px !important; font-weight: 900 !important; font-family: 'Inter', sans-serif !important; letter-spacing: -0.02em !important; margin-bottom: 15px !important; opacity: 1 !important; visibility: visible !important; background: transparent !important; -webkit-text-fill-color: initial !important; -webkit-background-clip: border-box !important; display: block;">{{ $section_services->title }}</h2>
+            <h2 class="fw-bold section-title-premium-dynamic" style="color: #000000 !important; font-weight: 900 !important; font-family: 'Inter', sans-serif !important; letter-spacing: -0.02em !important; margin-bottom: 15px !important; opacity: 1 !important; visibility: visible !important; background: transparent !important; -webkit-text-fill-color: initial !important; -webkit-background-clip: border-box !important; display: block;">{{ $section_services->title }}</h2>
             <div class="yellow-separator centered"></div>
             <p class="mt-3" style="max-width: 800px; margin-left: auto; margin-right: auto; color: #1a1a1a !important; font-weight: 500 !important; font-size: 16px !important; line-height: 1.8 !important; font-family: 'Inter', sans-serif !important; opacity: 1 !important; visibility: visible !important;">{!! strip_tags($section_services->description) !!}</p>
         </div>
@@ -545,7 +560,7 @@
     <section id="portfolio" class="portfolio-section-premium">
         <div class="container">
             <div class="sec-title centered mb-5 wow fadeInUp" style="text-align: center !important;">
-                <h2 class="fw-bold" style="color: #000000 !important; font-size: 42px !important; font-weight: 900 !important; font-family: 'Inter', sans-serif !important; letter-spacing: -0.02em !important; margin-bottom: 15px !important; display: block;">{{ $section_portfolio->title }}</h2>
+                <h2 class="fw-bold section-title-premium-dynamic" style="color: #000000 !important; font-weight: 900 !important; font-family: 'Inter', sans-serif !important; letter-spacing: -0.02em !important; margin-bottom: 15px !important; display: block;">{{ $section_portfolio->title }}</h2>
                 <div class="yellow-separator centered"></div>
                 <p class="mt-3" style="max-width: 800px; margin-left: auto; margin-right: auto; color: #666666 !important; font-weight: 400 !important; font-size: 16px !important; line-height: 1.8 !important; font-family: 'Inter', sans-serif !important;">{!! strip_tags($section_portfolio->description) !!}</p>
             </div>
@@ -627,7 +642,7 @@
     <section id="blog" class="blog-section-premium" style="padding: 60px 0;">
         <div class="container">
             <div class="sec-title centered mb-4 wow fadeInUp">
-                <h2 class="fw-bold" style="color: #000000 !important; font-size: 42px !important; font-weight: 900 !important; font-family: 'Inter', sans-serif !important; letter-spacing: -0.02em !important; margin-bottom: 15px !important;">{{ $blog_title }}</h2>
+                <h2 class="fw-bold section-title-premium-dynamic" style="color: #000000 !important; font-weight: 900 !important; font-family: 'Inter', sans-serif !important; letter-spacing: -0.02em !important; margin-bottom: 15px !important;">{{ $blog_title }}</h2>
                 <div class="yellow-separator centered"></div>
                 <p class="mt-3" style="max-width: 800px; margin-left: auto; margin-right: auto; color: #666666 !important; font-weight: 400 !important; font-size: 16px !important; line-height: 1.8 !important; font-family: 'Inter', sans-serif !important;">{!! strip_tags($blog_desc) !!}</p>
             </div>
@@ -675,7 +690,7 @@
     <section class="process-section py-5" style="background: #fcfdfe;">
         <div class="container">
             <div class="sec-title centered mb-5 wow fadeInUp">
-                <h2 class="fw-bold" style="color: #000000 !important; font-size: 42px !important; font-weight: 900 !important; font-family: 'Inter', sans-serif !important; letter-spacing: -0.02em !important; margin-bottom: 15px !important;">{{ $process_title }}</h2>
+                <h2 class="fw-bold section-title-premium-dynamic" style="color: #000000 !important; font-weight: 900 !important; font-family: 'Inter', sans-serif !important; letter-spacing: -0.02em !important; margin-bottom: 15px !important;">{{ $process_title }}</h2>
                 <div class="yellow-separator centered"></div>
                 <p class="mt-3" style="max-width: 800px; margin-left: auto; margin-right: auto; color: #666666 !important; font-weight: 400 !important; font-size: 16px !important; line-height: 1.8 !important; font-family: 'Inter', sans-serif !important;">{!! strip_tags($process_desc) !!}</p>
             </div>

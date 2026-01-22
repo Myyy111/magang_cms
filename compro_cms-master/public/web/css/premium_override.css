@@ -3387,3 +3387,283 @@ body {
         --bs-gutter-y: 1.5rem !important;
     }
 }
+
+/* Scroll To Top Override */
+.scroll-to-top {
+    left: auto !important;
+    right: 30px !important;
+    bottom: 30px !important;
+    background: var(--accent-yellow) !important;
+    color: #000000 !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
+    opacity: 1 !important;
+    border-radius: 50% !important;
+    width: 50px !important;
+    height: 50px !important;
+    display: none;
+    /* Controlled by JS */
+    align-items: center;
+    justify-content: center;
+}
+
+.scroll-to-top .fas {
+    line-height: 50px;
+}
+
+.scroll-to-top:hover {
+    background: #004aad !important;
+    color: #ffffff !important;
+    transform: translateY(-5px);
+}
+
+/* MOBILE ONLY - Modern Border & Layout Refinements */
+@media (max-width: 767px) {
+
+    /* Soften Card Borders */
+    .inner-box,
+    .service-block .inner-box,
+    .news-block .inner-box,
+    .team-block .inner-box,
+    .project-block .inner-box {
+        border-radius: 20px !important;
+        border: 1px solid rgba(0, 0, 0, 0.06) !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03) !important;
+        margin-bottom: 25px !important;
+        /* Fix stacking spacing */
+        overflow: hidden !important;
+    }
+
+    /* Fix Image Corners */
+    .image-box img,
+    .image img,
+    .thumb img {
+        border-radius: 20px 20px 0 0 !important;
+    }
+
+    /* Consistent Spacing for Sections */
+    section {
+        padding-top: 60px !important;
+        padding-bottom: 60px !important;
+    }
+
+    /* Remove double borders on lists/widgets */
+    .sidebar .widget,
+    .footer-widget {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+    }
+
+    /* Fix Input Fields on Mobile (General) */
+    input.form-control,
+    textarea.form-control,
+    select {
+        border-radius: 12px !important;
+        border: 1px solid #eaeaea !important;
+        padding: 15px !important;
+    }
+
+    input:focus,
+    textarea:focus {
+        border-color: #f8be14 !important;
+        box-shadow: 0 0 0 3px rgba(248, 190, 20, 0.1) !important;
+    }
+}
+
+
+/* Newsletter Mobile Fix - Clean Layout */
+@media (max-width: 767px) {
+    .subscribe-section {
+        padding: 50px 20px !important;
+    }
+
+    .subscribe-section .title-column {
+        text-align: center !important;
+        margin-bottom: 30px !important;
+    }
+
+    .subscribe-section .title-column h2 {
+        font-size: 24px !important;
+        line-height: 1.3 !important;
+        margin-bottom: 12px !important;
+    }
+
+    .subscribe-section .title-column .text {
+        font-size: 14px !important;
+        line-height: 1.6 !important;
+    }
+
+    .subscribe-section .title-column .icon-box {
+        display: none !important;
+    }
+
+    .subscribe-section .form-column {
+        margin-top: 0 !important;
+    }
+
+    .subscribe-section .form-column .inner-column {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .subscribe-section .subscribe-form .form-group {
+        position: relative !important;
+        display: block !important;
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+
+    .subscribe-section .subscribe-form .form-group input[type='email'] {
+        width: 100% !important;
+        padding: 15px 20px !important;
+        padding-right: 60px !important;
+        border-radius: 50px !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        color: #fff !important;
+        font-size: 15px !important;
+        height: 60px !important;
+        box-shadow: none !important;
+    }
+
+    .subscribe-section .subscribe-form .form-group input[type='email']::placeholder {
+        color: rgba(255, 255, 255, 0.7) !important;
+    }
+
+    .subscribe-section .subscribe-form .form-group button {
+        position: absolute !important;
+        right: 5px !important;
+        top: 5px !important;
+        bottom: 5px !important;
+        width: 50px !important;
+        height: 50px !important;
+        margin: 0 !important;
+        transform: none !important;
+        border-radius: 50% !important;
+        background: #f8be14 !important;
+        border: none !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+        color: #000 !important;
+    }
+
+    .subscribe-section .subscribe-form .form-group button i {
+        font-size: 18px !important;
+        margin: 0 !important;
+    }
+
+    .subscribe-form .form-group button i {
+        color: #000 !important;
+        font-size: 16px !important;
+    }
+}
+
+
+/* ==========================================================================
+   MOBILE AUDIT FIXES (2026-01-21)
+   ========================================================================== */
+@media (max-width: 768px) {
+
+    /* 1. Typography Fixes - Override Desktop sizes */
+    .section-title-premium-dynamic,
+    .sec-title h2 {
+        font-size: 28px !important;
+        /* Visual Harmony */
+        line-height: 1.3 !important;
+    }
+
+    /* 2. Spacing Optimization */
+    section {
+        padding-top: 40px !important;
+        padding-bottom: 40px !important;
+    }
+
+    .sec-title {
+        margin-bottom: 30px !important;
+    }
+
+    /* 3. Team Card Safety Override */
+    .team-section-wrapper .card-inner {
+        height: auto !important;
+        min-height: auto !important;
+    }
+
+    /* 4. Menu Close Button Safety */
+    #closeMobileMenu {
+        top: max(30px, env(safe-area-inset-top)) !important;
+    }
+}
+/* ==========================================================================
+   FAQs Icon Alignment Fixes
+   ========================================================================== */
+.accordion-box .acc-btn .icon-outer {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: absolute !important; 
+    right: 20px !important; /* Adjust if needed */
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 24px !important;
+    height: 24px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important; /* Ensure no conflict */
+}
+
+/* Ensure relative positioning on the button to handle the absolute icon */
+.accordion-box .acc-btn {
+    position: relative !important;
+    padding-right: 50px !important; /* Make space for the icon */
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Center the icons themselves */
+.accordion-box .acc-btn .icon-outer .icon {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    line-height: normal !important;
+    font-size: 14px !important; /* Adjust size */
+}
+
+/* Ensure correct FontAwesome rendering */
+.accordion-box .acc-btn .icon-outer .icon::before {
+    margin: 0 !important;
+    line-height: 1 !important;
+    display: block !important;
+}
+
+/* Handle Visibility Logic Clearly */
+.accordion-box .acc-btn:not(.active) .icon_minus {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+.accordion-box .acc-btn.active .icon_plus {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+.accordion-box .acc-btn.active .icon_minus {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.accordion-box .acc-btn:not(.active) .icon_plus {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+

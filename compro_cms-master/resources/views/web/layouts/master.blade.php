@@ -176,15 +176,35 @@
     </header>
 
     <!-- Fullscreen Mobile Menu -->
-    <div id="mobileMenuOverlay" style="position: fixed; inset: 0; background: #0A3D62; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1);">
-        <button id="closeMobileMenu" style="position: absolute; top: 30px; right: 30px; background: none; border: none; color: white; font-size: 32px; cursor: pointer;">&times;</button>
+    <div id="mobileMenuOverlay" style="position: fixed; inset: 0; background: #0A3D62; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 100px; gap: 20px; transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1); overflow-y: auto;">
+        <button id="closeMobileMenu" style="position: absolute; top: max(30px, env(safe-area-inset-top)); right: 30px; background: none; border: none; color: white; font-size: 32px; cursor: pointer; z-index: 10001;">&times;</button>
         
         <a href="{{ url('/') }}" class="mobile-nav-item" style="color: white; font-size: 28px; font-weight: 600; text-decoration: none;">BERANDA</a>
         <a href="{{ url('/#team') }}" class="mobile-nav-item" style="color: white; font-size: 28px; font-weight: 600; text-decoration: none;">TIM</a>
         <a href="{{ route('about') }}" class="mobile-nav-item" style="color: white; font-size: 28px; font-weight: 600; text-decoration: none;">TENTANG KAMI</a>
         <a href="{{ route('services') }}" class="mobile-nav-item" style="color: white; font-size: 28px; font-weight: 600; text-decoration: none;">LAYANAN</a>
+        
+        <!-- Mobile Submenu Services -->
+        <button class="mobile-submenu-toggle" onclick="toggleSubmenu('submenu-services', this)" style="background: none; border: none; color: white; margin-top: -15px; margin-bottom: 5px;">
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div id="submenu-services" style="display: none; flex-direction: column; gap: 12px; text-align: center; margin-bottom: 15px;">
+             @foreach($service_subnavs as $service_nav)
+             <a href="{{ route('service.single', $service_nav->slug) }}" style="color: #cbd5e1; font-size: 18px; text-decoration: none; display: block;">{{ $service_nav->title }}</a>
+             @endforeach
+        </div>
         <a href="{{ route('portfolios') }}" class="mobile-nav-item" style="color: white; font-size: 28px; font-weight: 600; text-decoration: none;">PORTOFOLIO</a>
         <a href="{{ route('blogs') }}" class="mobile-nav-item" style="color: white; font-size: 28px; font-weight: 600; text-decoration: none;">INFO TERKINI</a>
+
+        <!-- Mobile Submenu Blogs -->
+        <button class="mobile-submenu-toggle" onclick="toggleSubmenu('submenu-blogs', this)" style="background: none; border: none; color: white; margin-top: -15px; margin-bottom: 5px;">
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div id="submenu-blogs" style="display: none; flex-direction: column; gap: 12px; text-align: center; margin-bottom: 15px;">
+             @foreach($article_subnavs as $article_nav)
+             <a href="{{ route('blog.category', $article_nav->slug) }}" style="color: #cbd5e1; font-size: 18px; text-decoration: none; display: block;">{{ $article_nav->title }}</a>
+             @endforeach
+        </div>
         <a href="{{ route('faqs') }}" class="mobile-nav-item" style="color: white; font-size: 28px; font-weight: 600; text-decoration: none;">FAQS</a>
         <a href="{{ route('contact') }}" class="mobile-nav-item" style="color: white; font-size: 28px; font-weight: 600; text-decoration: none;">KONTAK KAMI</a>
         
@@ -223,7 +243,43 @@
 
             closeBtn.addEventListener('click', closeMenu);
             mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+            
+            // Scroll to Top Logic
+            const scrollBtn = document.querySelector('.scroll-to-top');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    scrollBtn.style.display = 'flex';
+                } else {
+                    scrollBtn.style.display = 'none';
+                }
+            });
+
+            if(scrollBtn) {
+                scrollBtn.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
         });
+
+        // Mobile Submenu Toggle
+        function toggleSubmenu(id, btn) {
+            const submenu = document.getElementById(id);
+            const icon = btn.querySelector('i');
+            
+            if (submenu.style.display === 'none') {
+                submenu.style.display = 'flex';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                submenu.style.display = 'none';
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
     </script>
     <!--End Main Header -->
 
