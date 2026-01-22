@@ -60,6 +60,22 @@ Route::middleware(['XSS'])->namespace('Web')->group(function () {
     // Subscribe Route
     Route::post('/subscribe', 'HomeController@subscribe')->name('subscribe');
 
+    // E-Commerce Routes
+    Route::get('/ecommerce', 'CommerceController@index')->name('ecommerce.index');
+    Route::get('/ecommerce/product/{slug}', 'CommerceController@show')->name('ecommerce.show');
+    Route::get('/ecommerce/track', 'CommerceController@track')->name('ecommerce.track');
+    
+    // Cart Routes
+    Route::post('/ecommerce/add-to-cart', 'CommerceController@addToCart')->name('ecommerce.add_to_cart');
+    Route::get('/ecommerce/cart', 'CommerceController@cart')->name('ecommerce.cart');
+    Route::patch('/ecommerce/cart/update', 'CommerceController@updateCart')->name('ecommerce.cart.update');
+    Route::delete('/ecommerce/cart/remove', 'CommerceController@removeFromCart')->name('ecommerce.cart.remove');
+    
+    // Checkout Route
+    Route::get('/ecommerce/checkout', 'CommerceController@checkout')->name('ecommerce.checkout');
+    Route::post('/ecommerce/checkout/process', 'CommerceController@processOrder')->name('ecommerce.process');
+    Route::get('/ecommerce/success/{order_id}', 'CommerceController@success')->name('ecommerce.success');
+    
     // Payment Routes
     Route::get('/handle-payment/{id}', 'PayPalPaymentController@handlePayment')->name('make.payment');
     Route::get('/cancel-payment/{id}', 'PayPalPaymentController@paymentCancel')->name('cancel.payment');
@@ -98,6 +114,10 @@ Route::middleware(['auth:web', 'XSS'])->name('admin.')->namespace('Admin')->pref
 
     // Service Routes
     Route::resource('service', 'ServiceController');
+
+    // Product Routes
+    Route::resource('product', 'ProductController');
+    Route::resource('order', 'OrderController');
 
     // Pricing Routes
     Route::resource('pricing', 'PricingController');

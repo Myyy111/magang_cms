@@ -69,6 +69,20 @@
         </li>
 
         <li>
+            <a href="{{ route('admin.product.index') }}">
+                <span class="icon"><i class="fas fa-shopping-cart"></i></span>
+                <span> Products </span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ route('admin.order.index') }}">
+                <span class="icon"><i class="fas fa-cart-arrow-down"></i></span>
+                <span> Orders </span>
+            </a>
+        </li>
+
+        <li>
             <a href="javascript: void(0);">
                 <span class="icon"><i class="fas fa-users"></i></span>
                 <span> {{ trans_choice('dashboard.team', 2) }} </span>

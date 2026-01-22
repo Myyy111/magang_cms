@@ -39,6 +39,7 @@
     <link href="{{ asset('web/css/responsive.css') }}" rel="stylesheet">
     <link href="{{ asset('web/css/kategori-tab.css') }}" rel="stylesheet">
     <link href="{{ asset('web/css/premium_override.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 
     <!-- Custom Style -->
@@ -157,6 +158,23 @@
                     </div>
                 </div>
 
+                <!-- E-Commerce Mega Menu -->
+                <div class="premium-nav-item has-mega-menu">
+                    <a href="{{ route('ecommerce.index') }}" class="premium-nav-link">E-COMMERCE <i class="fas fa-chevron-down ms-1" style="font-size: 10px;"></i></a>
+                    <div class="mega-menu-wrapper">
+                        <div class="mega-menu-container">
+                            <div class="mega-menu-row">
+                                <div class="mega-menu-col">
+                                    <ul class="mega-menu-list">
+                                        <li><a href="{{ route('ecommerce.index') }}">Daftar Produk</a></li>
+                                        <li><a href="{{ route('ecommerce.cart') }}">Keranjang Belanja</a></li>
+                                        <li><a href="{{ route('ecommerce.track') }}">Cek Status Pesanan</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <a href="{{ route('faqs') }}" class="premium-nav-link">FAQS</a>
                 <a href="{{ route('contact') }}" class="premium-nav-link">KONTAK KAMI</a>
             </nav>
@@ -204,6 +222,17 @@
              @foreach($article_subnavs as $article_nav)
              <a href="{{ route('blog.category', $article_nav->slug) }}" style="color: #cbd5e1; font-size: 18px; text-decoration: none; display: block;">{{ $article_nav->title }}</a>
              @endforeach
+        </div>
+        <a href="{{ route('ecommerce.index') }}" class="mobile-nav-item" style="color: white; font-size: 28px; font-weight: 600; text-decoration: none;">E-COMMERCE</a>
+        
+        <!-- Mobile Submenu E-Commerce -->
+        <button class="mobile-submenu-toggle" onclick="toggleSubmenu('submenu-ecommerce', this)" style="background: none; border: none; color: white; margin-top: -15px; margin-bottom: 5px;">
+            <i class="fas fa-chevron-down"></i>
+        </button>
+        <div id="submenu-ecommerce" style="display: none; flex-direction: column; gap: 12px; text-align: center; margin-bottom: 15px;">
+             <a href="{{ route('ecommerce.index') }}" style="color: #cbd5e1; font-size: 18px; text-decoration: none; display: block;">Daftar Produk</a>
+             <a href="{{ route('ecommerce.cart') }}" style="color: #cbd5e1; font-size: 18px; text-decoration: none; display: block;">Keranjang Belanja</a>
+             <a href="{{ route('ecommerce.track') }}" style="color: #cbd5e1; font-size: 18px; text-decoration: none; display: block;">Cek Status Pesanan</a>
         </div>
         <a href="{{ route('faqs') }}" class="mobile-nav-item" style="color: white; font-size: 28px; font-weight: 600; text-decoration: none;">FAQS</a>
         <a href="{{ route('contact') }}" class="mobile-nav-item" style="color: white; font-size: 28px; font-weight: 600; text-decoration: none;">KONTAK KAMI</a>
@@ -491,6 +520,21 @@
     <script src="{{ asset('web/js/floating-wpp.min.js') }}"></script>
     @endif
     <script src="{{ asset('web/js/script.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        @if(Session::has('success'))
+            toastr.success("{{ Session::get('success') }}");
+        @endif
+        @if(Session::has('info'))
+            toastr.info("{{ Session::get('info') }}");
+        @endif
+        @if(Session::has('warning'))
+            toastr.warning("{{ Session::get('warning') }}");
+        @endif
+        @if(Session::has('error'))
+            toastr.error("{{ Session::get('error') }}");
+        @endif
+    </script>
 
 
     <!-- @if($livechat->status == 1) -->
