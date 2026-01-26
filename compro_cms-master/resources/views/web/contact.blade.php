@@ -59,7 +59,7 @@
                 <!-- Form Column -->
                 <div class="form-column col-lg-8 col-md-12 col-sm-12 wow fadeInLeft">
                      <div class="sec-title left mb-4">
-                        <h2 class="fw-bold" style="color: #0A3D62 !important; font-size: 36px !important;">{{ $section_mail->title }}</h2>
+                        <h2 class="fw-bold" style="color: #000 !important; font-size: 36px !important;">{{ $section_mail->title }}</h2>
                         <div class="my-3 rounded" style="width: 60px; height: 3px; background: #f1c40f; display: block !important; margin: 0 !important;"></div>
                         <div class="text-muted">{!! $section_mail->description !!}</div>
                     </div>
@@ -141,7 +141,7 @@
                 <!-- Info Column -->
                 <div class="info-column col-lg-4 col-md-12 col-sm-12 wow fadeInRight">
                     <div class="sec-title left mb-4">
-                        <h2 class="fw-bold" style="color: #0A3D62 !important; font-size: 36px !important;">{{ $section_contact->title }}</h2>
+                        <h2 class="fw-bold" style="color: #000 !important; font-size: 36px !important;">{{ $section_contact->title }}</h2>
                         <div class="my-3 rounded" style="width: 60px; height: 3px; background: #f1c40f; display: block !important; margin: 0 !important;"></div>
                     </div>
                     <div class="inner-column">

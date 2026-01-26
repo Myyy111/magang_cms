@@ -56,6 +56,17 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="wc_product_id">WooCommerce Product ID</label>
+                        <input type="text" class="form-control" name="wc_product_id" id="wc_product_id" value="{{ old('wc_product_id') }}">
+                        <small class="form-text text-muted">ID Produk di WooCommerce (misal: 871).</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sku">SKU</label>
+                        <input type="text" class="form-control" name="sku" id="sku" value="{{ old('sku') }}">
+                    </div>
+
+                    <div class="form-group">
                         <label for="description">{{ __('dashboard.description') }} <span>*</span></label>
                         <textarea class="form-control textMediaEditor" name="description" id="description" rows="8" required>{{ old('description') }}</textarea>
 

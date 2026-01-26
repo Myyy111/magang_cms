@@ -109,6 +109,8 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
         $product->stock = $request->stock;
+        $product->wc_product_id = $request->wc_product_id;
+        $product->sku = $request->sku;
         $product->image_path = $fileNameToStore;
         $product->status = 1;
         $product->save();
@@ -204,6 +206,8 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
         $product->stock = $request->stock;
+        $product->wc_product_id = $request->wc_product_id;
+        $product->sku = $request->sku;
         $product->image_path = $fileNameToStore;
         $product->status = $request->status;
         $product->save();

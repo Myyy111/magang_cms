@@ -67,25 +67,45 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::with('items')->findOrFail($id);
         
         $request->validate([
             'status' => 'required|in:pending,paid,completed,failed',
         ]);
 
-        // Kurangi stok ketika order status berubah menjadi completed
-        if($request->status == 'completed' && $order->status != 'completed') {
-            // Loop melalui setiap item dalam order
-            foreach($order->items as $item) {
-                if($item->product) {
-                    // Kurangi stok produk
-                    $item->product->stock -= $item->quantity;
-                    $item->product->save();
+        $oldStatus = $order->status;
+        $newStatus = $request->status;
+
+        // If status changes to 'failed' from a non-failed status, restore stock
+        if ($newStatus == 'failed' && $oldStatus != 'failed') {
+            foreach ($order->items as $item) {
+                // Restore main product stock
+                Product::where('id', $item->product_id)->increment('stock', $item->quantity);
+                
+                // Restore variant stock
+                if ($item->variant_ids) {
+                    foreach ($item->variant_ids as $vid) {
+                        \App\Models\ProductVariant::where('id', $vid)->increment('stock', $item->quantity);
+                    }
+                }
+            }
+        }
+        
+        // If status changes FROM 'failed' to something else, reduce stock again (if possible)
+        if ($oldStatus == 'failed' && $newStatus != 'failed') {
+            // Check if stock is available first? 
+            // For simplicity in admin, we just decrement. Admin should decide.
+            foreach ($order->items as $item) {
+                Product::where('id', $item->product_id)->decrement('stock', $item->quantity);
+                if ($item->variant_ids) {
+                    foreach ($item->variant_ids as $vid) {
+                        \App\Models\ProductVariant::where('id', $vid)->decrement('stock', $item->quantity);
+                    }
                 }
             }
         }
 
-        $order->status = $request->status;
+        $order->status = $newStatus;
         $order->save();
 
         Toastr::success(__('dashboard.updated_successfully'), __('dashboard.success'));
@@ -101,7 +121,20 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::with('items')->findOrFail($id);
+        
+        // Restore stock if it wasn't already failed (stock restored then)
+        if ($order->status != 'failed') {
+            foreach ($order->items as $item) {
+                Product::where('id', $item->product_id)->increment('stock', $item->quantity);
+                if ($item->variant_ids) {
+                    foreach ($item->variant_ids as $vid) {
+                        \App\Models\ProductVariant::where('id', $vid)->increment('stock', $item->quantity);
+                    }
+                }
+            }
+        }
+
         $order->items()->delete(); // Delete related items first
         $order->delete();
 

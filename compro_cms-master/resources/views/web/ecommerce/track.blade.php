@@ -16,7 +16,7 @@
                     <ul>
                         <li><a href="{{ route('home') }}">Beranda</a></li>
                         <li><a href="{{ route('ecommerce.index') }}">E-Commerce</a></li>
-                        <li>Track Order</li>
+                        <li>Status Pesanan</li>
                     </ul>
                 </div>
             </div>

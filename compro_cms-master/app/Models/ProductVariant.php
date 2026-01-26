@@ -5,26 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OrderItem extends Model
+class ProductVariant extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'order_id',
         'product_id',
-        'variant_ids',
-        'quantity',
-        'price',
+        'wc_variant_id',
+        'attribute_name',
+        'attribute_value',
+        'price_extra',
+        'stock'
     ];
-
-    protected $casts = [
-        'variant_ids' => 'array',
-    ];
-
-    public function order()
-    {
-        return $this->belongsTo(Order::class);
-    }
 
     public function product()
     {

@@ -73,22 +73,65 @@
                         </div>
                         <div class="card-body px-4 pb-4">
                             <ul class="list-group list-group-flush mb-3">
-                                @php $total = 0; @endphp
-                                @foreach($cart as $details)
-                                    @php $total += $details['price'] * $details['quantity'] @endphp
+                                @php 
+                                    $subtotal = 0; 
+                                    $total_shipping = 0;
+                                    $shipping_per_item = 20000;
+                                @endphp
+                                @foreach($cart as $id => $details)
+                                    @php 
+                                        $subtotal += $details['price'] * $details['quantity'];
+                                        $product = \App\Models\Product::find($details['product_id']);
+                                        $item_shipping = ($product && $product->is_free_ongkir) ? 0 : $shipping_per_item;
+                                        $total_shipping += $item_shipping;
+                                    @endphp
                                     <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                         <div>
                                             <h6 class="my-0">{{ $details['title'] }}</h6>
+                                            @if(isset($details['variants']) && count($details['variants']) > 0)
+                                                <small class="text-muted d-block">
+                                                    @foreach($details['variants'] as $attr => $val)
+                                                        {{ $attr }}: {{ $val }}{{ !$loop->last ? ', ' : '' }}
+                                                    @endforeach
+                                                </small>
+                                            @endif
                                             <small class="text-muted">{{ $details['quantity'] }} x Rp {{ number_format($details['price'], 0, ',', '.') }}</small>
+                                            @if($product && $product->is_free_ongkir)
+                                                <br><span class="badge badge-success" style="font-size: 10px; background: #1dd1a1; color: #000;">Gratis Ongkir</span>
+                                            @endif
                                         </div>
                                         <span class="text-muted">Rp {{ number_format($details['price'] * $details['quantity'], 0, ',', '.') }}</span>
                                     </li>
                                 @endforeach
+                                
+                                <li class="list-group-item d-flex justify-content-between px-0" style="border-top: 1px solid #eee;">
+                                    <span>Subtotal</span>
+                                    <span>Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between px-0" style="border-top: none; padding-top: 0;">
+                                    <span>Ongkos Kirim</span>
+                                    <span style="color: {{ $total_shipping == 0 ? '#1dd1a1' : 'inherit' }}; font-weight: {{ $total_shipping == 0 ? '800' : 'normal' }};">
+                                        {{ $total_shipping == 0 ? 'Gratis' : 'Rp '.number_format($total_shipping, 0, ',', '.') }}
+                                    </span>
+                                </li>
                                 <li class="list-group-item d-flex justify-content-between px-0" style="background: transparent; border-top: 2px dashed #eee;">
                                     <span style="font-size: 18px; font-weight: bold;">Total (IDR)</span>
-                                    <strong style="font-size: 18px; color: #004aad;">Rp {{ number_format($total, 0, ',', '.') }}</strong>
+                                    <strong style="font-size: 18px; color: #004aad;">Rp {{ number_format($subtotal + $total_shipping, 0, ',', '.') }}</strong>
                                 </li>
                             </ul>
+
+                            <!-- Hidden values for the form -->
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const form = document.querySelector('form[action="{{ route('ecommerce.process') }}"]');
+                                    const shippingInput = document.createElement('input');
+                                    shippingInput.type = 'hidden';
+                                    shippingInput.name = 'shipping_cost';
+                                    shippingInput.value = '{{ $total_shipping }}';
+                                    form.appendChild(shippingInput);
+                                });
+                            </script>
+
                             <div class="alert alert-info border-0" role="alert" style="background: #ecf6ff; color: #004aad;">
                                 <i class="fas fa-info-circle mr-2"></i> Pembayaran akan diproses sesuai mekanisme internal perusahaan.
                             </div>

@@ -64,6 +64,7 @@ Route::middleware(['XSS'])->namespace('Web')->group(function () {
     Route::get('/ecommerce', 'CommerceController@index')->name('ecommerce.index');
     Route::get('/ecommerce/product/{slug}', 'CommerceController@show')->name('ecommerce.show');
     Route::get('/ecommerce/track', 'CommerceController@track')->name('ecommerce.track');
+    Route::post('/ecommerce/review', 'CommerceController@submitReview')->name('ecommerce.review');
     
     // Cart Routes
     Route::post('/ecommerce/add-to-cart', 'CommerceController@addToCart')->name('ecommerce.add_to_cart');

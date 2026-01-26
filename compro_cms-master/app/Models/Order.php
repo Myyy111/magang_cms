@@ -17,6 +17,7 @@ class Order extends Model
         'shipping_address',
         'customer_contact',
         'total_amount',
+        'shipping_cost',
         'status',
     ];
 

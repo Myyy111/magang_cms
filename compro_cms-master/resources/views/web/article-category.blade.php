@@ -34,12 +34,17 @@
         <div class="container">
             <div class="inner-container clearfix">
                 <div class="title-box">
-                    <h1>{{ __('navbar.blog') }} @if(isset($current_category)) - {{ $current_category->title }} @endif</h1>
+                    <h1>{{ __('navbar.blog') }}</h1>
                 </div>
                 <div class="bread-crumb">
                     <ul>
                         <li><a href="{{ route('home') }}">{{ __('navbar.home') }}</a></li>
-                        <li>{{ __('navbar.blog') }}</li>
+                        @if(isset($current_category))
+                            <li><a href="{{ route('blogs') }}">{{ __('navbar.blog') }}</a></li>
+                            <li>{{ $current_category->title }}</li>
+                        @else
+                            <li>{{ __('navbar.blog') }}</li>
+                        @endif
                     </ul>
                 </div>
             </div>

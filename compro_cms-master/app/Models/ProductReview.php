@@ -5,26 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OrderItem extends Model
+class ProductReview extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'order_id',
         'product_id',
-        'variant_ids',
-        'quantity',
-        'price',
+        'customer_name',
+        'rating',
+        'comment',
+        'status'
     ];
-
-    protected $casts = [
-        'variant_ids' => 'array',
-    ];
-
-    public function order()
-    {
-        return $this->belongsTo(Order::class);
-    }
 
     public function product()
     {
