@@ -3843,21 +3843,49 @@ body {
    TEAM SECTION - MODERN EXECUTIVE REDESIGN
    ========================================================================== */
 .team-section-wrapper {
-    background: radial-gradient(circle at top right, #f8fafc, #eff6ff) !important;
+    background: #fbfcfd !important;
     padding: 140px 0 !important;
     position: relative;
     overflow: hidden;
 }
 
+/* Animated Aura Orbs Background */
 .team-section-wrapper::before {
+    content: '';
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(0, 74, 173, 0.04) 0%, transparent 70%);
+    top: -300px;
+    left: -200px;
+    z-index: 0;
+    animation: auraDrift 15s ease-in-out infinite alternate;
+}
+
+.team-section-wrapper::after {
     content: '';
     position: absolute;
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(0, 74, 173, 0.05) 0%, transparent 70%);
-    top: -200px;
-    left: -200px;
+    background: radial-gradient(circle, rgba(248, 190, 20, 0.03) 0%, transparent 70%);
+    bottom: -200px;
+    right: -100px;
     z-index: 0;
+    animation: auraDrift 20s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes auraDrift {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(100px, 50px) scale(1.1);
+    }
+
+    100% {
+        transform: translate(-50px, 100px) scale(0.9);
+    }
 }
 
 .team-section-wrapper .container {
