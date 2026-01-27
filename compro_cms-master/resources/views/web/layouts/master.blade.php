@@ -197,67 +197,79 @@
     <div id="mobileMenuBackdrop" style="position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999998; display: none; opacity: 0; transition: opacity 0.4s ease;"></div>
 
     <!-- Fullscreen Mobile Menu Sidebar -->
-    <div id="premiumMobileMenu" style="position: fixed !important; top: 0 !important; right: 0 !important; width: 75% !important; height: 100vh !important; background-color: #ffffff !important; z-index: 999999 !important; display: flex !important; flex-direction: column !important; align-items: stretch !important; justify-content: flex-start !important; padding: 80px 25px 40px !important; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); overflow-y: auto !important; box-shadow: -10px 0 30px rgba(0,0,0,0.1) !important;">
-        <button id="closePremiumMenu" style="position: absolute !important; top: 20px !important; right: 20px !important; background: #f1f5f9 !important; border: none !important; color: #001f3f !important; font-size: 24px !important; cursor: pointer !important; width: 40px !important; height: 40px !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; z-index: 1000001 !important;">&times;</button>
+    <div id="premiumMobileMenu" class="premium-mobile-menu">
+        <div class="mobile-menu-header">
+            <div class="mobile-menu-logo">
+                @if(isset($setting))
+                <img src="{{ asset('/uploads/setting/'.$setting->logo_path) }}" alt="Logo">
+                @else
+                <img src="https://cmsdutasolusi.co.id/uploads/setting/CMS logo web transparant_1752657853.png" alt="Logo">
+                @endif
+            </div>
+            <button id="closePremiumMenu" class="close-menu-btn">&times;</button>
+        </div>
         
-        <div class="mobile-nav-group" style="display: flex !important; flex-direction: column !important; width: 100% !important; gap: 0 !important;">
-            <a href="{{ url('/') }}" style="color: #001f3f !important; font-size: 18px !important; font-weight: 700 !important; text-decoration: none !important; padding: 15px 0 !important; border-bottom: 1px solid #f1f5f9 !important; display: block !important;">BERANDA</a>
-            <a href="{{ url('/#team') }}" style="color: #001f3f !important; font-size: 18px !important; font-weight: 700 !important; text-decoration: none !important; padding: 15px 0 !important; border-bottom: 1px solid #f1f5f9 !important; display: block !important;">TIM</a>
-            <a href="{{ route('about') }}" style="color: #001f3f !important; font-size: 18px !important; font-weight: 700 !important; text-decoration: none !important; padding: 15px 0 !important; border-bottom: 1px solid #f1f5f9 !important; display: block !important;">TENTANG KAMI</a>
-            
-            <div class="mobile-has-sub" style="border-bottom: 1px solid #f1f5f9 !important;">
-                <div style="display: flex !important; justify-content: space-between !important; align-items: center !important; padding: 15px 0 !important;">
-                    <a href="{{ route('services') }}" style="color: #001f3f !important; font-size: 18px !important; font-weight: 700 !important; text-decoration: none !important; flex-grow: 1 !important;">LAYANAN</a>
-                    <button class="mobile-submenu-toggle" onclick="toggleSubmenu('submenu-services-premium', this)" style="background: #f1f5f9 !important; border: none !important; color: #001f3f !important; width: 35px !important; height: 35px !important; border-radius: 8px !important; display: flex !important; align-items: center !important; justify-content: center !important;">
-                        <i class="fas fa-chevron-down" style="font-size: 12px !important;"></i>
-                    </button>
+        <div class="mobile-nav-container">
+            <div class="mobile-nav-group">
+                <a href="{{ url('/') }}" class="mobile-nav-item">BERANDA</a>
+                <a href="{{ url('/#team') }}" class="mobile-nav-item">TIM</a>
+                <a href="{{ route('about') }}" class="mobile-nav-item">TENTANG KAMI</a>
+                
+                <div class="mobile-has-sub">
+                    <div class="mobile-nav-item" onclick="toggleSubmenu('submenu-services-premium', this)">
+                        <span>LAYANAN</span>
+                        <button class="mobile-submenu-btn">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div id="submenu-services-premium" class="mobile-submenu-list">
+                         @foreach($service_subnavs as $service_nav)
+                         <a href="{{ route('service.single', $service_nav->slug) }}" class="mobile-submenu-link">{{ $service_nav->title }}</a>
+                         @endforeach
+                    </div>
                 </div>
-                <div id="submenu-services-premium" style="display: none; flex-direction: column !important; gap: 5px !important; padding: 0 0 15px 15px !important;">
-                     @foreach($service_subnavs as $service_nav)
-                     <a href="{{ route('service.single', $service_nav->slug) }}" style="color: #475569 !important; font-size: 16px !important; text-decoration: none !important; display: block !important; padding: 6px 0 !important; font-weight: 500 !important;">{{ $service_nav->title }}</a>
-                     @endforeach
-                </div>
-            </div>
 
-            <a href="{{ route('portfolios') }}" style="color: #001f3f !important; font-size: 18px !important; font-weight: 700 !important; text-decoration: none !important; padding: 15px 0 !important; border-bottom: 1px solid #f1f5f9 !important; display: block !important;">PORTOFOLIO</a>
-            
-            <div class="mobile-has-sub" style="border-bottom: 1px solid #f1f5f9 !important;">
-                <div style="display: flex !important; justify-content: space-between !important; align-items: center !important; padding: 15px 0 !important;">
-                    <a href="{{ route('blogs') }}" style="color: #001f3f !important; font-size: 18px !important; font-weight: 700 !important; text-decoration: none !important; flex-grow: 1 !important;">INFO TERKINI</a>
-                    <button class="mobile-submenu-toggle" onclick="toggleSubmenu('submenu-blogs-premium', this)" style="background: #f1f5f9 !important; border: none !important; color: #001f3f !important; width: 35px !important; height: 35px !important; border-radius: 8px !important; display: flex !important; align-items: center !important; justify-content: center !important;">
-                        <i class="fas fa-chevron-down" style="font-size: 12px !important;"></i>
-                    </button>
+                <a href="{{ route('portfolios') }}" class="mobile-nav-item">PORTOFOLIO</a>
+                
+                <div class="mobile-has-sub">
+                    <div class="mobile-nav-item" onclick="toggleSubmenu('submenu-blogs-premium', this)">
+                        <span>INFO TERKINI</span>
+                        <button class="mobile-submenu-btn">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div id="submenu-blogs-premium" class="mobile-submenu-list">
+                         @foreach($article_subnavs as $article_nav)
+                         <a href="{{ route('blog.category', $article_nav->slug) }}" class="mobile-submenu-link">{{ $article_nav->title }}</a>
+                         @endforeach
+                    </div>
                 </div>
-                <div id="submenu-blogs-premium" style="display: none; flex-direction: column !important; gap: 5px !important; padding: 0 0 15px 15px !important;">
-                     @foreach($article_subnavs as $article_nav)
-                     <a href="{{ route('blog.category', $article_nav->slug) }}" style="color: #475569 !important; font-size: 16px !important; text-decoration: none !important; display: block !important; padding: 6px 0 !important; font-weight: 500 !important;">{{ $article_nav->title }}</a>
-                     @endforeach
-                </div>
-            </div>
 
-            <div class="mobile-has-sub" style="border-bottom: 1px solid #f1f5f9 !important;">
-                <div style="display: flex !important; justify-content: space-between !important; align-items: center !important; padding: 15px 0 !important;">
-                    <a href="{{ route('ecommerce.index') }}" style="color: #001f3f !important; font-size: 18px !important; font-weight: 700 !important; text-decoration: none !important; flex-grow: 1 !important;">E-COMMERCE</a>
-                    <button class="mobile-submenu-toggle" onclick="toggleSubmenu('submenu-ecommerce-premium', this)" style="background: #f1f5f9 !important; border: none !important; color: #001f3f !important; width: 35px !important; height: 35px !important; border-radius: 8px !important; display: flex !important; align-items: center !important; justify-content: center !important;">
-                        <i class="fas fa-chevron-down" style="font-size: 12px !important;"></i>
-                    </button>
+                <div class="mobile-has-sub">
+                    <div class="mobile-nav-item" onclick="toggleSubmenu('submenu-ecommerce-premium', this)">
+                        <span>E-COMMERCE</span>
+                        <button class="mobile-submenu-btn">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div id="submenu-ecommerce-premium" class="mobile-submenu-list">
+                         <a href="{{ route('ecommerce.index') }}" class="mobile-submenu-link">Daftar Produk</a>
+                         <a href="{{ route('ecommerce.cart') }}" class="mobile-submenu-link">Keranjang Belanja</a>
+                         <a href="{{ route('ecommerce.track') }}" class="mobile-submenu-link">Cek Status Pesanan</a>
+                    </div>
                 </div>
-                <div id="submenu-ecommerce-premium" style="display: none; flex-direction: column !important; gap: 5px !important; padding: 0 0 15px 15px !important;">
-                     <a href="{{ route('ecommerce.index') }}" style="color: #475569 !important; font-size: 16px !important; text-decoration: none !important; display: block !important; padding: 6px 0 !important; font-weight: 500 !important;">Daftar Produk</a>
-                     <a href="{{ route('ecommerce.cart') }}" style="color: #475569 !important; font-size: 16px !important; text-decoration: none !important; display: block !important; padding: 6px 0 !important; font-weight: 500 !important;">Keranjang Belanja</a>
-                     <a href="{{ route('ecommerce.track') }}" style="color: #475569 !important; font-size: 16px !important; text-decoration: none !important; display: block !important; padding: 6px 0 !important; font-weight: 500 !important;">Cek Status Pesanan</a>
-                </div>
-            </div>
 
-            <a href="{{ route('faqs') }}" style="color: #001f3f !important; font-size: 18px !important; font-weight: 700 !important; text-decoration: none !important; padding: 15px 0 !important; border-bottom: 1px solid #f1f5f9 !important; display: block !important;">FAQS</a>
-            <a href="{{ route('contact') }}" style="color: #001f3f !important; font-size: 18px !important; font-weight: 700 !important; text-decoration: none !important; padding: 15px 0 !important; border-bottom: 1px solid #f1f5f9 !important; display: block !important;">KONTAK KAMI</a>
+                <a href="{{ route('faqs') }}" class="mobile-nav-item">FAQS</a>
+                <a href="{{ route('contact') }}" class="mobile-nav-item">KONTAK KAMI</a>
+            </div>
         </div>
 
-        <div style="padding-top: 25px !important; margin-bottom: 30px !important;">
-            <a href="{{ route('get-quote') }}" class="header-cta-btn" style="width: 100% !important; justify-content: center !important; background-color: #f8be14 !important; color: #000000 !important; font-size: 15px !important; padding: 15px !important; border-radius: 10px !important; font-weight: 800 !important; display: flex !important; box-shadow: 0 10px 20px rgba(248, 190, 20, 0.2) !important;">
+        <div class="mobile-menu-footer">
+            <a href="{{ route('get-quote') }}" class="header-cta-btn" style="width: 100% !important; justify-content: center !important;">
                 Ajukan Penawaran <i class="fas fa-arrow-right"></i>
             </a>
         </div>
+    </div>
     </div>
 
     <script>
@@ -325,18 +337,24 @@
         });
 
         // Mobile Submenu Toggle
-        function toggleSubmenu(id, btn) {
+        function toggleSubmenu(id, parent) {
             const submenu = document.getElementById(id);
-            const icon = btn.querySelector('i');
+            const isHidden = window.getComputedStyle(submenu).display === 'none';
             
-            if (submenu.style.display === 'none') {
+            // Close other submenus first (Optional, for clean feel)
+            // document.querySelectorAll('.mobile-submenu-list').forEach(el => {
+            //     if(el.id !== id) el.style.display = 'none';
+            // });
+            // document.querySelectorAll('.mobile-nav-item').forEach(el => {
+            //     if(el !== parent) el.classList.remove('active');
+            // });
+
+            if (isHidden) {
                 submenu.style.display = 'flex';
-                icon.classList.remove('fa-chevron-down');
-                icon.classList.add('fa-chevron-up');
+                parent.classList.add('active');
             } else {
                 submenu.style.display = 'none';
-                icon.classList.remove('fa-chevron-up');
-                icon.classList.add('fa-chevron-down');
+                parent.classList.remove('active');
             }
         }
     </script>
