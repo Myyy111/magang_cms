@@ -3936,6 +3936,26 @@ body {
     transform: scale(1.15) !important;
 }
 
+/* Enable Drag Interaction for Cursor */
+#team-section-root .carousel-wrapper {
+    cursor: grab !important;
+    user-select: none !important;
+    /* Prevent text highlighting during drag */
+    -webkit-user-drag: none !important;
+    touch-action: pan-y !important;
+    /* Allow vertical scroll but capture horizontal drag */
+}
+
+#team-section-root .carousel-wrapper:active {
+    cursor: grabbing !important;
+}
+
+/* Ensure images don't interfere with dragging */
+#team-section-root .card-image {
+    pointer-events: none !important;
+    -webkit-user-drag: none !important;
+}
+
 /* Card - The "Executive Glass" Look */
 .team-section-wrapper .card-inner {
     background: #ffffff !important;
