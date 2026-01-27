@@ -304,114 +304,9 @@
             });
         }, 500);
 
-        // CLEAN & ROBUST CSS INJECTION
+        // Modal Fixes
         const style = document.createElement('style');
         style.textContent = `
-            /* 1. Base Card Alignment & Shape */
-            .team-section-wrapper .card-inner,
-            #team-section-root .card-inner {
-                height: 520px !important;
-                min-height: 520px !important;
-                max-height: 520px !important;
-                border-radius: 24px !important;
-                overflow: hidden !important;
-                display: flex !important;
-                flex-direction: column !important;
-                background: #103652 !important; /* Solid Premium Blue */
-                border: 1px solid rgba(255,255,255,0.1) !important;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
-                transition: all 0.3s ease !important;
-            }
-
-            @media (max-width: 768px) {
-                .team-section-wrapper .card-inner,
-                #team-section-root .card-inner {
-                    height: auto !important;
-                    min-height: auto !important;
-                    max-height: none !important;
-                }
-                .team-section-wrapper .image-wrapper,
-                #team-section-root .image-wrapper {
-                    height: 300px !important;
-                    min-height: 300px !important;
-                    max-height: 300px !important;
-                }
-            }
-
-            #team-section-root .card-container:hover .card-inner {
-                transform: translateY(-8px) !important;
-                border-color: #1DD1A1 !important;
-                background: #16466b !important;
-            }
-
-            /* 2. Photo Area - Forced Consistency */
-            .team-section-wrapper .image-wrapper,
-            #team-section-root .image-wrapper {
-                height: 380px !important;
-                min-height: 380px !important;
-                max-height: 380px !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                background: transparent !important;
-                position: relative !important;
-                overflow: hidden !important;
-            }
-
-            .card-image {
-                width: 100% !important;
-                height: 100% !important;
-                object-fit: cover !important;
-                object-position: top !important;
-                position: absolute !important;
-                top: 0 !important;
-                left: 0 !important;
-            }
-
-            /* 3. Content Area - CLEAN & VISIBLE */
-            .card-content,
-            .team-section-wrapper .card-content,
-            #team-section-root .card-content {
-                height: 140px !important;
-                min-height: 140px !important;
-                padding: 10px 15px !important;
-                margin: 0 !important;
-                display: flex !important;
-                flex-direction: column !important;
-                justify-content: center !important;
-                align-items: center !important;
-                text-align: center !important;
-                background: transparent !important; /* Let card-inner color show */
-                background-image: none !important; /* KILL THE GRADIENT (THE SHADOW BAR) */
-            }
-
-            /* 4. Typography - BOLD & CLEAR */
-            #team-section-root .member-name {
-                color: #ffffff !important;
-                font-size: 20px !important;
-                font-weight: 700 !important;
-                margin: 0 0 5px 0 !important;
-                padding: 0 !important;
-                display: block !important;
-                line-height: 1.2 !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-            }
-
-            #team-section-root .member-role {
-                color: #1DD1A1 !important;
-                font-size: 13px !important;
-                font-weight: 600 !important;
-                text-transform: uppercase !important;
-                letter-spacing: 1px !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                display: block !important;
-                line-height: 1.4 !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-            }
-
-            /* Modal Fixes */
             .btn-close-custom { 
                 z-index: 100000 !important; 
                 cursor: pointer !important; 
@@ -419,6 +314,34 @@
             }
             .modal-backdrop { z-index: 1040 !important; }
             .team-profile-modal { z-index: 1050 !important; }
+            
+            /* Modern Modal Styling */
+            .team-profile-modal .modal-content {
+                border-radius: 40px !important;
+                border: none !important;
+                overflow: hidden !important;
+                box-shadow: 0 50px 100px rgba(0,0,0,0.15) !important;
+            }
+            .member-photo-wrapper {
+                border-radius: 30px !important;
+                overflow: hidden !important;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important;
+            }
+            .member-name {
+                font-size: 36px !important;
+                font-weight: 900 !important;
+                color: #001f3f !important;
+                letter-spacing: -0.03em !important;
+            }
+            .section-title {
+                color: var(--primary-blue) !important;
+                font-weight: 800 !important;
+                text-transform: uppercase !important;
+                font-size: 13px !important;
+                letter-spacing: 2px !important;
+                display: block !important;
+                margin-bottom: 12px !important;
+            }
         `;
         document.head.appendChild(style);
     })();

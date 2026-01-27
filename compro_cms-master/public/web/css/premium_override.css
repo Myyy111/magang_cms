@@ -3839,41 +3839,172 @@ body {
     background: var(--accent-yellow) !important;
 }
 
-/* Team Section Carousel Dots - Simple Dots Only */
-.team-section .owl-dots,
-.team-carousal .owl-dots {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 6px !important;
-    margin-top: 20px !important;
-    position: relative !important;
-    bottom: auto !important;
-    left: auto !important;
-    right: auto !important;
+/* ==========================================================================
+   TEAM SECTION - MODERN ELEGANT REDESIGN
+   ========================================================================== */
+.team-section-wrapper {
+    background-color: #f8fafc !important;
+    /* Clean modern off-white */
+    padding: 120px 0 !important;
+    position: relative;
+    overflow: hidden;
 }
 
-.team-section .owl-dot,
-.team-carousal .owl-dot {
-    width: 10px !important;
-    height: 10px !important;
-    background: rgba(0, 74, 173, 0.25) !important;
-    border-radius: 50% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
-    cursor: pointer !important;
-    transition: background 0.3s ease !important;
-    display: inline-block !important;
+.team-section-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(0, 74, 173, 0.03) 0%, transparent 70%);
+    z-index: 0;
 }
 
-.team-section .owl-dot.active,
-.team-carousal .owl-dot.active {
+.team-section-wrapper .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* Header Styling */
+.team-section-wrapper .section-title {
+    color: #001f3f !important;
+    font-size: 48px !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.03em !important;
+    margin-bottom: 20px !important;
+}
+
+.team-section-wrapper .section-desc {
+    color: #64748b !important;
+    font-size: 18px !important;
+    max-width: 600px;
+    line-height: 1.7 !important;
+}
+
+/* Navigation Buttons */
+.team-section-wrapper .nav-btn {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #001f3f !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+    width: 55px !important;
+    height: 55px !important;
+}
+
+.team-section-wrapper .nav-btn:hover {
     background: var(--accent-yellow) !important;
-    width: 10px !important;
-    height: 10px !important;
-    transform: none !important;
+    border-color: var(--accent-yellow) !important;
+    color: #000 !important;
+    transform: translateY(-3px) !important;
 }
+
+/* Card Design - The "Floating" Look */
+.team-section-wrapper .card-inner {
+    background: #ffffff !important;
+    border: none !important;
+    border-radius: 30px !important;
+    height: 480px !important;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.06) !important;
+    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+    margin: 15px !important;
+    transform: translateZ(0);
+    /* Hardware acceleration */
+}
+
+.team-section-wrapper .card-container:hover .card-inner {
+    transform: translateY(-15px) !important;
+    box-shadow: 0 30px 60px rgba(0, 74, 173, 0.12) !important;
+}
+
+/* Image Container */
+.team-section-wrapper .image-wrapper {
+    height: 340px !important;
+    border-radius: 30px 30px 0 0 !important;
+    background: #f1f5f9 !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.team-section-wrapper .card-image {
+    filter: grayscale(100%) !important;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+    transform: scale(1.02);
+}
+
+.team-section-wrapper .card-container:hover .card-image {
+    filter: grayscale(0%) !important;
+    transform: scale(1.1) rotate(1deg) !important;
+}
+
+/* Content Area */
+.team-section-wrapper .card-content {
+    background: #ffffff !important;
+    padding: 30px 20px !important;
+    text-align: center !important;
+    border-radius: 0 0 30px 30px !important;
+    position: relative;
+    z-index: 2;
+}
+
+.team-section-wrapper .member-name {
+    color: #0f172a !important;
+    font-size: 22px !important;
+    font-weight: 800 !important;
+    margin-bottom: 6px !important;
+    transition: color 0.3s ease;
+}
+
+.team-section-wrapper .card-container:hover .member-name {
+    color: var(--primary-blue) !important;
+}
+
+.team-section-wrapper .member-role {
+    color: #94a3b8 !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.12em !important;
+    display: inline-block;
+    padding: 4px 12px;
+    background: #f8fafc;
+    border-radius: 100px;
+    transition: all 0.3s ease;
+}
+
+.team-section-wrapper .card-container:hover .member-role {
+    background: rgba(0, 74, 173, 0.05);
+    color: var(--primary-blue) !important;
+}
+
+/* Pagination Dots */
+.team-section-wrapper .dot {
+    background: #e2e8f0 !important;
+    height: 8px !important;
+    width: 8px !important;
+}
+
+.team-section-wrapper .dot.active {
+    background: var(--primary-blue) !important;
+    width: 32px !important;
+}
+
+/* Badge for Categories (Optional) */
+.category-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(0, 74, 173, 0.9);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 50px;
+    z-index: 10;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 
 /* ==========================================================================
    MOBILE MENU PREMIUM
