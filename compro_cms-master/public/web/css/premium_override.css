@@ -3843,54 +3843,61 @@ body {
    TEAM SECTION - MODERN EXECUTIVE REDESIGN
    ========================================================================== */
 .team-section-wrapper {
-    background: #fbfcfd !important;
+    background: #f8fafc !important;
+    /* Slightly lighter base */
     padding: 140px 0 !important;
     position: relative;
     overflow: hidden;
+    z-index: 1;
+    /* Establish new stacking context */
 }
 
-/* Animated Aura Orbs Background */
+/* Animated Aura Orbs Background - HIGH VISIBILITY */
 .team-section-wrapper::before {
     content: '';
     position: absolute;
-    width: 800px;
-    height: 800px;
-    background: radial-gradient(circle, rgba(0, 74, 173, 0.04) 0%, transparent 70%);
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(circle, rgba(0, 74, 173, 0.12) 0%, transparent 75%);
     top: -300px;
     left: -200px;
-    z-index: 0;
-    animation: auraDrift 15s ease-in-out infinite alternate;
+    z-index: -1;
+    /* Place above wrapper background, below container */
+    animation: auraDrift 18s ease-in-out infinite alternate;
+    pointer-events: none;
 }
 
 .team-section-wrapper::after {
     content: '';
     position: absolute;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(248, 190, 20, 0.03) 0%, transparent 70%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(248, 190, 20, 0.1) 0%, transparent 75%);
     bottom: -200px;
     right: -100px;
-    z-index: 0;
-    animation: auraDrift 20s ease-in-out infinite alternate-reverse;
+    z-index: -1;
+    animation: auraDrift 24s ease-in-out infinite alternate-reverse;
+    pointer-events: none;
 }
 
 @keyframes auraDrift {
     0% {
-        transform: translate(0, 0) scale(1);
+        transform: translate(0, 0) scale(1) rotate(0deg);
     }
 
     50% {
-        transform: translate(100px, 50px) scale(1.1);
+        transform: translate(120px, 80px) scale(1.15) rotate(10deg);
     }
 
     100% {
-        transform: translate(-50px, 100px) scale(0.9);
+        transform: translate(-60px, 120px) scale(0.9) rotate(-10deg);
     }
 }
 
 .team-section-wrapper .container {
     position: relative;
     z-index: 2;
+    /* Ensure content is on top of orbs */
 }
 
 /* Header Styling - Ultra Modern */
