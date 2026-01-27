@@ -73,7 +73,9 @@
 
 <div class="page-wrapper">
     <!-- Preloader -->
-    <div class="preloader"></div>
+    <div class="preloader">
+        <div class="preloader-inner"></div>
+    </div>
 
     <!-- Modern Premium Header -->
     <header class="main-header-premium" id="premiumHeader">
