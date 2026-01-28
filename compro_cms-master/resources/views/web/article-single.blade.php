@@ -54,7 +54,7 @@
         <div class="container">
             <div class="inner-container clearfix">
                 <div class="title-box">
-                    <h1>{{ $article->title }}</h1>
+                    <h1>Blog</h1>
                 </div>
                 <div class="bread-crumb">
                     <ul>
@@ -87,6 +87,22 @@
                                             <li><i class="far fa-calendar-check me-2" style="color: #004aad;"></i>{{ date('d M, Y', strtotime($article->created_at)) }}</li>
                                             <li><i class="far fa-folder-open me-2" style="color: #004aad;"></i><a href="{{ route('blog.category', $article->category->slug) }}" style="color: inherit; text-decoration: none;">{{ $article->category->title }}</a></li>
                                         </ul>
+                                        <style>
+                                            .article-content {
+                                                text-align: justify;
+                                                text-justify: inter-word;
+                                            }
+                                            .article-content p {
+                                                margin-bottom: 25px !important;
+                                            }
+                                            .article-content ul, .article-content ol {
+                                                margin-bottom: 25px;
+                                                padding-left: 20px;
+                                            }
+                                            .article-content li {
+                                                margin-bottom: 10px;
+                                            }
+                                        </style>
                                         <div class="article-content" style="color: #334155; font-size: 17px; line-height: 1.9; letter-spacing: -0.01em;">
                                             {!! $article->description !!}
                                         </div>

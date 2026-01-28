@@ -3839,244 +3839,41 @@ body {
     background: var(--accent-yellow) !important;
 }
 
-/* ==========================================================================
-   TEAM SECTION - MODERN EXECUTIVE REDESIGN
-   ========================================================================== */
-.team-section-wrapper {
-    background: #f8fafc !important;
-    /* Slightly lighter base */
-    padding: 140px 0 !important;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    /* Establish new stacking context */
+/* Team Section Carousel Dots - Simple Dots Only */
+.team-section .owl-dots,
+.team-carousal .owl-dots {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin-top: 20px !important;
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
 }
 
-/* Animated Aura Orbs Background - HIGH VISIBILITY */
-.team-section-wrapper::before {
-    content: '';
-    position: absolute;
-    width: 900px;
-    height: 900px;
-    background: radial-gradient(circle, rgba(0, 74, 173, 0.12) 0%, transparent 75%);
-    top: -300px;
-    left: -200px;
-    z-index: -1;
-    /* Place above wrapper background, below container */
-    animation: auraDrift 18s ease-in-out infinite alternate;
-    pointer-events: none;
-}
-
-.team-section-wrapper::after {
-    content: '';
-    position: absolute;
-    width: 800px;
-    height: 800px;
-    background: radial-gradient(circle, rgba(248, 190, 20, 0.1) 0%, transparent 75%);
-    bottom: -200px;
-    right: -100px;
-    z-index: -1;
-    animation: auraDrift 24s ease-in-out infinite alternate-reverse;
-    pointer-events: none;
-}
-
-@keyframes auraDrift {
-    0% {
-        transform: translate(0, 0) scale(1) rotate(0deg);
-    }
-
-    50% {
-        transform: translate(120px, 80px) scale(1.15) rotate(10deg);
-    }
-
-    100% {
-        transform: translate(-60px, 120px) scale(0.9) rotate(-10deg);
-    }
-}
-
-.team-section-wrapper .container {
-    position: relative;
-    z-index: 2;
-    /* Ensure content is on top of orbs */
-}
-
-/* Header Styling - Ultra Modern */
-.team-section-wrapper .section-title {
-    color: #001f3f !important;
-    font-size: 56px !important;
-    font-weight: 900 !important;
-    letter-spacing: -0.04em !important;
-    margin-bottom: 25px !important;
-    line-height: 1.1 !important;
-}
-
-.team-section-wrapper .section-desc {
-    color: #475569 !important;
-    font-size: 19px !important;
-    max-width: 650px;
-    line-height: 1.8 !important;
-    font-weight: 400 !important;
-}
-
-/* Navigation - Sleek & Tactile */
-.team-section-wrapper .nav-btn {
-    background: #ffffff !important;
+.team-section .owl-dot,
+.team-carousal .owl-dot {
+    width: 10px !important;
+    height: 10px !important;
+    background: rgba(0, 74, 173, 0.25) !important;
+    border-radius: 50% !important;
+    margin: 0 !important;
+    padding: 0 !important;
     border: none !important;
-    color: #001f3f !important;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
-    width: 60px !important;
-    height: 60px !important;
-    font-size: 18px !important;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    cursor: pointer !important;
+    transition: background 0.3s ease !important;
+    display: inline-block !important;
 }
 
-.team-section-wrapper .nav-btn:hover {
-    background: #004aad !important;
-    color: #ffffff !important;
-    transform: scale(1.15) !important;
+.team-section .owl-dot.active,
+.team-carousal .owl-dot.active {
+    background: var(--accent-yellow) !important;
+    width: 10px !important;
+    height: 10px !important;
+    transform: none !important;
 }
-
-/* Enable Drag Interaction for Cursor */
-#team-section-root .carousel-wrapper {
-    cursor: grab !important;
-    user-select: none !important;
-    /* Prevent text highlighting during drag */
-    -webkit-user-drag: none !important;
-    touch-action: pan-y !important;
-    /* Allow vertical scroll but capture horizontal drag */
-}
-
-#team-section-root .carousel-wrapper:active {
-    cursor: grabbing !important;
-}
-
-/* Ensure images don't interfere with dragging */
-#team-section-root .card-image {
-    pointer-events: none !important;
-    -webkit-user-drag: none !important;
-}
-
-/* Card - The "Executive Glass" Look */
-.team-section-wrapper .card-inner {
-    background: #ffffff !important;
-    border: 1px solid rgba(255, 255, 255, 0.8) !important;
-    border-radius: 40px !important;
-    height: 520px !important;
-    box-shadow: 0 20px 50px rgba(0, 74, 173, 0.06) !important;
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1) !important;
-    margin: 20px !important;
-    padding: 12px !important;
-    /* Internal spacing for "frame" look */
-}
-
-.team-section-wrapper .card-container:hover .card-inner {
-    transform: translateY(-20px) !important;
-    box-shadow: 0 40px 80px rgba(0, 74, 173, 0.15) !important;
-    background: #ffffff !important;
-}
-
-/* Image - Pure & Vibrant */
-.team-section-wrapper .image-wrapper {
-    height: 380px !important;
-    border-radius: 32px !important;
-    background: #f1f5f9;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 0 !important;
-}
-
-.team-section-wrapper .card-image {
-    filter: none !important;
-    /* REMOVED GRAYSCALE */
-    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1) !important;
-    object-position: top center !important;
-}
-
-.team-section-wrapper .card-container:hover .card-image {
-    transform: scale(1.08) !important;
-}
-
-/* Content Area - Minimalist Overlay */
-.team-section-wrapper .card-content {
-    background: transparent !important;
-    padding: 25px 15px !important;
-    text-align: center !important;
-}
-
-.team-section-wrapper .member-name {
-    color: #0f172a !important;
-    font-size: 24px !important;
-    font-weight: 800 !important;
-    margin-bottom: 4px !important;
-    letter-spacing: -0.02em !important;
-}
-
-.team-section-wrapper .member-role {
-    color: #64748b !important;
-    font-size: 14px !important;
-    font-weight: 600 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.15em !important;
-    position: relative;
-    display: inline-block;
-    padding-bottom: 8px;
-}
-
-.team-section-wrapper .member-role::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: var(--accent-yellow);
-    transition: all 0.4s ease;
-    transform: translateX(-50%);
-}
-
-.team-section-wrapper .card-container:hover .member-role::after {
-    width: 40px;
-}
-
-.team-section-wrapper .card-container:hover .member-role {
-    color: #475569 !important;
-}
-
-/* Pagination - Sophisticated Indicators */
-.team-section-wrapper .pagination-dots {
-    margin-top: 60px !important;
-}
-
-.team-section-wrapper .dot {
-    background: #cbd5e1 !important;
-    height: 7px !important;
-    width: 7px !important;
-    margin: 0 6px !important;
-}
-
-.team-section-wrapper .dot.active {
-    background: #004aad !important;
-    width: 45px !important;
-    border-radius: 10px !important;
-}
-
-/* Category Badge Enhancement */
-.category-badge {
-    position: absolute;
-    top: 25px;
-    left: 25px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(4px);
-    color: #004aad !important;
-    font-size: 12px;
-    font-weight: 800;
-    padding: 8px 18px;
-    border-radius: 14px;
-    z-index: 10;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-
 
 /* ==========================================================================
    MOBILE MENU PREMIUM

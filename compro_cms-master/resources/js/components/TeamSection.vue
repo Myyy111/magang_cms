@@ -14,39 +14,48 @@
               Kenali Tim Kami
             </h2>
           </div>
-
-
-          <!-- Navigation Controls -->
-          <div class="nav-controls">
-            <button
-              @click="handlePrev"
-              class="nav-btn"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-            </button>
-            <button
-              @click="handleNext"
-              class="nav-btn"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </button>
-          </div>
         </div>
       </div>
     </div>
 
-    <!-- Carousel Content -->
-    <div
-      class="carousel-wrapper"
-      @mousedown="touchStart($event)"
-      @mousemove="touchMove($event)"
-      @mouseup="touchEnd"
-      @mouseleave="handleMouseLeave"
-      @touchstart="touchStart($event)"
-      @touchmove="touchMove($event)"
-      @touchend="touchEnd"
-    >
-      <div class="container">
+    <!-- Carousel Area -->
+    <div class="carousel-section-container">
+      <!-- Navigation Controls Outside to avoid drag conflict -->
+      <div class="nav-container">
+        <button
+          type="button"
+          @click.stop="handlePrev"
+          @mousedown.stop
+          @touchstart.stop
+          class="nav-btn prev-btn"
+          aria-label="Previous slide"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <button
+          type="button"
+          @click.stop="handleNext"
+          @mousedown.stop
+          @touchstart.stop
+          class="nav-btn next-btn"
+          aria-label="Next slide"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+
+      <!-- Carousel Content -->
+      <div
+        class="carousel-wrapper"
+        @mousedown="touchStart($event)"
+        @mousemove="touchMove($event)"
+        @mouseup="touchEnd"
+        @mouseleave="handleMouseLeave"
+        @touchstart="touchStart($event)"
+        @touchmove="touchMove($event)"
+        @touchend="touchEnd"
+      >
+        <div class="container">
         <div
           class="carousel-track"
           :style="trackStyle"
@@ -88,6 +97,7 @@
             class="dot"
             :class="{ active: realIndex === idx }"
           ></span>
+        </div>
         </div>
       </div>
     </div>
@@ -320,45 +330,74 @@ export default {
   font-weight: 300;
 }
 
-.nav-controls {
-  display: flex;
-  gap: 15px;
-  margin-top: 30px;
+.carousel-section-container {
+  position: relative;
+  width: 100%;
 }
 
-@media (min-width: 768px) {
-  .nav-controls {
-    margin-top: 0;
+.nav-container {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 15px;
+  pointer-events: none;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.prev-btn, .next-btn {
+  pointer-events: auto !important;
+}
+
+@media (max-width: 1280px) {
+  .nav-container {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-container {
+    display: none;
   }
 }
 
 .nav-btn {
-  width: 50px;
-  height: 50px;
+  width: 65px;
+  height: 65px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff; /* White for arrows */
+  color: #ffffff;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
 }
 
 .nav-btn:hover {
-  background-color: #007bff; /* Corporate Blue Background on Hover */
+  background-color: #007bff;
   border-color: #007bff;
-  color: #ffffff; /* White Arrow on Hover */
   transform: scale(1.1);
-  box-shadow: 0 10px 20px rgba(0, 123, 255, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 123, 255, 0.5);
+}
+
+.nav-btn:active {
+  transform: scale(0.9);
 }
 
 .carousel-wrapper {
   position: relative;
   overflow: visible !important;
   cursor: grab;
+  z-index: 1;
 }
 
 .carousel-wrapper:active {

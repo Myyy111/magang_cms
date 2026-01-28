@@ -134,21 +134,34 @@
                             </div>
 
                             <div class="row mt-4">
-                                <div class="col-md-6">
-                                    <div class="bg-light p-3 rounded h-100">
+                                <div class="col-12">
+                                    <div class="bg-light p-3 rounded">
                                         <h6 class="font-weight-bold mb-2">Info Pemesan</h6>
                                         <p class="mb-1"><strong>Nama:</strong> {{ $order->customer_name }}</p>
                                         <p class="mb-1"><strong>Kontak:</strong> {{ $order->customer_contact }}</p>
-                                        <p class="mb-0"><strong>Unit:</strong> {{ $order->customer_unit }}</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mt-3 mt-md-0">
-                                    <div class="bg-light p-3 rounded h-100">
-                                        <h6 class="font-weight-bold mb-2">Alamat Pengiriman</h6>
-                                        <p class="mb-0">{{ $order->shipping_address ?: '-' }}</p>
+                                        <p class="mb-0"><strong>Unit:</strong> {{ str_replace(['(Lihat Detail)', 'Lihat Detail'], '', $order->customer_unit) }}</p>
                                     </div>
                                 </div>
                             </div>
+
+                            @if(!$order->signed_document_path && $order->status == 'pending')
+                            <div class="mt-4 p-4 border-warning bg-light rounded text-center" style="border: 2px dashed #f39c12;">
+                                <h5 class="text-warning font-weight-bold mb-3"><i class="fas fa-exclamation-circle"></i> Surat Pernyataan Belum Diupload</h5>
+                                <p class="mb-4">Pesanan Anda telah diterima, namun kami belum menerima Surat Pernyataan yang ditandatangani. Silakan unduh dan upload kembali dokumen tersebut untuk melanjutkan proses.</p>
+                                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                                    <a href="{{ route('ecommerce.download_pdf', $order->id) }}" class="btn btn-outline-primary mb-2 mx-1" target="_blank">
+                                        <i class="fas fa-download me-2"></i> Download PDF
+                                    </a>
+                                    <a href="{{ route('ecommerce.upload_document', $order->id) }}" class="btn btn-primary mb-2 mx-1">
+                                        <i class="fas fa-upload me-2"></i> Upload Surat Sekarang
+                                    </a>
+                                </div>
+                            </div>
+                            @elseif($order->signed_document_path)
+                            <div class="mt-4 p-3 bg-light rounded d-flex align-items-center justify-content-center" style="border: 1px solid #2ecc71;">
+                                <span class="text-success font-weight-bold"><i class="fas fa-check-circle me-2"></i> Dokumen Surat Pernyataan sudah kami terima.</span>
+                            </div>
+                            @endif
 
                         </div>
                     </div>

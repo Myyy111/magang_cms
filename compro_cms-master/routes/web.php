@@ -75,6 +75,9 @@ Route::middleware(['XSS'])->namespace('Web')->group(function () {
     // Checkout Route
     Route::get('/ecommerce/checkout', 'CommerceController@checkout')->name('ecommerce.checkout');
     Route::post('/ecommerce/checkout/process', 'CommerceController@processOrder')->name('ecommerce.process');
+    Route::get('/ecommerce/upload-document/{order_id}', 'CommerceController@uploadDocumentPage')->name('ecommerce.upload_document');
+    Route::post('/ecommerce/store-document/{order_id}', 'CommerceController@storeDocument')->name('ecommerce.store_document');
+    Route::get('/ecommerce/download-pdf/{order_id}', 'CommerceController@downloadPdf')->name('ecommerce.download_pdf');
     Route::get('/ecommerce/success/{order_id}', 'CommerceController@success')->name('ecommerce.success');
     
     // Payment Routes

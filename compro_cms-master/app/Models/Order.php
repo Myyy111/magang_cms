@@ -19,6 +19,14 @@ class Order extends Model
         'total_amount',
         'shipping_cost',
         'status',
+        'wilayah_kerja',
+        'unit_kerja_type',
+        'unit_kerja_detail',
+        'user_status',
+        'laptop_serial_number',
+        'payment_mechanism',
+        'payroll_deduction_periods',
+        'signed_document_path',
     ];
 
     public function items()

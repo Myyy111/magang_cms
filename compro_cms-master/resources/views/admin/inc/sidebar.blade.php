@@ -3,7 +3,7 @@
 
     <ul class="metismenu" id="side-menu">
 
-        <li class="menu-title">{{ __('dashboard.navigation') }}</li>
+        <li class="menu-title" style="color: #64748b; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 20px 20px 10px 25px; opacity: 0.8;">Navigasi Utama</li>
 
         <li>
             <a href="{{ route('admin.dashboard.index') }}">

@@ -76,30 +76,34 @@ class OrderController extends Controller
         $oldStatus = $order->status;
         $newStatus = $request->status;
 
-        // If status changes to 'failed' from a non-failed status, restore stock
-        if ($newStatus == 'failed' && $oldStatus != 'failed') {
+        $acceptedStatuses = ['paid', 'completed'];
+        $notAcceptedStatuses = ['pending', 'failed'];
+
+        // If status changes FROM (Pending/Failed) TO (Paid/Completed) -> Reduce Stock
+        if (in_array($oldStatus, $notAcceptedStatuses) && in_array($newStatus, $acceptedStatuses)) {
             foreach ($order->items as $item) {
-                // Restore main product stock
-                Product::where('id', $item->product_id)->increment('stock', $item->quantity);
+                // Decrement main product
+                Product::where('id', $item->product_id)->decrement('stock', $item->quantity);
                 
-                // Restore variant stock
+                // Decrement variants
                 if ($item->variant_ids) {
                     foreach ($item->variant_ids as $vid) {
-                        \App\Models\ProductVariant::where('id', $vid)->increment('stock', $item->quantity);
+                        \App\Models\ProductVariant::where('id', $vid)->decrement('stock', $item->quantity);
                     }
                 }
             }
         }
         
-        // If status changes FROM 'failed' to something else, reduce stock again (if possible)
-        if ($oldStatus == 'failed' && $newStatus != 'failed') {
-            // Check if stock is available first? 
-            // For simplicity in admin, we just decrement. Admin should decide.
+        // If status changes FROM (Paid/Completed) TO (Pending/Failed) -> Restore Stock
+        if (in_array($oldStatus, $acceptedStatuses) && in_array($newStatus, $notAcceptedStatuses)) {
             foreach ($order->items as $item) {
-                Product::where('id', $item->product_id)->decrement('stock', $item->quantity);
+                // Increment main product
+                Product::where('id', $item->product_id)->increment('stock', $item->quantity);
+                
+                // Increment variants
                 if ($item->variant_ids) {
                     foreach ($item->variant_ids as $vid) {
-                        \App\Models\ProductVariant::where('id', $vid)->decrement('stock', $item->quantity);
+                        \App\Models\ProductVariant::where('id', $vid)->increment('stock', $item->quantity);
                     }
                 }
             }
@@ -123,8 +127,9 @@ class OrderController extends Controller
     {
         $order = Order::with('items')->findOrFail($id);
         
-        // Restore stock if it wasn't already failed (stock restored then)
-        if ($order->status != 'failed') {
+        // Restore stock if it was already accepted (stock was reduced then)
+        $acceptedStatuses = ['paid', 'completed'];
+        if (in_array($order->status, $acceptedStatuses)) {
             foreach ($order->items as $item) {
                 Product::where('id', $item->product_id)->increment('stock', $item->quantity);
                 if ($item->variant_ids) {
@@ -140,6 +145,6 @@ class OrderController extends Controller
 
         Toastr::success(__('dashboard.deleted_successfully'), __('dashboard.success'));
 
-        return redirect()->back();
+        return redirect()->route($this->route.'.index');
     }
 }

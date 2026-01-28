@@ -203,6 +203,16 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "TeamSection",
   props: {
@@ -379,7 +389,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.team-section-wrapper[data-v-2b048ea6] {\r\n  position: relative;\r\n  background-color: #082d49; /* Solid Deep Navy */\r\n  font-family: 'Inter', sans-serif !important;\r\n  overflow: hidden;\r\n  padding: 100px 0;\n}\n.header-area[data-v-2b048ea6] {\r\n  margin-bottom: 60px;\n}\n.container[data-v-2b048ea6] {\r\n  margin-right: auto;\r\n  margin-left: auto;\r\n  padding-right: 15px;\r\n  padding-left: 15px;\r\n  max-width: 1200px;\n}\n.header-content[data-v-2b048ea6] {\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: space-between;\r\n  align-items: flex-start;\n}\n@media (min-width: 768px) {\n.header-content[data-v-2b048ea6] {\r\n    flex-direction: row;\r\n    align-items: flex-end;\n}\n}\n.title-wrapper[data-v-2b048ea6] {\r\n  max-width: 700px;\n}\n.section-title[data-v-2b048ea6] {\r\n  color: #fff;\r\n  font-size: 42px;\r\n  font-weight: 800;\r\n  margin-bottom: 20px;\r\n  line-height: 1.2;\r\n  letter-spacing: -0.02em;\n}\n.section-desc[data-v-2b048ea6] {\r\n  color: rgba(255, 255, 255, 0.7);\r\n  font-size: 18px;\r\n  line-height: 1.6;\r\n  font-weight: 300;\n}\n.nav-controls[data-v-2b048ea6] {\r\n  display: flex;\r\n  gap: 15px;\r\n  margin-top: 30px;\n}\n@media (min-width: 768px) {\n.nav-controls[data-v-2b048ea6] {\r\n    margin-top: 0;\n}\n}\n.nav-btn[data-v-2b048ea6] {\r\n  width: 50px;\r\n  height: 50px;\r\n  border-radius: 50%;\r\n  background: rgba(255, 255, 255, 0.05);\r\n  border: 1px solid rgba(255, 255, 255, 0.1);\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  color: #ffffff; /* White for arrows */\r\n  cursor: pointer;\r\n  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);\r\n  -webkit-backdrop-filter: blur(10px);\r\n          backdrop-filter: blur(10px);\n}\n.nav-btn[data-v-2b048ea6]:hover {\r\n  background-color: #007bff; /* Corporate Blue Background on Hover */\r\n  border-color: #007bff;\r\n  color: #ffffff; /* White Arrow on Hover */\r\n  transform: scale(1.1);\r\n  box-shadow: 0 10px 20px rgba(0, 123, 255, 0.3);\n}\n.carousel-wrapper[data-v-2b048ea6] {\r\n  position: relative;\r\n  overflow: visible !important;\r\n  cursor: -webkit-grab;\r\n  cursor: grab;\n}\n.carousel-wrapper[data-v-2b048ea6]:active {\r\n  cursor: -webkit-grabbing;\r\n  cursor: grabbing;\n}\n.carousel-track[data-v-2b048ea6] {\r\n  display: flex;\r\n  align-items: center;\r\n  width: 100%;\n}\n.card-container[data-v-2b048ea6] {\r\n  flex-shrink: 0;\r\n  width: 100%;\r\n  padding: 20px 15px;\r\n  box-sizing: border-box;\r\n  perspective: 1000px;\n}\n@media (min-width: 640px) {\n.card-container[data-v-2b048ea6] {\r\n    width: 50%;\n}\n}\n@media (min-width: 1024px) {\n.card-container[data-v-2b048ea6] {\r\n    width: 33.333%;\n}\n}\n.card-inner[data-v-2b048ea6] {\r\n  display: flex;\r\n  flex-direction: column;\r\n  background: rgba(255, 255, 255, 0.03);\r\n  -webkit-backdrop-filter: blur(5px);\r\n          backdrop-filter: blur(5px);\r\n  border: 1px solid rgba(255, 255, 255, 0.08);\r\n  border-radius: 24px;\r\n  overflow: hidden;\r\n  height: 100%;\r\n  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);\r\n  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);\n}\n.card-container:hover .card-inner[data-v-2b048ea6] {\r\n  transform: translateY(-10px);\r\n  background: rgba(255, 255, 255, 0.06);\r\n  border-color: rgba(29, 209, 161, 0.3);\r\n  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);\n}\n.image-wrapper[data-v-2b048ea6] {\r\n  position: relative;\r\n  width: 100%;\r\n  padding-top: 120%;\r\n  overflow: hidden;\r\n  background: #0d3654;\n}\n.card-image[data-v-2b048ea6] {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  -o-object-fit: cover;\r\n     object-fit: cover;\r\n  transition: transform 0.8s ease;\r\n  filter: grayscale(20%);\n}\n.card-container:hover .card-image[data-v-2b048ea6] {\r\n  transform: scale(1.05);\r\n  filter: grayscale(0%);\n}\n.card-content[data-v-2b048ea6] {\r\n  padding: 30px 25px;\r\n  text-align: center;\r\n  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.2));\n}\n.member-name[data-v-2b048ea6] {\r\n  font-size: 22px;\r\n  font-weight: 700;\r\n  color: #ffffff;\r\n  margin-bottom: 8px;\r\n  letter-spacing: -0.01em;\n}\n.member-role[data-v-2b048ea6] {\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  color: #1DD1A1;\r\n  text-transform: uppercase;\r\n  letter-spacing: 0.1em;\n}\n.pagination-dots[data-v-2b048ea6] {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin-top: 50px;\r\n  gap: 10px;\n}\n.dot[data-v-2b048ea6] {\r\n  height: 6px;\r\n  border-radius: 100px;\r\n  background: rgba(255, 255, 255, 0.2);\r\n  width: 6px;\r\n  transition: all 0.4s ease;\n}\n.dot.active[data-v-2b048ea6] {\r\n  width: 40px;\r\n  background-color: #007bff; /* Corporate Blue for Active Dot */\n}\r\n", ""]);
+exports.push([module.i, "\n.team-section-wrapper[data-v-2b048ea6] {\r\n  position: relative;\r\n  background-color: #082d49; /* Solid Deep Navy */\r\n  font-family: 'Inter', sans-serif !important;\r\n  overflow: hidden;\r\n  padding: 100px 0;\n}\n.header-area[data-v-2b048ea6] {\r\n  margin-bottom: 60px;\n}\n.container[data-v-2b048ea6] {\r\n  margin-right: auto;\r\n  margin-left: auto;\r\n  padding-right: 15px;\r\n  padding-left: 15px;\r\n  max-width: 1200px;\n}\n.header-content[data-v-2b048ea6] {\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: space-between;\r\n  align-items: flex-start;\n}\n@media (min-width: 768px) {\n.header-content[data-v-2b048ea6] {\r\n    flex-direction: row;\r\n    align-items: flex-end;\n}\n}\n.title-wrapper[data-v-2b048ea6] {\r\n  max-width: 700px;\n}\n.section-title[data-v-2b048ea6] {\r\n  color: #fff;\r\n  font-size: 42px;\r\n  font-weight: 800;\r\n  margin-bottom: 20px;\r\n  line-height: 1.2;\r\n  letter-spacing: -0.02em;\n}\n.section-desc[data-v-2b048ea6] {\r\n  color: rgba(255, 255, 255, 0.7);\r\n  font-size: 18px;\r\n  line-height: 1.6;\r\n  font-weight: 300;\n}\n.carousel-section-container[data-v-2b048ea6] {\r\n  position: relative;\r\n  width: 100%;\n}\n.nav-container[data-v-2b048ea6] {\r\n  position: absolute;\r\n  top: 40%;\r\n  left: 50%;\r\n  transform: translate(-50%, -50%);\r\n  width: 100%;\r\n  max-width: 1400px;\r\n  padding: 0 15px;\r\n  pointer-events: none;\r\n  z-index: 100;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\n}\n.prev-btn[data-v-2b048ea6], .next-btn[data-v-2b048ea6] {\r\n  pointer-events: auto !important;\n}\n@media (max-width: 1280px) {\n.nav-container[data-v-2b048ea6] {\r\n    padding: 0 30px;\n}\n}\n@media (max-width: 768px) {\n.nav-container[data-v-2b048ea6] {\r\n    display: none;\n}\n}\n.nav-btn[data-v-2b048ea6] {\r\n  width: 65px;\r\n  height: 65px;\r\n  border-radius: 50%;\r\n  background: rgba(255, 255, 255, 0.1);\r\n  border: 1px solid rgba(255, 255, 255, 0.2);\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  color: #ffffff;\r\n  cursor: pointer;\r\n  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);\r\n  -webkit-backdrop-filter: blur(20px);\r\n          backdrop-filter: blur(20px);\r\n  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);\n}\n.nav-btn[data-v-2b048ea6]:hover {\r\n  background-color: #007bff;\r\n  border-color: #007bff;\r\n  transform: scale(1.1);\r\n  box-shadow: 0 20px 40px rgba(0, 123, 255, 0.5);\n}\n.nav-btn[data-v-2b048ea6]:active {\r\n  transform: scale(0.9);\n}\n.carousel-wrapper[data-v-2b048ea6] {\r\n  position: relative;\r\n  overflow: visible !important;\r\n  cursor: -webkit-grab;\r\n  cursor: grab;\r\n  z-index: 1;\n}\n.carousel-wrapper[data-v-2b048ea6]:active {\r\n  cursor: -webkit-grabbing;\r\n  cursor: grabbing;\n}\n.carousel-track[data-v-2b048ea6] {\r\n  display: flex;\r\n  align-items: center;\r\n  width: 100%;\n}\n.card-container[data-v-2b048ea6] {\r\n  flex-shrink: 0;\r\n  width: 100%;\r\n  padding: 20px 15px;\r\n  box-sizing: border-box;\r\n  perspective: 1000px;\n}\n@media (min-width: 640px) {\n.card-container[data-v-2b048ea6] {\r\n    width: 50%;\n}\n}\n@media (min-width: 1024px) {\n.card-container[data-v-2b048ea6] {\r\n    width: 33.333%;\n}\n}\n.card-inner[data-v-2b048ea6] {\r\n  display: flex;\r\n  flex-direction: column;\r\n  background: rgba(255, 255, 255, 0.03);\r\n  -webkit-backdrop-filter: blur(5px);\r\n          backdrop-filter: blur(5px);\r\n  border: 1px solid rgba(255, 255, 255, 0.08);\r\n  border-radius: 24px;\r\n  overflow: hidden;\r\n  height: 100%;\r\n  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);\r\n  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);\n}\n.card-container:hover .card-inner[data-v-2b048ea6] {\r\n  transform: translateY(-10px);\r\n  background: rgba(255, 255, 255, 0.06);\r\n  border-color: rgba(29, 209, 161, 0.3);\r\n  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);\n}\n.image-wrapper[data-v-2b048ea6] {\r\n  position: relative;\r\n  width: 100%;\r\n  padding-top: 120%;\r\n  overflow: hidden;\r\n  background: #0d3654;\n}\n.card-image[data-v-2b048ea6] {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  -o-object-fit: cover;\r\n     object-fit: cover;\r\n  transition: transform 0.8s ease;\r\n  filter: grayscale(20%);\n}\n.card-container:hover .card-image[data-v-2b048ea6] {\r\n  transform: scale(1.05);\r\n  filter: grayscale(0%);\n}\n.card-content[data-v-2b048ea6] {\r\n  padding: 30px 25px;\r\n  text-align: center;\r\n  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.2));\n}\n.member-name[data-v-2b048ea6] {\r\n  font-size: 22px;\r\n  font-weight: 700;\r\n  color: #ffffff;\r\n  margin-bottom: 8px;\r\n  letter-spacing: -0.01em;\n}\n.member-role[data-v-2b048ea6] {\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  color: #1DD1A1;\r\n  text-transform: uppercase;\r\n  letter-spacing: 0.1em;\n}\n.pagination-dots[data-v-2b048ea6] {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin-top: 50px;\r\n  gap: 10px;\n}\n.dot[data-v-2b048ea6] {\r\n  height: 6px;\r\n  border-radius: 100px;\r\n  background: rgba(255, 255, 255, 0.2);\r\n  width: 6px;\r\n  transition: all 0.4s ease;\n}\n.dot.active[data-v-2b048ea6] {\r\n  width: 40px;\r\n  background-color: #007bff; /* Corporate Blue for Active Dot */\n}\r\n", ""]);
 
 // exports
 
@@ -1510,155 +1520,181 @@ var render = function() {
       }
     },
     [
-      _c("div", { staticClass: "header-area" }, [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "header-content" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("div", { staticClass: "nav-controls" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "carousel-section-container" }, [
+        _c("div", { staticClass: "nav-container" }, [
+          _c(
+            "button",
+            {
+              staticClass: "nav-btn prev-btn",
+              attrs: { type: "button", "aria-label": "Previous slide" },
+              on: {
+                click: function($event) {
+                  $event.stopPropagation()
+                  return _vm.handlePrev($event)
+                },
+                mousedown: function($event) {
+                  $event.stopPropagation()
+                },
+                touchstart: function($event) {
+                  $event.stopPropagation()
+                }
+              }
+            },
+            [
               _c(
-                "button",
-                { staticClass: "nav-btn", on: { click: _vm.handlePrev } },
-                [
-                  _c(
-                    "svg",
+                "svg",
+                {
+                  attrs: {
+                    xmlns: "http://www.w3.org/2000/svg",
+                    width: "28",
+                    height: "28",
+                    viewBox: "0 0 24 24",
+                    fill: "none",
+                    stroke: "currentColor",
+                    "stroke-width": "2.5",
+                    "stroke-linecap": "round",
+                    "stroke-linejoin": "round"
+                  }
+                },
+                [_c("path", { attrs: { d: "m15 18-6-6 6-6" } })]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "nav-btn next-btn",
+              attrs: { type: "button", "aria-label": "Next slide" },
+              on: {
+                click: function($event) {
+                  $event.stopPropagation()
+                  return _vm.handleNext($event)
+                },
+                mousedown: function($event) {
+                  $event.stopPropagation()
+                },
+                touchstart: function($event) {
+                  $event.stopPropagation()
+                }
+              }
+            },
+            [
+              _c(
+                "svg",
+                {
+                  attrs: {
+                    xmlns: "http://www.w3.org/2000/svg",
+                    width: "28",
+                    height: "28",
+                    viewBox: "0 0 24 24",
+                    fill: "none",
+                    stroke: "currentColor",
+                    "stroke-width": "2.5",
+                    "stroke-linecap": "round",
+                    "stroke-linejoin": "round"
+                  }
+                },
+                [_c("path", { attrs: { d: "m9 18 6-6-6-6" } })]
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "carousel-wrapper",
+            on: {
+              mousedown: function($event) {
+                return _vm.touchStart($event)
+              },
+              mousemove: function($event) {
+                return _vm.touchMove($event)
+              },
+              mouseup: _vm.touchEnd,
+              mouseleave: _vm.handleMouseLeave,
+              touchstart: function($event) {
+                return _vm.touchStart($event)
+              },
+              touchmove: function($event) {
+                return _vm.touchMove($event)
+              },
+              touchend: _vm.touchEnd
+            }
+          },
+          [
+            _c("div", { staticClass: "container" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "carousel-track",
+                  style: _vm.trackStyle,
+                  on: { transitionend: _vm.handleTransitionEnd }
+                },
+                _vm._l(_vm.extendedMembers, function(member, index) {
+                  return _c(
+                    "div",
                     {
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        width: "20",
-                        height: "20",
-                        viewBox: "0 0 24 24",
-                        fill: "none",
-                        stroke: "currentColor",
-                        "stroke-width": "2",
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round"
-                      }
+                      key: index,
+                      staticClass: "card-container",
+                      style: _vm.getCardStyle(index)
                     },
-                    [_c("path", { attrs: { d: "m15 18-6-6 6-6" } })]
+                    [
+                      _c("div", { staticClass: "card-inner" }, [
+                        _c("div", { staticClass: "image-wrapper" }, [
+                          _c("img", {
+                            staticClass: "card-image",
+                            attrs: {
+                              src: "/uploads/member/" + member.image,
+                              alt: member.name,
+                              draggable: "false"
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "card-content" }, [
+                          _c("h3", { staticClass: "member-name" }, [
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(member.name) +
+                                "\n              "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "member-role" }, [
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(member.role) +
+                                "\n              "
+                            )
+                          ])
+                        ])
+                      ])
+                    ]
                   )
-                ]
+                }),
+                0
               ),
               _vm._v(" "),
               _c(
-                "button",
-                { staticClass: "nav-btn", on: { click: _vm.handleNext } },
-                [
-                  _c(
-                    "svg",
-                    {
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        width: "20",
-                        height: "20",
-                        viewBox: "0 0 24 24",
-                        fill: "none",
-                        stroke: "currentColor",
-                        "stroke-width": "2",
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round"
-                      }
-                    },
-                    [_c("path", { attrs: { d: "m9 18 6-6-6-6" } })]
-                  )
-                ]
+                "div",
+                { staticClass: "pagination-dots" },
+                _vm._l(_vm.members, function(dot, idx) {
+                  return _c("span", {
+                    key: idx,
+                    staticClass: "dot",
+                    class: { active: _vm.realIndex === idx }
+                  })
+                }),
+                0
               )
             ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "carousel-wrapper",
-          on: {
-            mousedown: function($event) {
-              return _vm.touchStart($event)
-            },
-            mousemove: function($event) {
-              return _vm.touchMove($event)
-            },
-            mouseup: _vm.touchEnd,
-            mouseleave: _vm.handleMouseLeave,
-            touchstart: function($event) {
-              return _vm.touchStart($event)
-            },
-            touchmove: function($event) {
-              return _vm.touchMove($event)
-            },
-            touchend: _vm.touchEnd
-          }
-        },
-        [
-          _c("div", { staticClass: "container" }, [
-            _c(
-              "div",
-              {
-                staticClass: "carousel-track",
-                style: _vm.trackStyle,
-                on: { transitionend: _vm.handleTransitionEnd }
-              },
-              _vm._l(_vm.extendedMembers, function(member, index) {
-                return _c(
-                  "div",
-                  {
-                    key: index,
-                    staticClass: "card-container",
-                    style: _vm.getCardStyle(index)
-                  },
-                  [
-                    _c("div", { staticClass: "card-inner" }, [
-                      _c("div", { staticClass: "image-wrapper" }, [
-                        _c("img", {
-                          staticClass: "card-image",
-                          attrs: {
-                            src: "/uploads/member/" + member.image,
-                            alt: member.name,
-                            draggable: "false"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "card-content" }, [
-                        _c("h3", { staticClass: "member-name" }, [
-                          _vm._v(
-                            "\n                " +
-                              _vm._s(member.name) +
-                              "\n              "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "member-role" }, [
-                          _vm._v(
-                            "\n                " +
-                              _vm._s(member.role) +
-                              "\n              "
-                          )
-                        ])
-                      ])
-                    ])
-                  ]
-                )
-              }),
-              0
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "pagination-dots" },
-              _vm._l(_vm.members, function(dot, idx) {
-                return _c("span", {
-                  key: idx,
-                  staticClass: "dot",
-                  class: { active: _vm.realIndex === idx }
-                })
-              }),
-              0
-            )
-          ])
-        ]
-      )
+          ]
+        )
+      ])
     ]
   )
 }
@@ -1667,9 +1703,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "title-wrapper" }, [
-      _c("h2", { staticClass: "section-title" }, [
-        _vm._v("\n            Kenali Tim Kami\n          ")
+    return _c("div", { staticClass: "header-area" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "header-content" }, [
+          _c("div", { staticClass: "title-wrapper" }, [
+            _c("h2", { staticClass: "section-title" }, [
+              _vm._v("\n            Kenali Tim Kami\n          ")
+            ])
+          ])
+        ])
       ])
     ])
   }
@@ -13937,7 +13979,7 @@ if (document.getElementById('team-section-root')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\ASUS TUF\.gemini\antigravity\scratch\cms\compro_cms-master\resources\js\team_section_app.js */"./resources/js/team_section_app.js");
+module.exports = __webpack_require__(/*! D:\cms\compro_cms-master\resources\js\team_section_app.js */"./resources/js/team_section_app.js");
 
 
 /***/ })

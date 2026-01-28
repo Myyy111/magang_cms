@@ -12,6 +12,7 @@ use App\Models\Contact;
 use App\Models\Member;
 use App\Models\Client;
 use App\Models\Faq;
+use App\Models\Order;
 
 class DashboardController extends Controller
 {
@@ -49,6 +50,9 @@ class DashboardController extends Controller
         $data['contacts'] = Contact::where('status', 1)->count();
         $data['subscribers'] = Subscriber::where('status', 1)->count();
         $data['members'] = Member::where('status', 1)->get();
+        
+        $data['total_orders'] = Order::count();
+        $data['total_revenue'] = Order::whereIn('status', ['paid', 'completed'])->sum('total_amount');
 
         return view($this->view.'.index', $data);
     }

@@ -183,10 +183,15 @@ class CommerceController extends Controller
         $request->validate([
             'customer_name' => 'required|string|max:255',
             'customer_id_num' => 'required|string|max:255',
-            'customer_unit' => 'required|string|max:255',
             'customer_contact' => 'required|string|max:255',
+            'wilayah_kerja' => 'required',
+            'unit_kerja_detail_a' => 'required|string',
+            'unit_kerja_detail_b' => 'required|string',
+            'unit_kerja_detail_c' => 'required|string',
+            'user_status' => 'required',
+            'payment_mechanism' => 'required',
         ]);
-
+        
         $cart = Session::get('cart', []);
         if(count($cart) < 1){
             Toastr::error('Keranjang kosong, tidak dapat memproses pesanan.', 'Error');
@@ -198,60 +203,39 @@ class CommerceController extends Controller
             $subtotal = 0;
             $shipping_cost = $request->input('shipping_cost', 0);
 
-            // STOCK LOGIC: TRACK CUMULATIVE USAGE
-            $totalRequestedStock = [];
-            $totalVariantRequestedStock = [];
-
-            foreach($cart as $item) {
-                $pid = $item['product_id'];
-                $totalRequestedStock[$pid] = ($totalRequestedStock[$pid] ?? 0) + $item['quantity'];
-                
-                if(isset($item['variant_ids'])) {
-                    foreach($item['variant_ids'] as $vid) {
-                        $totalVariantRequestedStock[$vid] = ($totalVariantRequestedStock[$vid] ?? 0) + $item['quantity'];
-                    }
-                }
-            }
-
-            // 1. Pre-validation: Check cumulative stock
-            foreach($totalRequestedStock as $pid => $qty) {
-                $product = Product::find($pid);
-                if(!$product || $product->stock < $qty) {
-                    $title = $product ? $product->title : 'Produk';
-                    throw new \Exception("Stok produk '{$title}' tidak mencukupi untuk total pesanan Anda (Tersisa: " . ($product ? $product->stock : 0) . ").");
-                }
-            }
-            foreach($totalVariantRequestedStock as $vid => $qty) {
-                $variant = ProductVariant::find($vid);
-                if(!$variant || $variant->stock < $qty) {
-                    $vname = $variant ? $variant->attribute_name . ': ' . $variant->attribute_value : 'Varian';
-                    throw new \Exception("Stok varian '{$vname}' tidak mencukupi untuk total pesanan Anda (Tersisa: " . ($variant ? $variant->stock : 0) . ").");
-                }
-            }
-
-            // 2. Decrement Stock & Calculate Subtotal
-            foreach($totalRequestedStock as $pid => $qty) {
-                Product::find($pid)->decrement('stock', $qty);
-            }
-            foreach($totalVariantRequestedStock as $vid => $qty) {
-                ProductVariant::find($vid)->decrement('stock', $qty);
-            }
-
-            foreach($cart as $item) {
+             // 1. Calculate Subtotal (Stock reduction removed here by request)
+             foreach($cart as $item) {
+                // We could still check if stock is available to warn user, but not decrement
                 $subtotal += $item['price'] * $item['quantity'];
             }
+
+            // Combine Unit Kerja Details into JSON for storage
+            $unit_details_combined = json_encode([
+                'kab_kota' => $request->unit_kerja_detail_a,
+                'cabang' => $request->unit_kerja_detail_b,
+                'deputi' => $request->unit_kerja_detail_c
+            ]);
 
             // Create Order
             $order = Order::create([
                 'order_number' => 'ORD-' . strtoupper(uniqid()),
                 'customer_name' => $request->customer_name,
                 'customer_id_num' => $request->customer_id_num,
-                'customer_unit' => $request->customer_unit,
+                'customer_unit' => "Lengkap (Lihat Detail)", // Simplified string for listing
                 'customer_contact' => $request->customer_contact,
-                'shipping_address' => $request->shipping_address,
+                'shipping_address' => $request->shipping_address ?? '-',
                 'total_amount' => $subtotal + $shipping_cost,
                 'shipping_cost' => $shipping_cost,
                 'status' => 'pending',
+
+                // New Fields
+                'wilayah_kerja' => $request->wilayah_kerja,
+                'unit_kerja_type' => 'complete', // Marking as complete/all filled
+                'unit_kerja_detail' => $unit_details_combined,
+                'user_status' => $request->user_status,
+                'laptop_serial_number' => $request->laptop_serial_number,
+                'payment_mechanism' => $request->payment_mechanism,
+                'payroll_deduction_periods' => $request->payroll_deduction_periods,
             ]);
 
             // Create Order Items
@@ -274,15 +258,12 @@ class CommerceController extends Controller
             try {
                 $this->postOrderToWooCommerce($order, $cart);
             } catch (\Exception $e) {
-                // We don't roll back the local transaction because the local order is already successful.
-                // We just log the error so the admin can check why it didn't sync.
                 Log::error('WooCommerce Sync Failed: ' . $e->getMessage());
-                // Optional: Notify admin or store in a 'failed_syncs' table
             }
 
-            // Redirect to Success Page
-            Toastr::success('Pesanan berhasil dibuat! Stok telah diperbarui.', 'Sukses');
-            return redirect()->route('ecommerce.success', ['order_id' => $order->id]);
+            // Redirect to Document Upload Page
+            Toastr::success('Data berhasil disimpan! Silakan unduh dan upload surat pernyataan.', 'Langkah Selanjutnya');
+            return redirect()->route('ecommerce.upload_document', ['order_id' => $order->id]);
 
         } catch (\Exception $e) {
             DB::rollback();
@@ -426,5 +407,52 @@ class CommerceController extends Controller
         } else {
             Log::error("Failed to sync order to WooCommerce. Status: " . $response->getStatusCode());
         }
+    }
+
+    public function uploadDocumentPage($order_id)
+    {
+        $order = Order::findOrFail($order_id);
+        // If already passed this step, maybe redirect to success? 
+        // For now, allow re-upload if needed or check status.
+        
+        $data['title'] = 'Upload Surat Pernyataan';
+        $data['order'] = $order;
+        return view('web.ecommerce.upload_document', $data);
+    }
+
+    public function downloadPdf($order_id)
+    {
+        $order = Order::findOrFail($order_id);
+        return view('web.ecommerce.pdf_view', compact('order'));
+    }
+
+    public function storeDocument(Request $request, $order_id)
+    {
+        $request->validate([
+            'signed_document' => 'required|mimes:pdf,jpg,jpeg,png|max:5120',
+        ]);
+
+        $order = Order::findOrFail($order_id);
+        
+        if($request->hasFile('signed_document')) {
+            $file = $request->file('signed_document');
+            $filename = 'signed_' . $order->order_number . '_' . time() . '.' . $file->getClientOriginalExtension();
+            
+            // Ensure directory exists
+            if(!file_exists(public_path('uploads/documents'))) {
+                mkdir(public_path('uploads/documents'), 0777, true);
+            }
+
+            $file->move(public_path('uploads/documents'), $filename);
+
+            $order->signed_document_path = $filename;
+            $order->save();
+
+            Toastr::success('Dokumen berhasil diupload! Pesanan Anda sedang diproses.', 'Sukses');
+            return redirect()->route('ecommerce.success', $order->id);
+        }
+
+        Toastr::error('Gagal mengupload dokumen.', 'Error');
+        return redirect()->back();
     }
 }
