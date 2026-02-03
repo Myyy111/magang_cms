@@ -57,6 +57,8 @@
                 <span class="checkbox-box {{ $order->wilayah_kerja == 'pusat' ? 'checked' : '' }}"></span> KANTOR PUSAT
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <span class="checkbox-box {{ $order->wilayah_kerja == 'wilayah' ? 'checked' : '' }}"></span> KANTOR WILAYAH
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="checkbox-box {{ $order->wilayah_kerja == 'cabang' ? 'checked' : '' }}"></span> KANTOR CABANG
                 <br>
                 <i>( beri tanda centang / tanda "X" pada pilihan )</i>
             </td>

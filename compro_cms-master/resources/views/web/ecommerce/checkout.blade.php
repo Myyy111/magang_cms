@@ -62,11 +62,34 @@
         .unit-row .label-text {
             width: 220px;
             flex-shrink: 0;
+            font-size: 14px;
+            color: #555;
         }
         .unit-row .colon {
             width: 20px;
             text-align: center;
             flex-shrink: 0;
+            font-weight: bold;
+        }
+        
+        /* Mobile Optimization for Unit Kerja Form */
+        @media (max-width: 576px) {
+            .unit-row {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 15px;
+            }
+            .unit-row .label-text {
+                width: 100%;
+                margin-bottom: 6px;
+                font-weight: 600;
+            }
+            .unit-row .colon {
+                display: none;
+            }
+            .unit-row .flex-grow-1 {
+                width: 100%;
+            }
         }
     </style>
 
@@ -120,6 +143,10 @@
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="wilayah_kerja" id="wilayah_wilayah" value="wilayah" required>
                                             <label class="form-check-label" for="wilayah_wilayah">KANTOR WILAYAH</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="wilayah_kerja" id="wilayah_cabang" value="cabang" required>
+                                            <label class="form-check-label" for="wilayah_cabang">KANTOR CABANG</label>
                                         </div>
                                     </div>
 
@@ -219,10 +246,29 @@
                                     
                                     <input type="hidden" name="customer_unit" id="legacy_unit">
                                 </div>
-                                <button type="submit" class="btn-premium w-100 mt-4 py-3" style="border: none; font-size: 18px; font-weight: bold;">
-                                    <i class="fas fa-file-pdf me-2"></i> Buat Surat Pernyataan (PDF)
+                                <!-- Button with specialized override styles -->
+                                <style>
+                                    #btn-pdf-submit {
+                                        padding: 10px 20px !important;
+                                        border-radius: 8px !important;
+                                        border-radius: 8px !important;
+                                        font-size: 14px !important;
+                                        width: 100%;
+                                        margin-top: 15px;
+                                        border: none;
+                                        font-weight: 700;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        gap: 8px;
+                                        box-shadow: none !important; 
+                                        height: auto !important;
+                                    }
+                                </style>
+                                <button type="submit" id="btn-pdf-submit" class="btn-premium">
+                                    <i class="fas fa-file-pdf" style="font-size: 16px;"></i> Unduh Surat Pernyataan (PDF)
                                 </button>
-                                <p class="text-center mt-2 small text-muted">Akan mengunduh PDF untuk Anda tandatangani & upload kembali.</p>
+                                <p class="text-center mt-2 text-muted" style="font-size: 11px;">PDF akan diunduh otomatis.</p>
                             </form>
                             
                             <script>

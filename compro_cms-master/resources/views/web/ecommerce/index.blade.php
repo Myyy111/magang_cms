@@ -2,7 +2,7 @@
 @section('title', $title)
 @section('content')
 
-    <style>
+    <style data-version="{{ time() }}">
         /* Responsive Grid & Card Enhancements */
         .ecommerce-card-premium {
             transition: all 0.3s ease;
@@ -16,72 +16,164 @@
             transition: all 0.3s ease;
         }
 
-        @media (max-width: 576px) {
-            .services-section {
+        /* Mobile Optimizations */
+        @media (max-width: 991px) {
+            /* Hide sidebar on tablet and mobile */
+            .ecommerce-sidebar-premium {
+                display: none !important;
+            }
+            
+            /* Make product grid full width */
+            .col-lg-9 {
+                flex: 0 0 100% !important;
+                max-width: 100% !important;
+            }
+            
+            .col-lg-3 {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Page Title Mobile Adjustments */
+            .page-title-premium {
+                padding: 40px 0 30px !important;
+            }
+            
+            .page-title-premium h1 {
+                font-size: 28px !important;
+            }
+            
+            .page-title-premium .bread-crumb {
+                font-size: 13px !important;
+            }
+            
+            /* Header Section Mobile */
+            .ecommerce-main-section {
                 padding: 30px 0 !important;
             }
-            .ecommerce-grid {
-                margin-left: -8px !important;
-                margin-right: -8px !important;
+            
+            .ecommerce-main-section h2 {
+                font-size: 22px !important;
+                margin-bottom: 5px !important;
             }
-            .product-col-responsive {
-                padding-left: 8px !important;
-                padding-right: 8px !important;
-                margin-bottom: 16px !important;
+            
+            .ecommerce-main-section .row.mb-5 {
+                margin-bottom: 20px !important;
             }
-            .ecommerce-card-premium {
-                min-height: auto !important;
-                border-radius: 12px !important;
+        }
+
+        @media (max-width: 576px) {
+            /* Page Title Compact */
+            .page-title-premium {
+                padding: 110px 0 30px !important; /* Increased top padding to clear fixed header */
             }
-            .ecommerce-image-box {
-                height: 170px !important;
+            
+            .page-title-premium h1 {
+                font-size: 24px !important;
+                margin-bottom: 8px !important;
             }
-            .ecommerce-lower-content {
-                padding: 12px 10px !important;
+            
+            .page-title-premium .bread-crumb ul li {
+                font-size: 12px !important;
             }
-            .product-title-premium {
+            
+            /* Section Padding */
+            .ecommerce-main-section {
+                padding: 20px 0 !important;
+            }
+            
+            /* Header Compact */
+            .ecommerce-main-section h2 {
+                font-size: 20px !important;
+                margin-bottom: 3px !important;
+            }
+            
+            .ecommerce-main-section p {
                 font-size: 13px !important;
+            }
+            
+            .row.mb-5 {
+                margin-bottom: 15px !important;
+            }
+            
+            /* Product Grid Tighter */
+            .ecommerce-grid {
+                margin-left: -6px !important;
+                margin-right: -6px !important;
+            }
+            
+            .product-item-container {
+                padding-left: 6px !important;
+                padding-right: 6px !important;
+                margin-bottom: 12px !important;
+            }
+            
+            /* Card Optimizations */
+            .modern-card-tokped {
+                min-height: auto !important;
+                border-radius: 10px !important;
+            }
+            
+            .card-img-wrapper {
+                aspect-ratio: 1 !important;
+            }
+            
+            .card-content-desc {
+                padding: 10px !important;
+            }
+            
+            .card-content-desc h3 {
+                font-size: 12px !important;
                 line-height: 1.4 !important;
-                min-height: 36px !important; /* Forces 2-line height consistency */
-                margin-bottom: 6px !important;
+                min-height: 34px !important;
+                margin-bottom: 5px !important;
             }
-            .price-main {
-                font-size: 15px !important;
-                font-weight: 800 !important;
+            
+            .card-content-desc > div:nth-child(2) {
+                margin-bottom: 5px !important;
             }
-            .price-before {
-                font-size: 11px !important;
+            
+            .card-content-desc > div:nth-child(2) > div:first-child {
+                font-size: 14px !important;
             }
-            .rating-box {
-                font-size: 11px !important;
-                margin-bottom: 4px !important;
+            
+            .card-content-desc > div:nth-child(2) > div:last-child {
+                font-size: 10px !important;
             }
-            .product-desc-premium {
-                display: none !important; /* Hide description on mobile for cleaner look */
+            
+            .card-content-desc > div:last-child {
+                font-size: 10px !important;
+                margin-top: 5px !important;
             }
-            .detail-btn-box {
-                display: none !important; /* Hide button on mobile, card is clickable */
+            
+            /* Badges Mobile */
+            .card-badge-top > div {
+                font-size: 9px !important;
+                padding: 3px 7px !important;
             }
-            .card-link-overlay {
-                position: absolute;
-                inset: 0;
-                z-index: 5;
-            }
-            .badge-gajian, .badge-ongkir {
+            
+            .card-img-wrapper > div:last-child > div {
                 font-size: 8px !important;
                 padding: 2px 5px !important;
             }
-            .discount-tag {
-                top: 8px !important;
-                left: 8px !important;
-                font-size: 9px !important;
-                padding: 3px 6px !important;
+            
+            /* Pagination Mobile */
+            .pagination-wrapper {
+                margin-top: 30px !important;
             }
-            .preorder-tag {
-                top: 8px !important;
-                right: 8px !important;
-                font-size: 8px !important;
-                padding: 2px 6px !important;
+        }
+        
+        /* iOS Specific Fixes */
+        @supports (-webkit-touch-callout: none) {
+            @media (max-width: 991px) {
+                .ecommerce-sidebar-premium {
+                    display: none !important;
+                    visibility: hidden !important;
+                    opacity: 0 !important;
+                    height: 0 !important;
+                    overflow: hidden !important;
+                }
             }
         }
     </style>
@@ -111,6 +203,71 @@
         </div>
     </section>
     <!--End Page Title-->
+
+    <!-- Floating Filter Button (Mobile Only) -->
+    <!-- Floating Filter Button Removed -->
+
+    <!-- Mobile Filter Modal -->
+    <div id="mobileFilterModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: flex-end; justify-content: center;">
+        <div style="background: #fff; width: 100%; max-height: 85vh; overflow-y: auto; border-radius: 20px 20px 0 0; animation: slideUp 0.3s ease;">
+            <div style="padding: 20px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: #fff; z-index: 10;">
+                <h4 style="font-size: 18px; font-weight: 800; color: #001f3f; margin: 0;">Filter Produk</h4>
+                <button onclick="document.getElementById('mobileFilterModal').style.display='none'" style="background: none; border: none; font-size: 24px; color: #64748b; cursor: pointer;">&times;</button>
+            </div>
+            <div style="padding: 20px;">
+                <form action="{{ route('ecommerce.index') }}" method="GET">
+                    <!-- Search -->
+                    <div class="filter-group mb-4">
+                        <label style="font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; display: block;">Cari Nama</label>
+                        <div style="position: relative;">
+                            <input type="text" name="search" value="{{ request('search') }}" placeholder="Contoh: ProBook..." style="width: 100%; height: 45px; padding: 0 15px 0 40px; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 14px; background: #f8fafc;">
+                            <i class="fas fa-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 14px;"></i>
+                        </div>
+                    </div>
+
+                    <!-- Categories -->
+                    <div class="filter-group mb-4">
+                        <label style="font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; display: block;">Pilih Kategori</label>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <a href="{{ route('ecommerce.index') }}" class="cat-pill {{ !request('category') ? 'active' : '' }}">
+                                <span class="icon"><i class="fas fa-th-large"></i></span>
+                                <span class="text">Semua Produk</span>
+                            </a>
+                            @foreach($categories as $category)
+                                <a href="{{ route('ecommerce.index', ['category' => $category->slug]) }}" class="cat-pill {{ request('category') == $category->slug ? 'active' : '' }}">
+                                    <span class="icon"><i class="fas fa-laptop"></i></span>
+                                    <span class="text">{{ $category->title }}</span>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <!-- Sorting -->
+                    <div class="filter-group mb-4">
+                        <label style="font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; display: block;">Urutkan Berdasarkan</label>
+                        <select name="sort" class="form-control" style="border-radius: 12px; height: 48px; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 500;">
+                            <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Terbaru Dirilis</option>
+                            <option value="price_low" {{ request('sort') == 'price_low' ? 'selected' : '' }}>Harga: Terendah ke Tinggi</option>
+                            <option value="price_high" {{ request('sort') == 'price_high' ? 'selected' : '' }}>Harga: Tinggi ke Terendah</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" style="width: 100%; border: none; height: 50px; border-radius: 12px; font-weight: 800; font-size: 15px; background: #f8be14; color: #000; margin-bottom: 10px;">Terapkan Filter</button>
+                    
+                    @if(request()->anyFilled(['search', 'category', 'sort']))
+                        <a href="{{ route('ecommerce.index') }}" style="display: block; text-align: center; font-size: 13px; color: #ff2d55; font-weight: 700; text-decoration: none;">Bersihkan Filter</a>
+                    @endif
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+    </style>
 
     <!-- Modern E-Commerce Layout -->
     <section class="ecommerce-main-section" style="background: #fcfdfe; padding: 60px 0;">
@@ -196,6 +353,16 @@
 
                 <!-- Product Grid Area -->
                 <div class="col-lg-9">
+                    
+                    <!-- Mobile Inline Filter (Visible Mobile Only) -->
+                    <div class="mobile-inline-filter" onclick="document.getElementById('mobileFilterModal').style.display='flex'">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-sliders-h" style="color: #004aad;"></i>
+                            <span>Filter & Pencarian</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-muted"></i>
+                    </div>
+
                     <div class="row ecommerce-grid g-4" id="productGrid">
                         @forelse($products as $product)
                             <div class="col-6 col-md-4 col-lg-4 product-item-container">
@@ -296,6 +463,28 @@
         }
         .cat-pill:hover {
             background: #f8fafc;
+        }
+        /* Mobile Inline Filter Button (New) */
+        .mobile-inline-filter {
+            display: none;
+            width: 100%;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            align-items: center;
+            justify-content: space-between;
+            color: #333;
+            font-weight: 600;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            cursor: pointer;
+        }
+        
+        @media (max-width: 991px) {
+            .mobile-inline-filter {
+                display: flex;
+            }
         }
         .cat-pill.active {
             background: #ecf3ff;

@@ -43,20 +43,39 @@
                                 </div>
                             </div>
 
-                            <div class="alert alert-warning mb-4">
-                                <i class="fas fa-download me-2"></i> <a href="{{ route('ecommerce.download_pdf', $order->id) }}" class="fw-bold text-decoration-underline" target="_blank">Unduh surat Anda disini</a>.
+                            <div class="alert mb-4" style="background: #fff8e1; border: 1px solid #ffe58f; border-radius: 8px; color: #b7791f; padding: 15px; display: flex; align-items: center;">
+                                <i class="fas fa-download me-2"></i> 
+                                <a href="{{ route('ecommerce.download_pdf', $order->id) }}" class="fw-bold" style="color: #d69e2e; text-decoration: underline;" target="_blank">Unduh surat Anda disini</a>.
                             </div>
 
                             <form action="{{ route('ecommerce.store_document', $order->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group mb-4">
-                                    <label for="signed_document" class="form-label font-weight-bold">Upload Surat Pernyataan (PDF/JPG/PNG)</label>
-                                    <input type="file" class="form-control-file p-2 border rounded w-100" name="signed_document" id="signed_document" required accept=".pdf,.jpg,.jpeg,.png">
-                                    <small class="text-muted">Maksimal ukuran file 5MB.</small>
+                                    <label for="signed_document" class="form-label font-weight-bold" style="font-size: 14px; margin-bottom: 8px; display: block;">Upload Surat Pernyataan (PDF)</label>
+                                    <input type="file" class="form-control" name="signed_document" id="signed_document" required accept=".pdf" style="padding: 10px; height: auto; font-size: 14px;">
+                                    <small class="text-muted mt-2 d-block" style="font-size: 12px;">Maksimal ukuran file 5MB. Hanya format PDF yang diperbolehkan.</small>
                                 </div>
 
-                                <button type="submit" class="btn-premium w-100" style="border: none; padding: 15px;">
-                                    <i class="fas fa-check-circle me-2"></i> Selesaikan Transaksi
+                                <!-- Button Override -->
+                                <style>
+                                    #btn-finish-trx {
+                                        padding: 12px 20px !important;
+                                        border-radius: 8px !important;
+                                        font-size: 14px !important;
+                                        width: 100%;
+                                        border: none;
+                                        font-weight: 700;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        gap: 8px;
+                                        box-shadow: none !important; 
+                                        height: auto !important;
+                                    }
+                                </style>
+
+                                <button type="submit" id="btn-finish-trx" class="btn-premium">
+                                    <i class="fas fa-check-circle"></i> Selesaikan Transaksi
                                 </button>
                             </form>
                         </div>

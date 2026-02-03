@@ -226,64 +226,71 @@
         .subtotal-label { color: rgba(0,0,0,0.54); font-size: 14px; }
         .subtotal-value { font-size: 18px; font-weight: 800; color: rgba(0,0,0,0.85); }
 
+        /* Default Hidden for Desktop */
+        .mobile-sticky-footer { display: none; }
+        .mobile-variant-section { display: none; }
+
         /* Mobile Bottom Bar (Tokopedia Style) */
         @media (max-width: 991px) {
+            /* Reset Sidebar to Normal Flow */
             .purchase-sidebar-wrapper {
+                position: static !important;
+                margin-top: 20px;
+                display: none; /* We hide the original sidebar in mobile to avoid duplicates */
+            }
+            
+            /* Hide the default desktop sidebar purchase card */
+            .purchase-card {
+                display: none; 
+            }
+
+            .product-detail-container { padding-bottom: 100px; }
+            
+            /* Fix Sticky Navbar overlap */
+            .mobile-sticky-footer {
                 position: fixed;
                 bottom: 0;
                 left: 0;
                 right: 0;
-                z-index: 1000;
-                top: auto;
-            }
-            .purchase-card {
-                border-radius: 16px 16px 0 0;
-                box-shadow: 0 -8px 24px rgba(0,0,0,0.12);
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding: 16px 20px calc(16px + env(safe-area-inset-bottom));
                 background: #fff;
-            }
-            .purchase-card-title, .hide-mobile-tokped, .subtotal-row { display: none !important; }
-            
-            .mobile-price-preview {
-                flex: 1;
-                min-width: 100px;
-            }
-            .mobile-price-preview .label { 
-                font-size: 11px; 
-                color: rgba(0,0,0,0.54); 
-                display: block;
-                margin-bottom: 2px;
-            }
-            .mobile-price-preview .val { 
-                font-size: 15px; 
-                font-weight: 800; 
-                color: #004aad; 
-                white-space: nowrap;
-            }
-
-            #formTokped {
-                display: flex;
-                flex: 2.5;
-                gap: 8px;
-                margin: 0;
-            }
-
-            .btn-tokped-green, .btn-tokped-outline {
-                width: 100%;
-                margin-bottom: 0 !important;
-                padding: 10px 4px !important;
-                font-size: 12px !important;
-                height: 42px;
-                flex: 1;
-                display: flex;
+                padding: 10px 12px;
+                padding-bottom: calc(10px + env(safe-area-inset-bottom));
+                box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
+                z-index: 9999;
+                display: flex !important;
+                gap: 10px;
                 align-items: center;
-                justify-content: center;
-                white-space: nowrap;
+                border-top: 1px solid #eee;
+                justify-content: space-between;
             }
-            .product-detail-container { padding-bottom: 140px; }
+            
+            /* Pricing Section in Footer */
+            .mobile-footer-price {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                min-width: fit-content; /* Ensure price doesn't get crushed */
+            }
+
+            /* Buttons Container in Footer */
+            .mobile-footer-actions {
+                display: flex;
+                gap: 8px;
+                flex: 1; /* Take remaining space */
+                justify-content: flex-end;
+            }
+
+            /* Tokopedia-like Button Styling for Mobile Footer */
+            .mobile-sticky-footer .btn-tokped-green, 
+            .mobile-sticky-footer .btn-tokped-outline {
+                margin: 0 !important;
+                justify-content: center;
+                height: 40px;
+                font-size: 13px !important;
+                border-radius: 8px;
+                padding: 0 10px !important;
+                width: 100%; /* Fill the container space */
+            }
         }
     </style>
 
@@ -353,6 +360,38 @@
                         <span class="price-original">Rp {{ number_format($product->price_before_discount, 0, ',', '.') }}</span>
                         @endif
                     </div>
+
+                    <!-- MOBILE VARIANT SECTION (Visible only on mobile) -->
+                    <div class="mobile-variant-section">
+                        <h4 style="font-size: 14px; font-weight: 700; color: #001f3f; margin-bottom: 12px;">Pilih Varian</h4>
+                        <!-- Mobile Variants Rendered Here -->
+                        @if(count($product->variants) > 0)
+                            @foreach($product->variants->groupBy('attribute_name') as $attr_name => $variants)
+                            <div class="variant-group mb-3">
+                                <label style="font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 8px; display: block;">{{ $attr_name }}</label>
+                                <div class="variant-options" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                    @foreach($variants as $index => $variant)
+                                    <label class="variant-btn" style="cursor: pointer;">
+                                        <input type="radio" name="mobile_variants[{{ $attr_name }}]" value="{{ $variant->id }}" class="d-none mobile-variant-radio" {{ $index == 0 ? 'checked' : '' }} data-extra="{{ $variant->price_extra }}" onchange="syncMobileToDesktop('{{ $attr_name }}', '{{ $variant->id }}')">
+                                        <span class="variant-label-styled">{{ $variant->attribute_value }}</span>
+                                    </label>
+                                    @endforeach
+                                </div>
+                            </div>
+                            @endforeach
+                        @endif
+                        
+                        <!-- Mobile Qty -->
+                        <div class="d-flex align-items-center gap-3 mt-3">
+                            <span style="font-size: 13px; font-weight: 600; color: #001f3f;">Jumlah:</span>
+                            <div class="qty-selector-minimal" style="background: #fff;">
+                                <button type="button" class="qty-btn-min" onclick="updateQtyTokped(-1)">-</button>
+                                <input type="text" value="1" id="qtyMobile" class="qty-input-min" readonly>
+                                <button type="button" class="qty-btn-min" onclick="updateQtyTokped(1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="product-tabs-minimal">
                         <div class="tab-minimal active" onclick="switchTab(this, 'detail')">Detail</div>
@@ -435,7 +474,7 @@
                                         <div class="variant-options" style="display: flex; flex-wrap: wrap; gap: 8px;">
                                             @foreach($variants as $index => $variant)
                                             <label class="variant-btn" style="cursor: pointer;">
-                                                <input type="radio" name="variants[{{ $attr_name }}]" value="{{ $variant->id }}" class="d-none variant-radio" {{ $index == 0 ? 'checked' : '' }} data-extra="{{ $variant->price_extra }}" onchange="updatePrice()">
+                                                <input type="radio" name="variants[{{ $attr_name }}]" value="{{ $variant->id }}" class="d-none variant-radio" {{ $index == 0 ? 'checked' : '' }} data-extra="{{ $variant->price_extra }}" onchange="updatePrice('desktop')">
                                                 <span class="variant-label-styled">{{ $variant->attribute_value }}</span>
                                             </label>
                                             @endforeach
@@ -454,7 +493,8 @@
                                         transition: all 0.2s;
                                         display: inline-block;
                                     }
-                                    .variant-radio:checked + .variant-label-styled {
+                                    .variant-radio:checked + .variant-label-styled,
+                                    .mobile-variant-radio:checked + .variant-label-styled {
                                         border-color: #004aad;
                                         background: #ecf3ff;
                                         color: #004aad;
@@ -477,11 +517,6 @@
                                     </div>
                                 </div>
 
-                                <div class="mobile-price-preview d-lg-none">
-                                    <span class="label">Total Harga</span>
-                                    <span class="val" id="mobileSubtotal">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
-                                </div>
-
                                 <button type="submit" name="action" value="cart" class="btn-tokped-green">
                                     <i class="fas fa-plus"></i> Keranjang
                                 </button>
@@ -493,6 +528,18 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Mobile Sticky Footer (New Implementation) -->
+    <div class="mobile-sticky-footer">
+        <div class="mobile-footer-price">
+            <span style="font-size: 10px; color: #64748b; margin-bottom: 2px;">Total Harga</span>
+            <span style="font-size: 15px; font-weight: 800; color: #004aad; white-space: nowrap;" id="mobileStickyPrice">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+        </div>
+        <div class="mobile-footer-actions">
+            <button type="button" onclick="submitMobileForm('cart')" class="btn-tokped-green"> + Keranjang</button>
+            <button type="button" onclick="submitMobileForm('checkout')" class="btn-tokped-outline"> Beli Langsung</button>
         </div>
     </div>
 
@@ -539,33 +586,78 @@
             document.getElementById('tab-' + target).style.display = 'block';
         }
 
-        function updatePrice() {
+        function updatePrice(source = 'desktop') {
             let extra = 0;
-            document.querySelectorAll('.variant-radio:checked').forEach(radio => {
+            // Determine which set of inputs to check based on visibility
+            const isMobile = window.innerWidth <= 991;
+            const selector = isMobile ? '.mobile-variant-radio:checked' : '.variant-radio:checked';
+            
+            document.querySelectorAll(selector).forEach(radio => {
                 extra += parseFloat(radio.dataset.extra);
             });
             
-            const qty = parseInt(document.getElementById('qtyTokped').value);
+            const qty = parseInt(document.getElementById(isMobile ? 'qtyMobile' : 'qtyTokped').value);
             const total = (basePrice + extra) * qty;
             
             const formatted = 'Rp ' + new Intl.NumberFormat('id-ID').format(total);
+            
+            // Update all price displays
             const subtotalEl = document.getElementById('subtotalTokped');
-            const mobileSubtotalEl = document.getElementById('mobileSubtotal');
+            const mobileStickyPrice = document.getElementById('mobileStickyPrice');
             
             if(subtotalEl) subtotalEl.innerText = formatted;
-            if(mobileSubtotalEl) mobileSubtotalEl.innerText = formatted;
+            if(mobileStickyPrice) mobileStickyPrice.innerText = formatted;
         }
 
         function updateQtyTokped(val) {
-            const qtyInput = document.getElementById('qtyTokped');
+            // Get both inputs
+            const qtyDesktop = document.getElementById('qtyTokped');
+            const qtyMobile = document.getElementById('qtyMobile');
             const finalQtyInput = document.getElementById('finalQtyTokped');
             
-            let qty = parseInt(qtyInput.value);
-            qty = Math.max(1, qty + val);
+            let currentQty = parseInt(qtyDesktop.value);
+            let newQty = Math.max(1, currentQty + val);
             
-            qtyInput.value = qty;
-            finalQtyInput.value = qty;
+            // Sync all inputs
+            qtyDesktop.value = newQty;
+            qtyMobile.value = newQty;
+            finalQtyInput.value = newQty;
+            
             updatePrice();
+        }
+        
+        function syncMobileToDesktop(group, value) {
+            // Find desktop radio with same value
+            const desktopRadio = document.querySelector(`input[name="variants[${group}]"][value="${value}"]`);
+            if(desktopRadio) {
+                desktopRadio.checked = true;
+                updatePrice('mobile');
+            }
+        }
+        
+        function submitMobileForm(action) {
+            const form = document.getElementById('formTokped');
+            
+            // Check HTML5 Validation first (for required variants)
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Create hidden input for action if not exists
+            // Remove existing action input to avoid duplicates/confusion
+            const existingInput = form.querySelector('input[name="action"][type="hidden"]');
+            if(existingInput) {
+                existingInput.remove();
+            }
+
+            const actionInput = document.createElement('input');
+            actionInput.type = 'hidden';
+            actionInput.name = 'action';
+            actionInput.value = action;
+            form.appendChild(actionInput);
+            
+            form.submit();
         }
 
         // Initialize price on load if there are variants
