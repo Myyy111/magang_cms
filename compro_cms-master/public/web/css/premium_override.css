@@ -264,55 +264,6 @@ body {
     /* Allow bar overlap */
 }
 
-/* Background Animated Blobs */
-.hero-bg-blobs {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    overflow: hidden;
-    display: none;
-    /* Added to remove blobs */
-}
-
-.hero-bg-blobs .blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(120px);
-    opacity: 0.15;
-}
-
-.blob-1 {
-    width: 600px;
-    height: 600px;
-    background: #004aad;
-    top: -10%;
-    left: -10%;
-    animation: blobMove 15s infinite alternate;
-}
-
-.blob-2 {
-    width: 500px;
-    height: 500px;
-    background: #f8be14;
-    bottom: 5%;
-    right: -5%;
-    animation: blobMove 12s infinite alternate-reverse;
-}
-
-@keyframes blobMove {
-    0% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    100% {
-        transform: translate(50px, 100px) scale(1.1);
-    }
-}
-
-.hero-enterprise-style .slide-item::before {
-    display: none !important;
-}
-
 .hero-enterprise-style .slide-item {
     height: 100% !important;
     display: flex !important;
@@ -320,9 +271,18 @@ body {
     position: relative;
     z-index: 5;
     padding-top: 160px;
-    /* Increased to avoid header overlap */
     padding-bottom: 80px;
     background: transparent !important;
+}
+
+.hero-enterprise-style .slide-item::before {
+    display: none !important;
+}
+
+@media (max-width: 991px) {
+    .hero-enterprise-style {
+        min-height: 850px !important;
+    }
 }
 
 /* Typography & Content */
@@ -582,23 +542,36 @@ body {
 
 /* Mobile Fixes */
 @media (max-width: 991px) {
-    .hero-enterprise-style {
-        min-height: 1000px !important;
+    .banner-carousel .hero-content-box {
+        text-align: center;
+        margin-bottom: 40px;
     }
 
     .hero-enterprise-style h1 {
-        font-size: 42px !important;
+        font-size: 36px !important;
+        margin-bottom: 15px !important;
     }
 
-    .quick-item {
-        border: none !important;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    .hero-enterprise-style .text-description {
+        min-height: auto;
+        margin-bottom: 30px !important;
     }
 
-    .hero-quick-bar-wrapper {
-        transform: translateY(20px);
-        position: relative;
-        margin-top: 50px;
+    .hero-enterprise-style .text-description p {
+        font-size: 15px !important;
+    }
+
+    .hero-showcase-container {
+        padding-left: 0;
+    }
+
+    .hero-main-img {
+        border-radius: 30px;
+        min-height: 300px;
+    }
+
+    .hero-nav-lines {
+        bottom: 30px;
     }
 
     .floating-data-card {
@@ -831,22 +804,85 @@ body {
 .about-title-wrapper h2 {
     font-size: 48px !important;
     font-weight: 800 !important;
-    color: var(--primary-blue);
-    margin-bottom: 30px;
+    color: var(--primary-blue) !important;
+    margin-bottom: 25px !important;
     position: relative;
-    display: inline-block;
+    display: block !important;
+    letter-spacing: -0.02em;
 }
 
-.about-title-wrapper h2::after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    width: 60px;
-    height: 4px;
-    background: var(--accent-yellow);
-    border-radius: 2px;
+.about-title-wrapper .yellow-separator {
+    display: block !important;
+    margin: 0 0 30px 0 !important;
 }
+
+/* Mobile-only Justify and Alignment */
+@media (max-width: 991px) {
+
+    .about-text p,
+    .vision-mission-box p,
+    .vision-mission-box span,
+    .text-description p,
+    .sec-title p,
+    .quick-card-desc,
+    .testimonial-text-premium,
+    .blog-content-premium p,
+    .process-card-premium .text-muted,
+    .info-block p,
+    .history-content li,
+    .service-details p,
+    .blog-details p,
+    .page-content p,
+    .team-details p,
+    .why-choose-us .inner-column div,
+    .why-choose-us .inner-column li {
+        text-align: justify !important;
+        text-justify: inter-word !important;
+        line-height: 1.7 !important;
+    }
+}
+
+.about-text p,
+.vision-mission-box p,
+.vision-mission-box span {
+    line-height: 1.8 !important;
+}
+
+
+@media (max-width: 768px) {
+    .about-section-premium {
+        padding: 60px 0;
+    }
+
+    .about-title-wrapper {
+        text-align: center !important;
+    }
+
+    .about-title-wrapper h2 {
+        font-size: 28px !important;
+        margin-bottom: 15px !important;
+    }
+
+    .about-title-wrapper .yellow-separator,
+    .why-choose-us .sec-title .yellow-separator {
+        margin: 10px auto !important;
+        display: block !important;
+    }
+
+    .why-choose-us .sec-title,
+    .why-choose-us .sec-title h2 {
+        text-align: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .about-text p {
+        font-size: 15px !important;
+        line-height: 1.8 !important;
+    }
+}
+
+/* Separator styling handled by .yellow-separator class */
 
 /* ==========================================================================
    YELLOW SEPARATOR WITH DOT (UNIFIED STYLE)
@@ -2353,64 +2389,70 @@ body {
 /* ==========================================================================
    TEAM PROFILE MODAL (BRI STYLE)
    ========================================================================== */
+.team-profile-modal .modal-dialog {
+    max-width: 1100px !important;
+    margin: 1.75rem auto;
+}
+
 .team-profile-modal .modal-content {
-    border-radius: 32px !important;
+    border-radius: 30px !important;
     border: none !important;
     overflow: hidden;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
 }
 
 .team-profile-modal .modal-body {
-    padding: 60px !important;
+    padding: 60px 70px !important;
     position: relative;
     background: #fff;
 }
 
 .btn-close-custom {
     position: absolute;
-    top: 30px;
-    right: 40px;
+    top: 40px;
+    right: 50px;
     background: none;
     border: none;
-    color: #f8be14;
-    font-weight: 700;
+    color: #ff9300 !important;
+    /* BRI Orange */
+    font-weight: 600;
     font-size: 16px;
     display: flex;
     align-items: center;
     gap: 8px;
-    transition: all 0.3s ease;
-    z-index: 100000 !important;
-    cursor: pointer !important;
-    pointer-events: auto !important;
-}
-
-.btn-close-custom:hover {
-    color: #e5af12;
-    transform: scale(1.05);
+    z-index: 10;
+    cursor: pointer;
 }
 
 .member-photo-wrapper {
-    border-radius: 24px;
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+    width: 100%;
+    max-width: 360px;
+    /* Enlarge photo to match BRI */
+    margin: 0 auto;
+    background: #f8fafc;
 }
 
 .member-photo {
     width: 100%;
     height: auto;
-    object-fit: cover;
     display: block;
+    object-fit: cover;
+    aspect-ratio: 4/5;
 }
 
 /* Modal Specific Member Name */
 .team-profile-modal .member-name {
     font-size: 32px !important;
-    font-weight: 900 !important;
-    color: #333 !important;
-    margin-bottom: 5px !important;
+    font-weight: 700 !important;
+    color: #000 !important;
+    margin: 0 0 5px 0 !important;
+    line-height: 1.2;
 }
 
-/* Homepage Carousel Card Styles */
+/* Restore Homepage Carousel Card Styles */
 #team-section-root .member-name {
     font-size: 24px !important;
     font-weight: 700 !important;
@@ -2453,22 +2495,34 @@ body {
 }
 
 .member-designation {
-    font-size: 17px !important;
-    font-weight: 700 !important;
-    color: var(--primary-blue) !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #00529C !important;
+    /* BRI Blue */
     margin-bottom: 35px !important;
 }
 
 .info-block {
     margin-bottom: 25px;
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
 }
 
 .info-block .section-title {
     display: block;
     font-size: 16px;
-    font-weight: 800;
-    color: var(--primary-blue);
-    margin-bottom: 12px;
+    font-weight: 700;
+    color: #00529C !important;
+    margin-bottom: 8px;
+    text-transform: none;
+}
+
+.info-block p {
+    color: #444 !important;
+    line-height: 1.6;
+    font-size: 15px;
+    margin-bottom: 0;
 }
 
 .history-list {
@@ -2478,9 +2532,16 @@ body {
 }
 
 .history-list li {
+    padding: 0 !important;
+    margin-bottom: 10px;
+    color: #444 !important;
+    line-height: 1.6;
+    font-size: 15px;
     position: relative;
-    padding-left: 0;
-    margin-bottom: 8px;
+}
+
+.history-list li::before {
+    display: none !important;
 }
 
 .contact-info {
@@ -2490,17 +2551,77 @@ body {
 }
 
 @media (max-width: 768px) {
+    .team-profile-modal .modal-dialog {
+        margin: 20px !important;
+        max-width: calc(100% - 40px) !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .team-profile-modal .modal-content {
+        max-height: 85vh !important;
+        /* Create the cut-off effect */
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
     .team-profile-modal .modal-body {
-        padding: 40px 25px !important;
+        padding: 50px 25px 40px 25px !important;
+        overflow-y: auto !important;
+        /* Enable sliding/scrolling for cut-off content */
+        -webkit-overflow-scrolling: touch;
     }
 
     .btn-close-custom {
-        top: 15px;
-        right: 20px;
+        top: 20px !important;
+        right: 20px !important;
+        background: white !important;
+        padding: 5px 10px !important;
+        border-radius: 50px !important;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .member-photo-wrapper {
+        max-width: 280px !important;
+        margin: 0 auto 30px auto !important;
     }
 
     .team-profile-modal .member-name {
         font-size: 26px !important;
+        text-align: center !important;
+        margin-bottom: 5px !important;
+    }
+
+    .member-designation {
+        font-size: 15px !important;
+        text-align: center !important;
+        margin-bottom: 35px !important;
+    }
+
+    .info-block .section-title {
+        text-align: center !important;
+        /* Match BRI Mobile style */
+        font-size: 18px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .info-block p,
+    .history-list li {
+        font-size: 14.5px !important;
+        text-align: justify !important;
+        text-justify: inter-word;
+    }
+
+    /* Hide scrollbar for cleaner look like in screenshot if requested, but keep scrolling active */
+    .team-profile-modal .modal-body::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .team-profile-modal .modal-body::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
     }
 }
 

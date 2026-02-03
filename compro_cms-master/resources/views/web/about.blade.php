@@ -57,6 +57,7 @@
                 <div class="col-lg-6 col-md-12 mb-5 mb-lg-0 wow fadeInLeft">
                     <div class="about-title-wrapper start mb-4" style="text-align: left !important;">
                         <h2 style="color: #000000 !important; font-size: 42px !important; font-weight: 900 !important; font-family: 'Inter', sans-serif !important; letter-spacing: -0.02em !important; margin-bottom: 15px !important; display: block;">{{ $about->title }}</h2>
+                        <div class="yellow-separator"></div>
                     </div>
                     <div class="about-text">
                         <div style="color: #000000 !important; font-size: 17px; line-height: 1.8; font-family: 'Inter', sans-serif;">
@@ -146,7 +147,7 @@
                     <div class="inner-column">
                         <div class="sec-title left mb-4">
                             <h2 style="color: #000000 !important; font-size: 42px !important; font-weight: 900 !important; font-family: 'Inter', sans-serif !important; letter-spacing: -0.02em !important; margin-bottom: 15px !important; display: block;">{{ $section_whyus->title }}</h2>
-                            <div class="my-3 rounded" style="width: 60px; height: 3px; background: #f1c40f; display: block !important; margin: 0 !important;"></div>
+                            <div class="yellow-separator"></div>
                         </div>
                         <div class="mb-4" style="color: #000000 !important; line-height: 1.8; font-size: 16px;">{!! $section_whyus->description !!}</div>
                         <ul class="list-unstyled mb-5">
@@ -233,7 +234,7 @@
     <!-- Team Member Modals (Premium BRI-Style Redesign) -->
     @foreach($members as $member)
     <div class="modal fade team-profile-modal" id="teamModal{{ $member->id }}" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-body">
                     <!-- Custom Close Button -->
@@ -241,30 +242,14 @@
                         <i class="far fa-times-circle"></i> Close
                     </button>
 
-                    <div class="row g-5">
+                    <div class="row g-4">
                         <!-- Photo Column -->
                         <div class="col-md-5">
                             <div class="member-photo-wrapper">
                                 <img src="{{ asset('uploads/member/'.$member->image_path) }}" alt="{{ $member->title }}" class="member-photo">
                             </div>
 
-                            <!-- Social Media (Added subtly under photo) -->
-                            @if($member->facebook || $member->linkedin || $member->instagram || $member->twitter)
-                            <div class="d-flex gap-3 justify-content-center mt-4">
-                                @if($member->facebook)
-                                <a href="{{ $member->facebook }}" target="_blank" style="color: #4B5563; font-size: 18px;"><i class="fab fa-facebook-f"></i></a>
-                                @endif
-                                @if($member->linkedin)
-                                <a href="{{ $member->linkedin }}" target="_blank" style="color: #4B5563; font-size: 18px;"><i class="fab fa-linkedin-in"></i></a>
-                                @endif
-                                @if($member->instagram)
-                                <a href="{{ $member->instagram }}" target="_blank" style="color: #4B5563; font-size: 18px;"><i class="fab fa-instagram"></i></a>
-                                @endif
-                                @if($member->twitter)
-                                <a href="{{ $member->twitter }}" target="_blank" style="color: #4B5563; font-size: 18px;"><i class="fab fa-twitter"></i></a>
-                                @endif
-                            </div>
-                            @endif
+                            <!-- Social Media removed for BRI Style parity -->
                         </div>
 
                         <!-- Info Column -->
@@ -277,11 +262,12 @@
                             @if($member->career_history)
                             <div class="info-block">
                                 <span class="section-title">Riwayat Pekerjaan</span>
-                                <div class="history-content" style="color: #434e5a; line-height: 1.8; font-size: 15px;">
+                                <div class="history-content">
                                     <ul class="history-list">
                                         @foreach(explode("\n", str_replace("\r", "", $member->career_history)) as $career)
-                                            @if(trim($career))
-                                                <li style="margin-bottom: 8px; position: relative;">{{ trim($career) }}</li>
+                                            @php $trimmedCareer = trim($career); @endphp
+                                            @if($trimmedCareer && strtolower($trimmedCareer) != 'riwayat pekerjaan')
+                                                <li>{{ $trimmedCareer }}</li>
                                             @endif
                                         @endforeach
                                     </ul>
@@ -292,11 +278,12 @@
                             @if($member->education_history)
                             <div class="info-block">
                                 <span class="section-title">Riwayat Pendidikan</span>
-                                <div class="history-content" style="color: #434e5a; line-height: 1.8; font-size: 15px;">
+                                <div class="history-content">
                                     <ul class="history-list">
                                         @foreach(explode("\n", str_replace("\r", "", $member->education_history)) as $edu)
-                                            @if(trim($edu))
-                                                <li style="margin-bottom: 8px; position: relative;">{{ trim($edu) }}</li>
+                                            @php $trimmedEdu = trim($edu); @endphp
+                                            @if($trimmedEdu && strtolower($trimmedEdu) != 'riwayat pendidikan')
+                                                <li>{{ $trimmedEdu }}</li>
                                             @endif
                                         @endforeach
                                     </ul>
@@ -307,29 +294,11 @@
                             @if($member->description)
                             <div class="info-block">
                                 <span class="section-title">Tentang</span>
-                                <p style="color: #434e5a; line-height: 1.8; font-size: 15px;">{!! nl2br(e($member->description)) !!}</p>
+                                <p>{!! nl2br(e($member->description)) !!}</p>
                             </div>
                             @endif
 
-                            <!-- Contact Information -->
-                            @if($member->email || $member->phone || $member->whatsapp || $member->website)
-                            <div class="contact-info">
-                                <div class="d-flex flex-wrap gap-4">
-                                    @if($member->email)
-                                    <div class="d-flex align-items-center gap-2">
-                                        <i class="fas fa-envelope" style="color: var(--primary-blue);"></i>
-                                        <a href="mailto:{{ $member->email }}" style="color: #4B5563; text-decoration: none; font-size: 14px;">{{ $member->email }}</a>
-                                    </div>
-                                    @endif
-                                    @if($member->whatsapp)
-                                    <div class="d-flex align-items-center gap-2">
-                                        <i class="fab fa-whatsapp" style="color: #25D366;"></i>
-                                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $member->whatsapp) }}" target="_blank" style="color: #4B5563; text-decoration: none; font-size: 14px;">{{ $member->whatsapp }}</a>
-                                    </div>
-                                    @endif
-                                </div>
-                            </div>
-                            @endif
+                            <!-- Contact Info removed for BRI Style parity -->
                         </div>
                     </div>
                 </div>

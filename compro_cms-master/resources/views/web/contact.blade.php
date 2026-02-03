@@ -150,8 +150,13 @@
                                 <i class="fas fa-envelope"></i> 
                                 <div>
                                     <span>{{ __('contact.email') }}</span>
+                                    @if($setting->email_one != 'subangkit@cmsdutasolusi.co.id')
                                     <a href="mailto:{{ $setting->email_one }}">{{ $setting->email_one }}</a>
-                                    @if(isset($setting->email_two))<br><a href="mailto:{{ $setting->email_two }}">{{ $setting->email_two }}</a>@endif
+                                    @endif
+                                    @if(isset($setting->email_two) && $setting->email_two != 'subangkit@cmsdutasolusi.co.id')
+                                    @if($setting->email_one != 'subangkit@cmsdutasolusi.co.id')<br>@endif
+                                    <a href="mailto:{{ $setting->email_two }}">{{ $setting->email_two }}</a>
+                                    @endif
                                 </div>
                             </li>
                             <li> 
