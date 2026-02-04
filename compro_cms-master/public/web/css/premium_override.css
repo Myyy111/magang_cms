@@ -2386,9 +2386,7 @@ body {
     left: 0 !important;
 }
 
-/* ==========================================================================
-   TEAM PROFILE MODAL (BRI STYLE)
-   ========================================================================== */
+
 .team-profile-modal .modal-dialog {
     max-width: 1100px !important;
     margin: 1.75rem auto;
@@ -2414,7 +2412,6 @@ body {
     background: none;
     border: none;
     color: #ff9300 !important;
-    /* BRI Orange */
     font-weight: 600;
     font-size: 16px;
     display: flex;
@@ -2430,7 +2427,6 @@ body {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
     width: 100%;
     max-width: 360px;
-    /* Enlarge photo to match BRI */
     margin: 0 auto;
     background: #f8fafc;
 }
@@ -2498,7 +2494,6 @@ body {
     font-size: 16px !important;
     font-weight: 600 !important;
     color: #00529C !important;
-    /* BRI Blue */
     margin-bottom: 35px !important;
 }
 
@@ -2602,7 +2597,6 @@ body {
 
     .info-block .section-title {
         text-align: center !important;
-        /* Match BRI Mobile style */
         font-size: 18px !important;
         margin-bottom: 20px !important;
     }

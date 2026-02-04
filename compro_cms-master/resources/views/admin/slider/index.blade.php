@@ -65,20 +65,14 @@
                                     <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#showModal-{{ $row->id }}">
                                         <i class="fas fa-eye"></i>
                                     </button>
-                                    <!-- Include Show modal -->
-                                    @include($view.'.show')
 
                                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal-{{ $row->id }}">
                                         <i class="far fa-edit"></i>
                                     </button>
-                                    <!-- Include Edit modal -->
-                                    @include($view.'.edit')
 
                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ $row->id }}">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
-                                    <!-- Include Delete modal -->
-                                    @include('admin.inc.delete')
                                 </td>
                             </tr>
                           @endforeach
@@ -93,8 +87,53 @@
     </div>
     <!-- end row-->
 
+    <!-- Modals Loop -->
+    @foreach( $rows as $key => $row )
+        @include($view.'.show')
+        @include($view.'.edit')
+        @include('admin.inc.delete')
+    @endforeach
+
+
     
 </div> <!-- container -->
 <!-- End Content-->
 
+@endsection
+
+@section('page_js')
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Initialize Summernote inside Edit Modals when shown
+        $('[id^=editModal-]').on('shown.bs.modal', function() {
+            var $editor = $(this).find('.summernote-dynamic');
+            // Check if already initialized to avoid double init
+            if ($editor.length > 0 && $editor.next('.note-editor').length === 0) {
+                $editor.summernote({
+                     height: 200,
+                     toolbar: [
+                        ["style", ["style"]],
+                        ["font", ["bold", "italic", "underline", "clear"]],
+                        ['fontsize', ['fontsize']],
+                        ["fontname", ["fontname"]],
+                        ["color", ["color"]],
+                        ["para", ["ul", "ol", "paragraph"]],
+                        ["table", ["table"]],
+                        ["insert", ["link"]],
+                    ],
+                    dialogsInBody: true,
+                    callbacks: {
+                        onPaste: function (e) {
+                            var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                            e.preventDefault();
+                            setTimeout(function () {
+                                document.execCommand('insertText', false, bufferText);
+                            }, 10);
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
 @endsection
