@@ -27,12 +27,12 @@
         padding: 0;
         z-index: 1;
         display: flex;
-        justify-content: flex-end; /* Shifted to the right */
+        justify-content: flex-end; /* Desktop alignment */
     }
     .main-image-wrapper {
         position: relative;
         overflow: hidden;
-        border-radius: 40px !important; /* Non-pointy, matching hero slider */
+        border-radius: 40px !important;
         box-shadow: 0 20px 50px rgba(0,0,0,0.1);
         width: 100%;
     }
@@ -46,6 +46,20 @@
     }
     .main-image-wrapper:hover .rounded-custom {
         transform: scale(1.05);
+    }
+
+    /* Mobile Responsive Fixes */
+    @media (max-width: 991px) {
+        .about-image-showcase {
+            justify-content: center !important; /* Center on mobile */
+            margin-top: 40px; /* Space from the button above */
+        }
+        .sec-title h2 {
+            font-size: 32px !important; /* Smaller text for mobile */
+        }
+        .why-choose-us .col-lg-6 {
+            padding-bottom: 20px;
+        }
     }
 </style>
     @endsection
@@ -167,6 +181,20 @@
                             <h2 style="color: #000000 !important; font-size: 42px !important; font-weight: 900 !important; font-family: 'Inter', sans-serif !important; letter-spacing: -0.02em !important; margin-bottom: 15px !important; display: block;">{{ $section_whyus->title }}</h2>
                             <div class="yellow-separator"></div>
                         </div>
+
+                        <!-- Mobile Image Showcase (Shown only on mobile, under title) -->
+                        <div class="d-lg-none mb-5 wow fadeInUp">
+                            <div class="about-image-showcase p-0">
+                                <div class="main-image-wrapper">
+                                    @if(isset($about->image_path))
+                                        <img src="{{ asset('uploads/about/'.$about->image_path) }}" alt="{{ $about->title }}" class="img-fluid rounded-custom">
+                                    @else
+                                        <img src="{{ asset('web/images/resource/about-1.jpg') }}" alt="About Us" class="img-fluid rounded-custom">
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="mb-4" style="color: #000000 !important; line-height: 1.8; font-size: 16px;">{!! $section_whyus->description !!}</div>
                         <ul class="list-unstyled mb-5">
                             @foreach($chooses as $choose)
@@ -190,7 +218,7 @@
                 </div>
                 @endif
 
-                <!-- Right Column: Image or Video Showcase -->
+                <!-- Right Column: Image or Video Showcase (Desktop Only / Video Always) -->
                 <div class="col-lg-6 col-md-12 col-sm-12 wow fadeInRight">
                     @if(!empty($about->video_id))
                         <div class="video-box-wrapper" style="position: relative; border-radius: 30px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.1);">
@@ -199,15 +227,16 @@
                             </div>
                         </div>
                     @else
-                        <div class="about-image-showcase">
-                            <div class="main-image-wrapper">
-                                @if(isset($about->image_path))
-                                    <img src="{{ asset('uploads/about/'.$about->image_path) }}" alt="{{ $about->title }}" class="img-fluid rounded-custom">
-                                @else
-                                    <img src="{{ asset('web/images/resource/about-1.jpg') }}" alt="About Us" class="img-fluid rounded-custom">
-                                @endif
-                                
-                                <!-- Showcase Image -->
+                        <!-- Desktop Only Image Showcase -->
+                        <div class="d-none d-lg-block">
+                            <div class="about-image-showcase">
+                                <div class="main-image-wrapper">
+                                    @if(isset($about->image_path))
+                                        <img src="{{ asset('uploads/about/'.$about->image_path) }}" alt="{{ $about->title }}" class="img-fluid rounded-custom">
+                                    @else
+                                        <img src="{{ asset('web/images/resource/about-1.jpg') }}" alt="About Us" class="img-fluid rounded-custom">
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     @endif
