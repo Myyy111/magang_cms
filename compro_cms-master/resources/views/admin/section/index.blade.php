@@ -49,17 +49,13 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#showModal-{{ $row->id }}">
+                                    <a href="{{ route($route.'.show', $row->id) }}" class="btn btn-success btn-sm">
                                         <i class="fas fa-eye"></i>
-                                    </button>
-                                    <!-- Include Show modal -->
-                                    @include($view.'.show')
+                                    </a>
 
-                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal-{{ $row->id }}">
+                                    <a href="{{ route($route.'.edit', $row->id) }}" class="btn btn-primary btn-sm">
                                         <i class="far fa-edit"></i>
-                                    </button>
-                                    <!-- Include Edit modal -->
-                                    @include($view.'.edit')
+                                    </a>
                                 </td>
                             </tr>
                           @endforeach

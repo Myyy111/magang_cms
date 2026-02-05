@@ -318,7 +318,7 @@ class ServiceController extends Controller
 
         Toastr::success(__('dashboard.updated_successfully'), __('dashboard.success'));
 
-        return redirect()->back();
+        return redirect()->route($this->route.'.index');
     }
 
     /**
@@ -339,6 +339,6 @@ class ServiceController extends Controller
 
         Toastr::success(__('dashboard.deleted_successfully'), __('dashboard.success'));
 
-        return redirect()->back();
+        return redirect()->route($this->route.'.index');
     }
 }

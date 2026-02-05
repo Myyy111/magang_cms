@@ -51,7 +51,12 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        $data['title'] = $this->title;
+        $data['route'] = $this->route;
+        $data['view'] = $this->view;
+        $data['path'] = $this->path;
+
+        return view($this->view.'.create', $data);
     }
 
     /**
@@ -108,7 +113,7 @@ class ClientController extends Controller
 
         Toastr::success(__('dashboard.created_successfully'), __('dashboard.success'));
 
-        return redirect()->back();
+        return redirect()->route($this->route.'.index');
     }
 
     /**
@@ -119,7 +124,13 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        //
+        $data['title'] = $this->title;
+        $data['route'] = $this->route;
+        $data['view'] = $this->view;
+        $data['path'] = $this->path;
+        $data['row'] = $client;
+
+        return view($this->view.'.show', $data);
     }
 
     /**
@@ -130,7 +141,13 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        //
+        $data['title'] = $this->title;
+        $data['route'] = $this->route;
+        $data['view'] = $this->view;
+        $data['path'] = $this->path;
+        $data['row'] = $client;
+
+        return view($this->view.'.edit', $data);
     }
 
     /**
@@ -195,7 +212,7 @@ class ClientController extends Controller
 
         Toastr::success(__('dashboard.updated_successfully'), __('dashboard.success'));
 
-        return redirect()->back();
+        return redirect()->route($this->route.'.index');
     }
 
     /**
@@ -216,6 +233,6 @@ class ClientController extends Controller
 
         Toastr::success(__('dashboard.deleted_successfully'), __('dashboard.success'));
 
-        return redirect()->back();
+        return redirect()->route($this->route.'.index');
     }
 }

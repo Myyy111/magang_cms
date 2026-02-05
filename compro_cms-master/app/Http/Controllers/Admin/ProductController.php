@@ -128,7 +128,13 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return redirect()->route($this->route.'.index');
+        $data['title'] = $this->title;
+        $data['route'] = $this->route;
+        $data['view'] = $this->view;
+        $data['path'] = $this->path;
+        $data['row'] = $product;
+
+        return view($this->view.'.show', $data);
     }
 
     /**
@@ -235,6 +241,6 @@ class ProductController extends Controller
 
         Toastr::success(__('dashboard.deleted_successfully'), __('dashboard.success'));
 
-        return redirect()->back();
+        return redirect()->route($this->route.'.index');
     }
 }

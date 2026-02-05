@@ -28,12 +28,11 @@
 
                   <!-- Data Table Start -->
                   <div class="table-responsive">
-                    <table id="basic-datatable" class="table table-striped table-hover table-dark nowrap full-width">
+                    <table id="basic-datatable" class="table nowrap full-width">
                         <thead>
                             <tr>
                                 <th>{{ __('dashboard.no') }}</th>
                                 <th>{{ __('dashboard.name') }}</th>
-                                <th>{{ __('dashboard.email') }}</th>
                                 <th>{{ __('dashboard.subject') }}</th>
                                 <th>{{ __('dashboard.date') }}</th>
                                 <th>{{ __('dashboard.status') }}</th>
@@ -44,27 +43,29 @@
                           @foreach( $rows as $key => $row )
                             <tr>
                                 <td>{{ $key + 1 }}</td>
-                                <td>{{ $row->name }}</td>
-                                <td>{{ $row->email }}</td>
+                                <td>
+                                    {{ $row->name }}<br>
+                                    <small class="text-muted">{{ $row->email }}</small>
+                                </td>
                                 <td>{!! str_limit(strip_tags($row->subject), 50, ' ...') !!}</td>
-                                <td>{{ date('h:i:s A | d-M-y', strtotime($row->created_at)) }}</td>
+                                <td>{{ date('d M Y', strtotime($row->created_at)) }}</td>
                                 <td>
                                     @if( $row->status == 1 )
-                                    <span class="badge badge-success badge-pill">{{ __('dashboard.active') }}</span>
+                                    <span class="badge badge-success">{{ __('dashboard.active') }}</span>
                                     @else
-                                    <span class="badge badge-danger badge-pill">{{ __('dashboard.inactive') }}</span>
+                                    <span class="badge badge-danger">{{ __('dashboard.inactive') }}</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#showModal-{{ $row->id }}">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <!-- Include Show modal -->
-                                    @include($view.'.show')
+                                    <div class="btn-group">
+                                        <a href="{{ route($route.'.show', $row->id) }}" class="btn btn-success" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
 
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ $row->id }}">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal-{{ $row->id }}" title="Delete">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
                                     <!-- Include Delete modal -->
                                     @include('admin.inc.delete')
                                 </td>

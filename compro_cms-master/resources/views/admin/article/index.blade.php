@@ -33,12 +33,12 @@
                     <table id="basic-datatable" class="table nowrap full-width">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Thumbnail</th>
-                                <th>Title</th>
-                                <th>Category</th>
-                                <th>Status</th>
-                                <th class="text-center">Action</th>
+                                <th>{{ __('dashboard.no') }}</th>
+                                <th>{{ __('dashboard.thumbnail') }}</th>
+                                <th>{{ __('dashboard.title') }}</th>
+                                <th>{{ __('dashboard.category') }}</th>
+                                <th>{{ __('dashboard.status') }}</th>
+                                <th>{{ __('dashboard.action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,11 +47,11 @@
                                 <td>{{ $key + 1 }}</td>
                                 <td>
                                     @if(file_exists(public_path('uploads/'.$path.'/'.$row->image_path)) && !empty($row->image_path))
-                                    <img src="{{ asset('uploads/'.$path.'/'.$row->image_path) }}" class="img-fluid" alt="Blog">
+                                    <img src="{{ asset('uploads/'.$path.'/'.$row->image_path) }}" class="img-fluid rounded shadow-sm" style="max-width: 80px;" alt="Blog">
                                     @endif
                                 </td>
                                 <td>{!! str_limit(strip_tags($row->title), 50, ' ...') !!}</td>
-                                <td>{{ $row->category->title }}</td>
+                                <td><span class="badge badge-info">{{ $row->category->title }}</span></td>
                                 <td>
                                     @if( $row->status == 1 )
                                     <span class="badge badge-success">{{ __('dashboard.active') }}</span>

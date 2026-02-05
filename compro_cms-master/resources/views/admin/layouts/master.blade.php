@@ -83,8 +83,8 @@
                 padding: 10px 20px !important; 
                 border: none !important;
             }
-            .table tbody tr { background: white !important; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: all 0.3s ease; cursor: default; }
-            .table tbody tr:hover { transform: scale(1.005); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.06) !important; }
+            .table tbody tr { background: white !important; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: transform 0.2s ease, box-shadow 0.2s ease; cursor: default; }
+            .table tbody tr:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.06) !important; }
             .table tbody td { 
                 padding: 15px 20px !important; 
                 border: none !important;
@@ -194,6 +194,147 @@
             .card { border: 1px solid var(--slate-200) !important; border-radius: 20px !important; box-shadow: var(--card-shadow) !important; overflow: hidden; }
             .card-header { padding: 1.5rem 2rem !important; background: white !important; border-bottom: 1px solid var(--slate-100) !important; }
             .header-title { font-size: 1.15rem !important; font-weight: 800 !important; color: var(--dark) !important; }
+
+            /* Modal Stability & Anti-Flicker */
+            body.modal-open { 
+                padding-right: 0px !important; 
+                overflow: hidden !important;
+            }
+            /* Matikan efek hover tabel saat modal terbuka untuk menghentikan getaran */
+            body.modal-open .table tbody tr:hover { 
+                transform: none !important; 
+                box-shadow: 0 1px 3px rgba(0,0,0,0.02) !important; 
+            }
+            .modal-backdrop {
+                backdrop-filter: blur(4px) !important;
+                -webkit-backdrop-filter: blur(4px) !important;
+                background-color: rgba(15, 23, 42, 0.5) !important;
+            }
+
+            /* Premium Profile Dropdown */
+            .profile-dropdown { 
+                border: none !important; 
+                border-radius: 20px !important; 
+                box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important; 
+                padding: 10px !important;
+                min-width: 200px !important;
+                margin-top: 15px !important;
+            }
+            .profile-dropdown .dropdown-header { 
+                padding: 15px 20px !important; 
+                background: var(--slate-50) !important; 
+                border-radius: 12px !important; 
+                margin-bottom: 8px !important; 
+            }
+            .profile-dropdown .dropdown-header h6 { 
+                color: var(--slate-400) !important; 
+                font-size: 0.75rem !important; 
+                text-transform: uppercase; 
+                letter-spacing: 0.05em; 
+                font-weight: 700; 
+                margin-bottom: 4px !important;
+            }
+            .profile-dropdown .pro-user-name { 
+                color: var(--dark) !important; 
+                font-size: 0.95rem !important; 
+                font-weight: 800 !important; 
+                display: block !important;
+            }
+            .profile-dropdown .dropdown-item { 
+                padding: 12px 18px !important; 
+                border-radius: 10px !important; 
+                font-weight: 600 !important; 
+                color: var(--slate-600) !important; 
+                transition: all 0.2s ease;
+                display: flex !important;
+                align-items: center !important;
+                gap: 10px !important;
+            }
+            .profile-dropdown .dropdown-item:hover { 
+                background: var(--slate-100) !important; 
+                color: var(--primary) !important; 
+                transform: translateX(5px);
+            }
+            .profile-dropdown .dropdown-item i { font-size: 1.1rem; opacity: 0.7; }
+            .profile-dropdown .dropdown-divider { margin: 8px 0 !important; opacity: 0.5; }
+
+            /* Premium Header/Navbar Styling */
+            .navbar-custom { 
+                background: rgba(255, 255, 255, 0.8) !important; 
+                backdrop-filter: blur(12px) !important; 
+                -webkit-backdrop-filter: blur(12px) !important; 
+                border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important; 
+                box-shadow: 0 4px 15px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02) !important;
+                padding: 0 30px !important;
+                height: 75px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                position: sticky !important;
+                top: 0 !important;
+                z-index: 100 !important;
+                margin-bottom: 0px !important;
+            }
+            .content-page { margin-top: -75px !important; padding-top: 75px !important; }
+            .button-menu-mobile { display: none !important; }
+            
+            .nav-user { 
+                height: 45px !important; 
+                padding: 0 15px !important; 
+                border-radius: 14px !important; 
+                background: var(--slate-50) !important;
+                display: flex !important;
+                align-items: center !important;
+                border: 1px solid var(--slate-100) !important;
+                transition: all 0.2s ease !important;
+            }
+            .nav-user:hover { background: white !important; box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important; border-color: var(--primary-soft) !important; }
+            .nav-user img { 
+                margin: 0 !important; 
+                width: 32px !important; 
+                height: 32px !important; 
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            }
+            
+            /* Breadcrumb Polish */
+            .page-title-box { padding: 30px 0 !important; }
+            .breadcrumb-item a { color: var(--slate-400) !important; font-weight: 600; }
+            .breadcrumb-item.active { color: var(--primary) !important; font-weight: 700; }
+
+            /* Premium Modal Styling */
+            .modal-content { border: none !important; border-radius: 24px !important; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3) !important; overflow: hidden; border: 1px solid rgba(255,255,255,0.1) !important; }
+            .modal-backdrop.show { opacity: 0.5 !important; backdrop-filter: blur(4px) !important; -webkit-backdrop-filter: blur(4px) !important; background-color: rgba(15, 23, 42, 0.7) !important; }
+            .modal-header { border-bottom: 1px solid var(--slate-100) !important; padding: 20px 30px !important; }
+            .modal-body { padding: 40px 30px !important; }
+            .modal-footer { border-top: 1px solid var(--slate-100) !important; padding: 15px 30px 25px !important; display: flex !important; gap: 12px !important; justify-content: center !important; }
+            .modal-footer .btn { margin: 0 !important; padding: 10px 25px !important; min-width: 120px !important; }
+            
+            .modal-icon-container { 
+                width: 80px; 
+                height: 80px; 
+                background: var(--danger-soft); 
+                color: var(--danger); 
+                border-radius: 50%; 
+                display: flex; 
+                align-items: center; 
+                justify-content: center; 
+                font-size: 2.5rem; 
+                margin: 0 auto 25px;
+                animation: pulse-danger 2s infinite;
+            }
+
+            @keyframes pulse-danger {
+                0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.4); }
+                70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(244, 63, 94, 0); }
+                100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
+            }
+
+            .btn-light-premium { 
+                background: var(--slate-100) !important; 
+                color: var(--slate-600) !important; 
+                border: none !important;
+            }
+            .btn-light-premium:hover { background: var(--slate-200) !important; color: var(--dark) !important; }
         </style>
     </head>
 
@@ -244,7 +385,16 @@
 
                     <!-- Topbar Start -->
                     <div class="navbar-custom">
-                        <ul class="list-unstyled topbar-right-menu float-right mb-0">
+                        <div class="navbar-left d-flex align-items-center">
+                            <!-- Menu Toggle Removed as requested -->
+                        </div>
+
+                        <ul class="list-unstyled topbar-right-menu mb-0 d-flex align-items-center">
+                            <li class="d-none d-sm-block">
+                                <a href="{{ route('home') }}" target="_blank" class="btn btn-link text-dark font-weight-700 mr-2" style="text-decoration: none;">
+                                    <i class="fe-external-link mr-1"></i> {{ __('dashboard.home') }}
+                                </a>
+                            </li>
 
                             <!-- Authentication Links -->
                             @guest
@@ -260,26 +410,22 @@
 
                             <li class="dropdown notification-list">
                                 <a class="nav-link dropdown-toggle nav-user mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                    <img src="{{ asset('/dashboard/images/users/user.png') }}" alt="user-image" class="rounded-circle">
+                                    <img src="{{ asset('/dashboard/images/users/user.png') }}" alt="user-image" class="rounded-circle mr-2">
+                                    <span class="pro-user-name d-none d-md-inline-block text-dark font-weight-700">
+                                        {{ Auth::user()->name }} <i class="mdi mdi-chevron-down ml-1"></i>
+                                    </span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown ">
                                     <!-- item-->
-                                    <div class="dropdown-header noti-title">
-                                        <h6 class="text-overflow m-0">{{ __('dashboard.welcome') }}
-                                            <small class="pro-user-name ml-1">
-                                                {{ Auth::user()->name }}
-                                            </small>
-                                        </h6>
+                                    <div class="dropdown-header noti-title text-left">
+                                        <h6>{{ __('dashboard.welcome') }}</h6>
+                                        <span class="pro-user-name">
+                                            {{ Auth::user()->name }}
+                                        </span>
                                     </div>
 
                                     <!-- item-->
-                                    <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                        <i class="fe-user"></i>
-                                        <span>My Account</span>
-                                    </a> -->
-
-                                    <!-- item-->
-                                    <a href="{{ route('admin.setting.index') }}" class="dropdown-item notify-item">
+                                    <a href="{{ route('admin.setting.index') }}" class="dropdown-item">
                                         <i class="fe-settings"></i>
                                         <span>{{ trans_choice('dashboard.setting', 2) }}</span>
                                     </a>
@@ -287,29 +433,19 @@
                                     <div class="dropdown-divider"></div>
 
                                     <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        
-                                        <i class="fe-log-out"></i>
-                                        <span>{{ __('dashboard.logout') }}</span>
+                                    <a href="javascript:void(0);" class="dropdown-item" 
+                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <i class="fe-log-out text-danger"></i>
+                                        <span class="text-danger">{{ __('dashboard.logout') }}</span>
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                         @csrf
                                     </form>
-
                                 </div>
                             </li>
-
                             @endguest
-
                         </ul>
-                        <button class="button-menu-mobile open-left disable-btn">
-                            <i class="fe-menu"></i>
-                        </button>
-                        <div class="app-search">
-                        </div>
                     </div>
                     <!-- end Topbar -->
 

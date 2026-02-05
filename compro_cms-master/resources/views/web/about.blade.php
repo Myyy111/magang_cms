@@ -20,6 +20,35 @@
     <meta name="keywords" content="{!! strip_tags($setting->keywords) !!}">
     @endif
     @endsection
+    @section('scripts')
+<style>
+    .about-image-showcase {
+        position: relative;
+        padding: 0;
+        z-index: 1;
+        display: flex;
+        justify-content: flex-end; /* Shifted to the right */
+    }
+    .main-image-wrapper {
+        position: relative;
+        overflow: hidden;
+        border-radius: 40px !important; /* Non-pointy, matching hero slider */
+        box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        width: 100%;
+    }
+    .rounded-custom {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform 0.6s ease;
+        border-radius: 40px !important;
+        object-fit: cover;
+    }
+    .main-image-wrapper:hover .rounded-custom {
+        transform: scale(1.05);
+    }
+</style>
+    @endsection
 
 @endif
 
@@ -130,20 +159,9 @@
     <section class="why-choose-us py-5" style="background: #ffffff;">
         <div class="container">
             <div class="row align-items-center g-5">
-                @if(!empty($about->video_id))
-                 <!--Image Column-->
-                <div class="col-lg-6 col-md-12 col-sm-12 wow fadeInLeft">
-                    <div class="video-box-wrapper" style="position: relative; border-radius: 30px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.1);">
-                        <div class="ratio ratio-16x9">
-                          <iframe src="https://www.youtube.com/embed/{{ $about->video_id }}?rel=0" allowfullscreen style="border: none;"></iframe>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-
+                <!-- Left Column: Content -->
                 @if(count($chooses) > 0 && isset($section_whyus))
-                <div class="col-lg-6 col-md-12 col-sm-12 wow fadeInRight">
+                <div class="col-lg-6 col-md-12 col-sm-12 wow fadeInLeft">
                     <div class="inner-column">
                         <div class="sec-title left mb-4">
                             <h2 style="color: #000000 !important; font-size: 42px !important; font-weight: 900 !important; font-family: 'Inter', sans-serif !important; letter-spacing: -0.02em !important; margin-bottom: 15px !important; display: block;">{{ $section_whyus->title }}</h2>
@@ -171,6 +189,29 @@
                     </div>
                 </div>
                 @endif
+
+                <!-- Right Column: Image or Video Showcase -->
+                <div class="col-lg-6 col-md-12 col-sm-12 wow fadeInRight">
+                    @if(!empty($about->video_id))
+                        <div class="video-box-wrapper" style="position: relative; border-radius: 30px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.1);">
+                            <div class="ratio ratio-16x9">
+                              <iframe src="https://www.youtube.com/embed/{{ $about->video_id }}?rel=0" allowfullscreen style="border: none;"></iframe>
+                            </div>
+                        </div>
+                    @else
+                        <div class="about-image-showcase">
+                            <div class="main-image-wrapper">
+                                @if(isset($about->image_path))
+                                    <img src="{{ asset('uploads/about/'.$about->image_path) }}" alt="{{ $about->title }}" class="img-fluid rounded-custom">
+                                @else
+                                    <img src="{{ asset('web/images/resource/about-1.jpg') }}" alt="About Us" class="img-fluid rounded-custom">
+                                @endif
+                                
+                                <!-- Showcase Image -->
+                            </div>
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
     </section>

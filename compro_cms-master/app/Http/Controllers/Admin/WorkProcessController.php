@@ -49,7 +49,12 @@ class WorkProcessController extends Controller
      */
     public function create()
     {
-        //
+        $data['title'] = $this->title;
+        $data['route'] = $this->route;
+        $data['view'] = $this->view;
+        $data['path'] = $this->path;
+
+        return view($this->view.'.create', $data);
     }
 
     /**
@@ -76,7 +81,7 @@ class WorkProcessController extends Controller
 
         Toastr::success(__('dashboard.created_successfully'), __('dashboard.success'));
 
-        return redirect()->back();
+        return redirect()->route($this->route.'.index');
     }
 
     /**
@@ -87,7 +92,13 @@ class WorkProcessController extends Controller
      */
     public function show(WorkProcess $workProcess)
     {
-        //
+        $data['title'] = $this->title;
+        $data['route'] = $this->route;
+        $data['view'] = $this->view;
+        $data['path'] = $this->path;
+        $data['row'] = $workProcess;
+
+        return view($this->view.'.show', $data);
     }
 
     /**
@@ -98,7 +109,13 @@ class WorkProcessController extends Controller
      */
     public function edit(WorkProcess $workProcess)
     {
-        //
+        $data['title'] = $this->title;
+        $data['route'] = $this->route;
+        $data['view'] = $this->view;
+        $data['path'] = $this->path;
+        $data['row'] = $workProcess;
+
+        return view($this->view.'.edit', $data);
     }
 
     /**
@@ -126,7 +143,7 @@ class WorkProcessController extends Controller
 
         Toastr::success(__('dashboard.updated_successfully'), __('dashboard.success'));
 
-        return redirect()->back();
+        return redirect()->route($this->route.'.index');
     }
 
     /**
@@ -142,6 +159,6 @@ class WorkProcessController extends Controller
 
         Toastr::success(__('dashboard.deleted_successfully'), __('dashboard.success'));
 
-        return redirect()->back();
+        return redirect()->route($this->route.'.index');
     }
 }

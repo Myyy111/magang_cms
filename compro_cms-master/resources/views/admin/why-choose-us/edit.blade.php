@@ -1,15 +1,33 @@
-    <!-- Edit modal content -->
-    <div id="editModal-{{ $row->id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-              <form class="needs-validation" novalidate action="{{ route($route.'.update', $row->id) }}" method="post" enctype="multipart/form-data">
+@extends('admin.layouts.master')
+@section('title', $title)
+@section('content')
+
+<!-- Start Content-->
+<div class="container-fluid">
+    
+    <!-- start page title -->
+    <!-- Include page breadcrumb -->
+    @include('admin.inc.breadcrumb')
+    <!-- end page title --> 
+
+
+    <div class="row">
+        <div class="col-12">
+            <a href="{{ route($route.'.index') }}" class="btn btn-info">{{ __('dashboard.back') }}</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="header-title">{{ __('dashboard.edit') }} {{ $title }}</h4>
+                </div>
+                <form class="needs-validation" novalidate action="{{ route($route.'.update', $row->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">{{ __('dashboard.edit') }} {{ $title }}</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                </div>
-                <div class="modal-body">
+                <div class="card-body">
+
                     <!-- Form Start -->
                     <div class="form-group">
                         <label for="title">{{ __('dashboard.title') }} <span>*</span></label>
@@ -25,14 +43,10 @@
                         <textarea class="form-control summernote" name="description" id="description" rows="8">{!! $row->description !!}</textarea>
                     </div>
 
-                    {{-- <div class="form-group">
+                    <div class="form-group">
                         <label for="icon">{{ __('dashboard.icon') }}</label>
-                        <input type="text" class="form-control" name="icon" id="icon" value="{{ $row->icon }}" placeholder='<i class="far fa-star"></i>'>
-
-                        <div class="invalid-feedback">
-                          {{ __('dashboard.please_provide') }} {{ __('dashboard.icon') }}
-                        </div>
-                    </div> --}}
+                        <input type="text" class="form-control" name="icon" id="icon" value="{{ $row->icon }}">
+                    </div>
 
                     <div class="form-group">
                         <label for="status">{{ __('dashboard.select_status') }}</label>
@@ -42,12 +56,21 @@
                         </select>
                     </div>
                     <!-- Form End -->
+                    
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-dismiss="modal">{{ __('dashboard.close') }}</button>
-                    <button type="submit" class="btn btn-primary">{{ __('dashboard.update') }}</button>
+                <div class="card-footer">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">{{ __('dashboard.update') }}</button>
+                    </div>
                 </div>
-              </form>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+                </form>
+            </div>
+        </div><!-- end col-->
+    </div>
+    <!-- end row-->
+
+    
+</div> <!-- container -->
+<!-- End Content-->
+
+@endsection

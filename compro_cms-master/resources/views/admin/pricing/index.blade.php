@@ -31,7 +31,7 @@
                   
                   <!-- Data Table Start -->
                   <div class="table-responsive">
-                    <table id="basic-datatable" class="table table-striped table-hover table-dark nowrap full-width">
+                    <table id="basic-datatable" class="table nowrap full-width">
                         <thead>
                             <tr>
                                 <th>{{ __('dashboard.no') }}</th>
@@ -48,31 +48,33 @@
                                 <td>{{ $key + 1 }}</td>
                                 <td>{!! str_limit(strip_tags($row->title), 50, ' ...') !!}</td>
                                 <td>
-                                    {{ $row->price }} 
+                                    <span class="text-primary font-weight-bold">{{ $row->price }}</span>
                                     @if(!empty($row->old_price))
-                                        / <del>{{ $row->old_price }}</del>
+                                        / <del class="text-muted">{{ $row->old_price }}</del>
                                     @endif
                                 </td>
-                                <td>{{ $row->duration }}</td>
+                                <td><span class="badge badge-info">{{ $row->duration }}</span></td>
                                 <td>
                                     @if( $row->status == 1 )
-                                    <span class="badge badge-success badge-pill">{{ __('dashboard.active') }}</span>
+                                    <span class="badge badge-success">{{ __('dashboard.active') }}</span>
                                     @else
-                                    <span class="badge badge-danger badge-pill">{{ __('dashboard.inactive') }}</span>
+                                    <span class="badge badge-danger">{{ __('dashboard.inactive') }}</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route($route.'.show', [$row->id]) }}" class="btn btn-success btn-sm">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
+                                    <div class="btn-group">
+                                        <a href="{{ route($route.'.show', [$row->id]) }}" class="btn btn-success" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
 
-                                    <a href="{{ route($route.'.edit', [$row->id]) }}" class="btn btn-primary btn-sm">
-                                        <i class="far fa-edit"></i>
-                                    </a>
+                                        <a href="{{ route($route.'.edit', [$row->id]) }}" class="btn btn-primary" title="Edit">
+                                            <i class="far fa-edit"></i>
+                                        </a>
 
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ $row->id }}">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal-{{ $row->id }}" title="Delete">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
                                     <!-- Include Delete modal -->
                                     @include('admin.inc.delete')
                                 </td>

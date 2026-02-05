@@ -49,7 +49,12 @@ class ArticleCategoryController extends Controller
      */
     public function create()
     {
-        //
+        $data['title'] = $this->title;
+        $data['route'] = $this->route;
+        $data['view'] = $this->view;
+        $data['path'] = $this->path;
+
+        return view($this->view.'.create', $data);
     }
 
     /**
@@ -75,7 +80,7 @@ class ArticleCategoryController extends Controller
 
         Toastr::success(__('dashboard.created_successfully'), __('dashboard.success'));
 
-        return redirect()->back();
+        return redirect()->route($this->route.'.index');
     }
 
     /**
@@ -86,7 +91,12 @@ class ArticleCategoryController extends Controller
      */
     public function show(ArticleCategory $articleCategory)
     {
-        //
+        $data['title'] = $this->title;
+        $data['route'] = $this->route;
+        $data['view'] = $this->view;
+        $data['row'] = $articleCategory;
+
+        return view($this->view.'.show', $data);
     }
 
     /**
@@ -97,7 +107,13 @@ class ArticleCategoryController extends Controller
      */
     public function edit(ArticleCategory $articleCategory)
     {
-        //
+        $data['title'] = $this->title;
+        $data['route'] = $this->route;
+        $data['view'] = $this->view;
+        $data['path'] = $this->path;
+        $data['row'] = $articleCategory;
+
+        return view($this->view.'.edit', $data);
     }
 
     /**
@@ -124,7 +140,7 @@ class ArticleCategoryController extends Controller
 
         Toastr::success(__('dashboard.updated_successfully'), __('dashboard.success'));
 
-        return redirect()->back();
+        return redirect()->route($this->route.'.index');
     }
 
     /**
@@ -140,6 +156,6 @@ class ArticleCategoryController extends Controller
 
         Toastr::success(__('dashboard.deleted_successfully'), __('dashboard.success'));
 
-        return redirect()->back();
+        return redirect()->route($this->route.'.index');
     }
 }

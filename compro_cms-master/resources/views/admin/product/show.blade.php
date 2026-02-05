@@ -27,10 +27,23 @@
 
                     <!-- Details View Start -->
                     <h4><span class="text-highlight">{{ __('dashboard.title') }}:</span> {{ $row->title }}</h4>
+                    <p><span class="text-highlight">SKU:</span> {{ $row->sku ?? '-' }}</p>
+                    <p><span class="text-highlight">Price:</span> <span class="text-primary font-weight-bold">Rp {{ number_format($row->price, 0, ',', '.') }}</span></p>
+                    <p><span class="text-highlight">Stock:</span> {{ $row->stock }}</p>
                     <hr/>
-                    <p><span class="text-highlight">{{ __('dashboard.icon') }}:</span> {!! $row->icon !!}</p>
+
+                    @if(file_exists(public_path('uploads/'.$path.'/'.$row->image_path)))
+                    <div class="mb-3">
+                        <p><span class="text-highlight">{{ __('dashboard.thumbnail') }}:</span></p>
+                        <img src="{{ asset('uploads/'.$path.'/'.$row->image_path) }}" class="img-fluid rounded border shadow-sm" style="max-width: 300px;" alt="Product">
+                    </div>
                     <hr/>
-                    <p><span class="text-highlight">{{ __('dashboard.description') }}:</span> {!! $row->description !!}</p>
+                    @endif
+
+                    <div class="mb-3">
+                        <p><span class="text-highlight">{{ __('dashboard.description') }}:</span></p>
+                        <div class="border p-3 rounded bg-light">{!! $row->description !!}</div>
+                    </div>
 
                     <hr/>
                     <p><span class="text-highlight">{{ __('dashboard.status') }}:</span> 
@@ -42,6 +55,9 @@
                     </p>
                     <!-- Details View End -->
                     
+                </div>
+                <div class="card-footer">
+                    <a href="{{ route($route.'.edit', $row->id) }}" class="btn btn-primary">{{ __('dashboard.edit') }}</a>
                 </div>
             </div>
         </div><!-- end col-->

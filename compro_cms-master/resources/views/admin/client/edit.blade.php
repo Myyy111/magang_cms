@@ -1,15 +1,33 @@
-    <!-- Edit modal content -->
-    <div id="editModal-{{ $row->id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-              <form class="needs-validation" novalidate action="{{ route($route.'.update', $row->id) }}" method="post" enctype="multipart/form-data">
+@extends('admin.layouts.master')
+@section('title', $title)
+@section('content')
+
+<!-- Start Content-->
+<div class="container-fluid">
+    
+    <!-- start page title -->
+    <!-- Include page breadcrumb -->
+    @include('admin.inc.breadcrumb')
+    <!-- end page title --> 
+
+
+    <div class="row">
+        <div class="col-12">
+            <a href="{{ route($route.'.index') }}" class="btn btn-info">{{ __('dashboard.back') }}</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="header-title">{{ __('dashboard.edit') }} {{ $title }}</h4>
+                </div>
+                <form class="needs-validation" novalidate action="{{ route($route.'.update', $row->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">{{ __('dashboard.edit') }} {{ $title }}</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                </div>
-                <div class="modal-body">
+                <div class="card-body">
+
                     <!-- Form Start -->
                     <div class="form-group">
                         <label for="title">{{ __('dashboard.title') }} <span>*</span></label>
@@ -26,14 +44,23 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="image">{{ __('dashboard.logo') }} <span>{{ __('dashboard.image_size', ['height' => 100, 'width' => 200]) }}</span></label>
+                        <label for="image">{{ __('dashboard.image') }}</label>
+                        @if(file_exists(public_path('uploads/'.$path.'/'.$row->image_path)))
+                        <div class="mb-2">
+                            <img src="{{ asset('uploads/'.$path.'/'.$row->image_path) }}" class="img-fluid" style="max-width: 150px;" alt="Logo">
+                        </div>
+                        @endif
                         <input type="file" class="form-control" name="image" id="image">
 
                         <div class="invalid-feedback">
-                          {{ __('dashboard.please_provide') }} {{ __('dashboard.logo') }}
+                          {{ __('dashboard.please_provide') }} {{ __('dashboard.image') }}
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label for="link">{{ __('dashboard.link') }}</label>
+                        <input type="url" class="form-control" name="link" id="link" value="{{ $row->link }}">
+                    </div>
 
                     <div class="form-group">
                         <label for="status">{{ __('dashboard.select_status') }}</label>
@@ -43,12 +70,21 @@
                         </select>
                     </div>
                     <!-- Form End -->
+                    
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-dismiss="modal">{{ __('dashboard.close') }}</button>
-                    <button type="submit" class="btn btn-primary">{{ __('dashboard.update') }}</button>
+                <div class="card-footer">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">{{ __('dashboard.update') }}</button>
+                    </div>
                 </div>
-              </form>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+                </form>
+            </div>
+        </div><!-- end col-->
+    </div>
+    <!-- end row-->
+
+    
+</div> <!-- container -->
+<!-- End Content-->
+
+@endsection

@@ -30,15 +30,13 @@
 
                   <!-- Data Table Start -->
                   <div class="table-responsive">
-                    <table id="basic-datatable" class="table table-striped table-hover table-dark nowrap full-width">
+                    <table id="basic-datatable" class="table nowrap full-width">
                         <thead>
                             <tr>
-                                <th>{{ __('dashboard.sl') }}</th>
+                                <th>{{ __('dashboard.no') }}</th>
                                 <th>{{ __('dashboard.invoice_no') }}</th>
                                 <th>{{ __('dashboard.name') }}</th>
-                                <th>{{ __('dashboard.email') }}</th>
                                 <th>{{ __('dashboard.invoice_date') }}</th>
-                                <th>{{ __('dashboard.invoice_type') }}</th>
                                 <th>{{ __('dashboard.status') }}</th>
                                 <th>{{ __('dashboard.action') }}</th>
                             </tr>
@@ -47,42 +45,31 @@
                           @foreach( $rows as $key => $row )
                             <tr>
                                 <td>{{ $key + 1 }}</td>
-                                <td><a href="{{ route($route.'.show', [$row->id]) }}">#{{ $row->id }}</a></td>
-                                <td>{{ $row->name }}</td>
-                                <td>{{ $row->email }}</td>
-                                <td>{{ date('h:i:s A | d-M-y', strtotime($row->created_at)) }}</td>
+                                <td><a href="{{ route($route.'.show', [$row->id]) }}" class="font-weight-bold">#{{ $row->id }}</a></td>
                                 <td>
-                                    @if( $row->invoice_type == 0 )
-                                        {{ __('dashboard.estimate') }}
-                                    @elseif( $row->invoice_type == 1 )
-                                        {{ __('dashboard.advance') }}
-                                    @elseif( $row->invoice_type == 2 )
-                                        {{ __('dashboard.interval') }}
-                                    @elseif( $row->invoice_type == 3 )
-                                        {{ __('dashboard.milestone') }}
-                                    @elseif( $row->invoice_type == 4 )
-                                        {{ __('dashboard.final') }}
-                                    @elseif( $row->invoice_type == 5 )
-                                        {{ __('dashboard.full') }}
-                                    @endif
+                                    {{ $row->name }}<br>
+                                    <small class="text-muted">{{ $row->email }}</small>
                                 </td>
+                                <td>{{ date('d M Y', strtotime($row->created_at)) }}</td>
                                 <td>
                                     @if( $row->status == 1 )
-                                    <span class="badge badge-primary badge-pill">{{ __('dashboard.pending') }}</span>
+                                    <span class="badge badge-warning">{{ __('dashboard.pending') }}</span>
                                     @elseif( $row->status == 2 )
-                                    <span class="badge badge-success badge-pill">{{ __('dashboard.paid') }}</span>
+                                    <span class="badge badge-success">{{ __('dashboard.paid') }}</span>
                                     @elseif( $row->status == 0 )
-                                    <span class="badge badge-danger badge-pill">{{ __('dashboard.canceled') }}</span>
+                                    <span class="badge badge-danger">{{ __('dashboard.canceled') }}</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route($route.'.show', [$row->id]) }}" class="btn btn-success btn-sm">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
+                                    <div class="btn-group">
+                                        <a href="{{ route($route.'.show', [$row->id]) }}" class="btn btn-success" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
 
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ $row->id }}">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal-{{ $row->id }}" title="Delete">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
                                     <!-- Include Delete modal -->
                                     @include('admin.inc.delete')
                                 </td>

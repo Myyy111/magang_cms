@@ -92,6 +92,7 @@ class AboutController extends Controller
             }
 
             if (extension_loaded('gd') || extension_loaded('imagick')) {
+                $thumbnailpath = $path . $fileNameToStore;
                 Image::make($request->file('image')->getRealPath())->resize(600, 600, function ($constraint) { $constraint->aspectRatio(); })->save($thumbnailpath);
             } else {
                 $request->file('image')->move($path, $fileNameToStore);

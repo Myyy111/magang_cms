@@ -49,7 +49,12 @@ class LanguageController extends Controller
      */
     public function create()
     {
-        //
+        $data['title'] = $this->title;
+        $data['route'] = $this->route;
+        $data['view'] = $this->view;
+        $data['path'] = $this->path;
+
+        return view($this->view.'.create', $data);
     }
 
     /**
@@ -76,7 +81,7 @@ class LanguageController extends Controller
 
         Toastr::success(__('dashboard.created_successfully'), __('dashboard.success'));
 
-        return redirect()->back();
+        return redirect()->route($this->route.'.index');
     }
 
     /**
@@ -98,7 +103,13 @@ class LanguageController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['title'] = $this->title;
+        $data['route'] = $this->route;
+        $data['view'] = $this->view;
+        $data['path'] = $this->path;
+        $data['row'] = Language::findOrFail($id);
+
+        return view($this->view.'.edit', $data);
     }
 
     /**
@@ -125,7 +136,7 @@ class LanguageController extends Controller
 
         Toastr::success(__('dashboard.updated_successfully'), __('dashboard.success'));
 
-        return redirect()->back();
+        return redirect()->route($this->route.'.index');
     }
 
     /**
@@ -141,7 +152,7 @@ class LanguageController extends Controller
 
         Toastr::success(__('dashboard.deleted_successfully'), __('dashboard.success'));
 
-        return redirect()->back();
+        return redirect()->route($this->route.'.index');
     }
 
     /**
@@ -166,6 +177,6 @@ class LanguageController extends Controller
 
         Toastr::success(__('dashboard.updated_successfully'), __('dashboard.success'));
 
-        return redirect()->back();
+        return redirect()->route($this->route.'.index');
     }
 }

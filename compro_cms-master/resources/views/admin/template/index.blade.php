@@ -27,7 +27,7 @@
 
                   <!-- Data Table Start -->
                   <div class="table-responsive">
-                    <table id="basic-datatable" class="table table-striped table-hover table-dark nowrap full-width">
+                    <table id="basic-datatable" class="table nowrap full-width">
                         <thead>
                             <tr>
                                 <th>{{ __('dashboard.no') }}</th>
@@ -45,23 +45,21 @@
                                 <td>{{ __('dashboard.template-'.$row->slug) }}</td>
                                 <td>
                                     @if( $row->status == 1 )
-                                    <span class="badge badge-success badge-pill">{{ __('dashboard.active') }}</span>
+                                    <span class="badge badge-success">{{ __('dashboard.active') }}</span>
                                     @else
-                                    <span class="badge badge-danger badge-pill">{{ __('dashboard.inactive') }}</span>
+                                    <span class="badge badge-danger">{{ __('dashboard.inactive') }}</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#showModal-{{ $row->id }}">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <!-- Include Show modal -->
-                                    @include($view.'.show')
+                                    <div class="btn-group">
+                                        <a href="{{ route($route.'.show', $row->id) }}" class="btn btn-success" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
 
-                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal-{{ $row->id }}">
-                                        <i class="far fa-edit"></i>
-                                    </button>
-                                    <!-- Include Edit modal -->
-                                    @include($view.'.edit')
+                                        <a href="{{ route($route.'.edit', $row->id) }}" class="btn btn-primary" title="Edit">
+                                            <i class="far fa-edit"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                           @endforeach

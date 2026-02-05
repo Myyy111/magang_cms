@@ -2,6 +2,118 @@
 @section('title', $title)
 @section('content')
 
+    <style>
+        /* Mobile Optimization for Track Page */
+        @media (max-width: 768px) {
+            .track-section {
+                padding: 40px 0 !important;
+            }
+            .card-body {
+                padding: 30px 20px !important;
+            }
+            .track-section h3 {
+                font-size: 22px !important;
+            }
+            .page-title-premium h1 {
+                font-size: 28px !important;
+            }
+            
+            /* Breadcrumb Fix */
+            .bread-crumb ul li {
+                font-size: 13px !important;
+                margin-right: 5px !important;
+            }
+            .bread-crumb ul li:after {
+                margin: 0 5px !important;
+            }
+
+            /* Search Form Mobile */
+            .track-form-container {
+                flex-direction: column;
+            }
+            .track-form-container .input-group {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                background: transparent !important;
+                border: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            .track-form-container input {
+                border-radius: 12px !important;
+                border-right: 2px solid #eee !important;
+                text-align: center;
+                height: 55px !important;
+                padding: 0 20px !important;
+                width: 100% !important;
+            }
+            .track-form-container .btn-premium {
+                border-radius: 12px !important;
+                width: 100% !important;
+                height: 55px !important;
+                margin: 0 !important;
+                justify-content: center;
+                font-weight: 700;
+                box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3) !important;
+            }
+
+            /* Responsive Status Steps */
+            .track-steps {
+                margin: 30px 0 !important;
+            }
+            .step-label {
+                font-size: 11px !important;
+                line-height: 1.2;
+                margin-top: 5px;
+            }
+            .step-icon {
+                width: 30px !important;
+                height: 30px !important;
+                font-size: 12px !important;
+            }
+            
+            /* Table Mobile Fixes */
+            .table-responsive {
+                border: 0;
+            }
+            .table thead {
+                display: none;
+            }
+            .table tbody tr {
+                display: block;
+                border-bottom: 1px solid #eee;
+                padding: 15px 0;
+            }
+            .table tbody td {
+                display: flex;
+                justify-content: space-between;
+                padding: 5px 0 !important;
+                text-align: right !important;
+                border: none !important;
+            }
+            .table tbody td:before {
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                color: #555;
+            }
+            .table tfoot tr {
+                display: block;
+                padding: 15px 0;
+            }
+            .table tfoot td {
+                display: flex;
+                justify-content: space-between;
+                padding: 0 !important;
+                border: none !important;
+            }
+            .tfoot-total-label {
+                display: none !important;
+            }
+        }
+    </style>
+
     <!--Page Title (Premium Cut)-->
     <section class="page-title-premium text-center">
         <div class="floating-element element-1"></div>
@@ -30,15 +142,15 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <!-- Search Box -->
-                    <div class="card shadow-sm border-0 mb-5">
+                    <div class="card shadow-sm border-0 mb-5" style="border-radius: 20px; overflow: hidden;">
                         <div class="card-body p-5 text-center">
                             <h3 class="mb-4" style="color: #004aad; font-weight: 700;">Lacak Pesanan Anda</h3>
-                            <p class="mb-4 text-muted">Masukkan Nomor Pesanan (Order ID) yang Anda terima di email untuk melihat status terkini.</p>
+                            <p class="mb-4 text-muted">Masukkan Nomor Pesanan (Order ID) yang Anda terima melalui WhatsApp/Email.</p>
                             
-                            <form action="{{ route('ecommerce.track') }}" method="GET" class="d-flex justify-content-center">
-                                <div class="input-group" style="max-width: 500px;">
+                            <form action="{{ route('ecommerce.track') }}" method="GET" class="d-flex justify-content-center track-form-container">
+                                <div class="input-group" style="max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-radius: 50px;">
                                     <input type="text" name="order_number" class="form-control form-control-lg" placeholder="Contoh: ORD-6790C4..." value="{{ request('order_number') }}" required style="border-radius: 50px 0 0 50px; border: 2px solid #eee; border-right: none; padding-left: 25px;">
-                                    <button class="btn btn-premium" type="submit" style="border-radius: 0 50px 50px 0; padding: 0 30px;">Lacak <i class="fas fa-search ml-2"></i></button>
+                                    <button class="btn btn-premium" type="submit" style="border-radius: 0 50px 50px 0; padding: 0 35px; font-weight: 700;">Lacak <i class="fas fa-search ml-2"></i></button>
                                 </div>
                             </form>
                         </div>
@@ -111,23 +223,23 @@
                                     <tbody>
                                         @foreach($order->items as $item)
                                         <tr>
-                                            <td>
+                                            <td data-label="Produk">
                                                 @if($item->product)
                                                 {{ $item->product->title }}
                                                 @else
                                                 Produk Dihapus
                                                 @endif
                                             </td>
-                                            <td class="text-right">Rp {{ number_format($item->price, 0, ',', '.') }}</td>
-                                            <td class="text-center">{{ $item->quantity }}</td>
-                                            <td class="text-right font-weight-bold">Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
+                                            <td class="text-right" data-label="Harga">Rp {{ number_format($item->price, 0, ',', '.') }}</td>
+                                            <td class="text-center" data-label="Qty">{{ $item->quantity }}</td>
+                                            <td class="text-right font-weight-bold" data-label="Total">Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                     <tfoot style="border-top: 2px solid #eee;">
                                         <tr>
-                                            <td colspan="3" class="text-right font-weight-bold pt-3" style="font-size: 18px;">Total Bayar</td>
-                                            <td class="text-right font-weight-bold pt-3" style="color: #004aad; font-size: 18px;">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</td>
+                                            <td colspan="3" class="text-right font-weight-bold pt-3 tfoot-total-label" style="font-size: 18px;">Total Bayar</td>
+                                            <td class="text-right font-weight-bold pt-3" style="color: #004aad; font-size: 18px;" data-label="Total Bayar">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</td>
                                         </tr>
                                     </tfoot>
                                 </table>

@@ -20,12 +20,13 @@
     <div class="row">
         <div class="col-12">
 
-            <div class="card">
-                <div class="card-body">
-                  <h4 class="header-title">{{ $title }}</h4>
-                  <br/>
+            <div class="card shadow border-0" style="border-radius: 12px;">
+                <div class="card-header bg-white border-bottom-0 pt-4 px-4">
+                    <h4 class="header-title" style="font-weight: 800; color: #333; text-transform: uppercase;">{{ $title }}</h4>
+                </div>
+                <div class="card-body px-4 pb-4">
 
-                  <ul class="nav nav-tabs mb-3">
+                  <ul class="nav nav-tabs nav-bordered mb-3">
                     <li class="nav-item">
                         <a href="#website-tab" data-toggle="tab" aria-expanded="false" class="nav-link active">
                             {{ __('dashboard.site_info') }}
@@ -136,7 +137,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">{{ __('dashboard.update') }}</button>
+                            <button type="submit" class="btn btn-primary btn-lg px-4" style="font-weight: 700;">{{ __('dashboard.update') }}</button>
                         </div>
 
                       </form>
@@ -177,7 +178,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">{{ __('dashboard.update') }}</button>
+                                <button type="submit" class="btn btn-primary btn-lg px-4" style="font-weight: 700;">{{ __('dashboard.update') }}</button>
                             </div>
                         </form>
                     </div>
@@ -267,7 +268,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">{{ __('dashboard.update') }}</button>
+                            <button type="submit" class="btn btn-primary btn-lg px-4" style="font-weight: 700;">{{ __('dashboard.update') }}</button>
                         </div>
 
                       </form>
@@ -362,7 +363,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">{{ __('dashboard.update') }}</button>
+                            <button type="submit" class="btn btn-primary btn-lg px-4" style="font-weight: 700;">{{ __('dashboard.update') }}</button>
                         </div>
 
                       </form>
@@ -382,7 +383,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">{{ __('dashboard.update') }}</button>
+                            <button type="submit" class="btn btn-primary btn-lg px-4" style="font-weight: 700;">{{ __('dashboard.update') }}</button>
                         </div>
 
                       </form>
@@ -400,28 +401,23 @@
                           <form class="needs-validation" novalidate action="{{ route($route.'.changemail') }}" method="post" enctype="multipart/form-data">
                             @csrf
 
-                            <div class="form-group row">
-                                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('dashboard.mail_address') }} <span>*</span></label>
+                            <div class="form-group">
+                                <label for="email" class="font-weight-600">{{ __('dashboard.mail_address') }} <span>*</span></label>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ Auth::user()->email }}" required>
 
-                                <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ Auth::user()->email }}" required>
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
 
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-
-                                    <div class="invalid-feedback">
-                                      {{ __('dashboard.please_provide') }} {{ __('dashboard.mail_address') }}
-                                    </div>
+                                <div class="invalid-feedback">
+                                  {{ __('dashboard.please_provide') }} {{ __('dashboard.mail_address') }}
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">{{ __('dashboard.change') }}</button>
-                                </div>
+                            <div class="form-group mb-0">
+                                <button type="submit" class="btn btn-primary btn-lg px-4" style="font-weight: 700;">{{ __('dashboard.change') }}</button>
                             </div>
 
                           </form>
@@ -438,58 +434,46 @@
                           <form class="needs-validation" novalidate action="{{ route($route.'.changepass') }}" method="post" enctype="multipart/form-data">
                             @csrf
 
-                            <div class="form-group row">
-                                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('dashboard.old_password') }} <span>*</span></label>
+                            <div class="form-group">
+                                <label for="old_password" class="font-weight-600">{{ __('dashboard.old_password') }} <span>*</span></label>
+                                <input id="old_password" type="password" class="form-control @error('old_password') is-invalid @enderror" name="old_password" required autocomplete="old_password">
 
-                                <div class="col-md-6">
-                                    <input id="old_password" type="password" class="form-control @error('old_password') is-invalid @enderror" name="old_password" required autocomplete="old_password">
+                                @error('old_password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
 
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-
-                                    <div class="invalid-feedback">
-                                      {{ __('dashboard.please_provide') }} {{ __('dashboard.old_password') }}
-                                    </div>
+                                <div class="invalid-feedback">
+                                  {{ __('dashboard.please_provide') }} {{ __('dashboard.old_password') }}
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('dashboard.new_password') }} <span>*</span></label>
+                            <div class="form-group">
+                                <label for="password" class="font-weight-600">{{ __('dashboard.new_password') }} <span>*</span></label>
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
-                                <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
 
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-
-                                    <div class="invalid-feedback">
-                                      {{ __('dashboard.please_provide') }} {{ __('dashboard.new_password') }}
-                                    </div>
+                                <div class="invalid-feedback">
+                                  {{ __('dashboard.please_provide') }} {{ __('dashboard.new_password') }}
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('dashboard.confirm_password') }} <span>*</span></label>
-
-                                <div class="col-md-6">
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                                </div>
-
+                            <div class="form-group">
+                                <label for="password-confirm" class="font-weight-600">{{ __('dashboard.confirm_password') }} <span>*</span></label>
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                 <div class="invalid-feedback">
                                     {{ __('dashboard.please_provide') }} {{ __('dashboard.confirm_password') }}
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">{{ __('dashboard.change') }}</button>
-                                </div>
+                            <div class="form-group mb-0">
+                                <button type="submit" class="btn btn-primary btn-lg px-4" style="font-weight: 700;">{{ __('dashboard.change') }}</button>
                             </div>
 
                           </form>

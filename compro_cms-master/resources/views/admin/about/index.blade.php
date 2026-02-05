@@ -91,7 +91,7 @@
                     </div>
 
                     <div class="row">
-                      {{-- <div class="form-group col-md-6">
+                      <div class="form-group col-md-6">
                         <label for="image">{{ __('dashboard.thumbnail') }}: <span>{{ __('dashboard.image_size', ['height' => 600, 'width' => 600]) }}</span></label>
                         <input type="file" class="form-control" name="image" id="image">
 
@@ -102,10 +102,10 @@
                         @if(isset($row->image_path))
                         <br/>
                         @if(file_exists(public_path('uploads/'.$path.'/'.$row->image_path)))
-                        <img src="{{ asset('uploads/'.$path.'/'.$row->image_path) }}" class="img-fluid" alt="Thumb">
+                        <img src="{{ asset('uploads/'.$path.'/'.$row->image_path) }}" class="img-fluid rounded" style="max-height: 200px;" alt="Thumb">
                         @endif
                         @endif
-                      </div> --}}
+                      </div>
 
                       <div class="form-group col-md-6">
                         <label for="video_id">{{ __('dashboard.youtube_video_id') }}</label>

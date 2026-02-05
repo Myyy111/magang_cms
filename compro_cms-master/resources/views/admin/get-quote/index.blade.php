@@ -28,14 +28,13 @@
 
                   <!-- Data Table Start -->
                   <div class="table-responsive">
-                    <table id="basic-datatable" class="table table-striped table-hover table-dark nowrap full-width">
+                    <table id="basic-datatable" class="table nowrap full-width">
                         <thead>
                             <tr>
-                                <th>{{ __('dashboard.sl') }}</th>
+                                <th>{{ __('dashboard.no') }}</th>
                                 <th>{{ __('dashboard.quote_no') }}</th>
                                 <th>{{ __('dashboard.name') }}</th>
-                                <th>{{ __('dashboard.email') }}</th>
-                                <th>{{ __('dashboard.quote_placed') }}</th>
+                                <th>{{ __('dashboard.date') }}</th>
                                 <th>{{ __('dashboard.status') }}</th>
                                 <th>{{ __('dashboard.action') }}</th>
                             </tr>
@@ -44,29 +43,33 @@
                           @foreach( $rows as $key => $row )
                             <tr>
                                 <td>{{ $key + 1 }}</td>
-                                <td><a href="{{ route($route.'.show', [$row->id]) }}">#{{ $row->id }}</a></td>
-                                <td>{{ $row->name }}</td>
-                                <td>{{ $row->email }}</td>
-                                <td>{{ date('h:i:s A | d-M-y', strtotime($row->created_at)) }}</td>
+                                <td><a href="{{ route($route.'.show', [$row->id]) }}" class="font-weight-bold">#{{ $row->id }}</a></td>
+                                <td>
+                                    {{ $row->name }}<br>
+                                    <small class="text-muted">{{ $row->email }}</small>
+                                </td>
+                                <td>{{ date('d M Y', strtotime($row->created_at)) }}</td>
                                 <td>
                                     @if( $row->status == 1 )
-                                    <span class="badge badge-primary badge-pill">{{ __('dashboard.pending') }}</span>
+                                    <span class="badge badge-warning">{{ __('dashboard.pending') }}</span>
                                     @elseif( $row->status == 2 )
-                                    <span class="badge badge-info badge-pill">{{ __('dashboard.estimated') }}</span>
+                                    <span class="badge badge-info">{{ __('dashboard.estimated') }}</span>
                                     @elseif( $row->status == 3 )
-                                    <span class="badge badge-success badge-pill">{{ __('dashboard.approved') }}</span>
+                                    <span class="badge badge-success">{{ __('dashboard.approved') }}</span>
                                     @elseif( $row->status == 0 )
-                                    <span class="badge badge-danger badge-pill">{{ __('dashboard.rejected') }}</span>
+                                    <span class="badge badge-danger">{{ __('dashboard.rejected') }}</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route($route.'.show', [$row->id]) }}" class="btn btn-success btn-sm">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
+                                    <div class="btn-group">
+                                        <a href="{{ route($route.'.show', [$row->id]) }}" class="btn btn-success" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
 
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal-{{ $row->id }}">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal-{{ $row->id }}" title="Delete">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
                                     <!-- Include Delete modal -->
                                     @include('admin.inc.delete')
                                 </td>
