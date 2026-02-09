@@ -71,14 +71,14 @@
         <li>
             <a href="{{ route('admin.product.index') }}">
                 <span class="icon"><i class="fas fa-shopping-cart"></i></span>
-                <span> Products </span>
+                <span> {{ trans_choice('dashboard.product', 2) }} </span>
             </a>
         </li>
 
         <li>
             <a href="{{ route('admin.order.index') }}">
                 <span class="icon"><i class="fas fa-cart-arrow-down"></i></span>
-                <span> Orders </span>
+                <span> {{ trans_choice('dashboard.order', 2) }} </span>
             </a>
         </li>
 
@@ -137,6 +137,14 @@
                 <span> {{ trans_choice('dashboard.work_process', 2) }} </span>
             </a>
         </li>
+
+        <li>
+            <a href="{{ route('admin.work-area.index') }}">
+                <span class="icon"><i class="fas fa-map-marked-alt"></i></span>
+                <span> {{ trans('dashboard.work_area') }} </span>
+            </a>
+        </li>
+
 
         <li>
             <a href="{{ route('admin.why-choose-us.index') }}">

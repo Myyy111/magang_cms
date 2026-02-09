@@ -3,6 +3,20 @@
 @section('content')
 
     <style>
+        /* Button Hover Animation */
+        .btn-search-animated {
+            transition: all 0.3s ease;
+        }
+        .btn-search-animated:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 74, 173, 0.4) !important;
+            filter: brightness(1.1);
+        }
+        .btn-search-animated:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(0, 74, 173, 0.3) !important;
+        }
+        
         /* Mobile Optimization for Track Page */
         @media (max-width: 768px) {
             .track-section {
@@ -141,119 +155,146 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <!-- Search Box -->
-                    <div class="card shadow-sm border-0 mb-5" style="border-radius: 20px; overflow: hidden;">
-                        <div class="card-body p-5 text-center">
-                            <h3 class="mb-4" style="color: #004aad; font-weight: 700;">Lacak Pesanan Anda</h3>
-                            <p class="mb-4 text-muted">Masukkan Nomor Pesanan (Order ID) yang Anda terima melalui WhatsApp/Email.</p>
-                            
-                            <form action="{{ route('ecommerce.track') }}" method="GET" class="d-flex justify-content-center track-form-container">
-                                <div class="input-group" style="max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-radius: 50px;">
-                                    <input type="text" name="order_number" class="form-control form-control-lg" placeholder="Contoh: ORD-6790C4..." value="{{ request('order_number') }}" required style="border-radius: 50px 0 0 50px; border: 2px solid #eee; border-right: none; padding-left: 25px;">
-                                    <button class="btn btn-premium" type="submit" style="border-radius: 0 50px 50px 0; padding: 0 35px; font-weight: 700;">Lacak <i class="fas fa-search ml-2"></i></button>
+                    @if(!isset($order))
+                    <!-- Clean Search Box -->
+                    <div class="search-container text-center px-3" style="padding: 40px 0;">
+                        <div class="search-box-clean mx-auto" style="max-width: 600px;">
+                            <form action="{{ route('ecommerce.track') }}" method="GET">
+                                <div class="input-group-clean d-flex align-items-center bg-white shadow-sm p-1" style="border-radius: 50px; border: 1px solid #e8ecef;">
+                                    <div class="search-icon px-3 text-muted">
+                                        <i class="fas fa-search" style="font-size: 16px;"></i>
+                                    </div>
+                                    <input type="text" name="order_number" class="form-control border-0 shadow-none py-3 px-2" placeholder="Masukkan Nomor Pesanan Anda..." value="{{ old('order_number', $old_order_number ?? '') }}" required style="background: transparent; font-size: 14px; color: #666;">
+                                    <button class="btn btn-search-animated px-3 py-2 mr-1" type="submit" style="border-radius: 50px; font-weight: 600; letter-spacing: 0.2px; background: #004aad; color: white; border: none; box-shadow: 0 2px 8px rgba(0, 74, 173, 0.3); font-size: 13px;">
+                                        <i class="fas fa-search mr-1"></i>Lacak
+                                    </button>
                                 </div>
+                                <p class="mt-3 mb-0 text-muted" style="font-size: 13px;">Contoh: <span style="color: #e74c3c; font-weight: 600;">ORD-[ID_PESANAN]</span>. Nomor ini ada di kuitansi Anda.</p>
                             </form>
                         </div>
                     </div>
+                    @endif
 
                     @if(isset($order))
-                    <!-- Order Result -->
-                    <div class="card shadow-sm border-0 animate__animated animate__fadeInUp">
-                        <div class="card-header bg-white border-bottom-0 pt-4 px-4 d-flex justify-content-between align-items-center flex-wrap">
-                            <div>
-                                <h5 class="mb-1 text-muted">Nomor Pesanan</h5>
-                                <h3 style="color: #004aad; font-weight: 800;">{{ $order->order_number }}</h3>
-                            </div>
-                            <div class="text-right">
-                                <p class="mb-1 text-muted">Tanggal Pesanan</p>
-                                <h6 class="font-weight-bold">{{ $order->created_at->format('d M Y, H:i') }}</h6>
+                    <!-- Integrated Search + Order Result -->
+                    <div class="card shadow-sm border-0 animate__animated animate__fadeInUp" style="border-radius: 15px;">
+                        <!-- Integrated Search Header -->
+                        <div class="card-header bg-gradient text-white border-0 p-4" style="background: linear-gradient(135deg, #004aad 0%, #0066cc 100%); border-radius: 15px 15px 0 0;">
+                            <form action="{{ route('ecommerce.track') }}" method="GET" class="mb-3">
+                                <div class="input-group-modern d-flex align-items-center bg-white shadow-sm p-1" style="border-radius: 100px;">
+                                    <div class="icon-box px-3 text-muted">
+                                        <i class="fas fa-search"></i>
+                                    </div>
+                                    <input type="text" name="order_number" class="form-control border-0 shadow-none py-3" placeholder="Cari pesanan lain..." value="{{ request('order_number') }}" required style="background: transparent; font-size: 14px;">
+                                    <button class="btn btn-search-animated px-4 py-2 mr-1" type="submit" style="border-radius: 100px; font-weight: 600; font-size: 13px; background: #004aad; color: white; border: none; box-shadow: 0 2px 8px rgba(0, 74, 173, 0.3);">
+                                        <i class="fas fa-search mr-1"></i>Lacak
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <div class="d-flex justify-content-between align-items-center flex-wrap mt-3">
+                                <div>
+                                    <small class="d-block mb-1" style="opacity: 0.9; font-size: 12px;">Nomor Pesanan</small>
+                                    <h4 class="mb-0 font-weight-bold">{{ $order->order_number }}</h4>
+                                </div>
+                                <div class="text-right">
+                                    <span class="badge badge-light px-3 py-2" style="font-size: 12px;">
+                                        <i class="far fa-calendar-alt mr-1"></i> {{ $order->created_at->format('d M Y') }}
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-body px-4 pb-4">
+
+                        <div class="card-body px-4 py-3">
                             
-                            <!-- Status Steps -->
-                            <div class="track-steps my-5">
+                            <!-- Status Steps (Slim Version) -->
+                            <div class="track-steps mb-4 mt-2">
                                 <div class="d-flex justify-content-between position-relative">
                                     <!-- Progress Bar Line -->
-                                    <div class="position-absolute" style="top: 15px; left: 0; width: 100%; height: 4px; background: #eee; z-index: 1;"></div>
-                                    <div class="position-absolute" style="top: 15px; left: 0; width: {{ $order->status == 'completed' ? '100%' : ($order->status == 'paid' ? '50%' : '0%') }}; height: 4px; background: #2ecc71; z-index: 1; transition: width 0.5s ease;"></div>
+                                    <div class="position-absolute" style="top: 15px; left: 12.5%; width: 75%; height: 3px; background: #eee; z-index: 1;"></div>
+                                    <div class="position-absolute" style="top: 15px; left: 12.5%; width: {{ $order->status == 'completed' ? '75%' : ($order->status == 'processing' ? '50%' : ($order->status == 'paid' ? '25%' : '0%')) }}; height: 3px; background: #2ecc71; z-index: 1; transition: width 0.5s ease;"></div>
 
-                                    <!-- Step 1: Pending -->
+                                    <!-- Step 1 -->
                                     <div class="step-item text-center position-relative" style="z-index: 2; flex: 1;">
-                                        <div class="step-icon d-flex align-items-center justify-content-center mx-auto mb-2" style="width: 35px; height: 35px; border-radius: 50%; background: {{ $order->status == 'pending' || $order->status == 'paid' || $order->status == 'completed' ? '#2ecc71' : '#eee' }}; color: white;">
-                                            <i class="fas fa-clipboard-list"></i>
+                                        <div class="step-icon d-flex align-items-center justify-content-center mx-auto mb-1" style="width: 30px; height: 30px; border-radius: 50%; background: {{ in_array($order->status, ['pending', 'paid', 'processing', 'completed']) ? '#2ecc71' : '#eee' }}; color: white; font-size: 12px;">
+                                            <i class="fas fa-shopping-basket"></i>
                                         </div>
-                                        <div class="step-label font-weight-bold {{ $order->status == 'pending' ? 'text-primary' : '' }}">Pesanan Diterima</div>
-                                        @if($order->status == 'pending') <small class="text-primary d-block mt-1">Menunggu Pembayaran</small> @endif
+                                        <div class="step-label font-weight-bold" style="font-size: 10px; color: {{ in_array($order->status, ['pending', 'paid', 'processing', 'completed']) ? '#333' : '#999' }};">Pesanan<br>Diterima</div>
                                     </div>
                                     
-                                    <!-- Step 2: Processing/Paid -->
+                                    <!-- Step 2 -->
                                     <div class="step-item text-center position-relative" style="z-index: 2; flex: 1;">
-                                        <div class="step-icon d-flex align-items-center justify-content-center mx-auto mb-2" style="width: 35px; height: 35px; border-radius: 50%; background: {{ $order->status == 'paid' || $order->status == 'completed' ? '#2ecc71' : '#eee' }}; color: white;">
-                                            <i class="fas fa-cog"></i>
+                                        <div class="step-icon d-flex align-items-center justify-content-center mx-auto mb-1" style="width: 30px; height: 30px; border-radius: 50%; background: {{ in_array($order->status, ['paid', 'processing', 'completed']) ? '#2ecc71' : '#eee' }}; color: white; font-size: 12px;">
+                                            <i class="fas fa-credit-card"></i>
                                         </div>
-                                        <div class="step-label font-weight-bold {{ $order->status == 'paid' ? 'text-primary' : '' }}">Pembayaran Dikonfirmasi</div>
-                                         @if($order->status == 'paid') <small class="text-primary d-block mt-1">Sedang Diproses</small> @endif
+                                        <div class="step-label font-weight-bold" style="font-size: 10px; color: {{ in_array($order->status, ['paid', 'processing', 'completed']) ? '#333' : '#999' }};">Pembayaran<br>Dikonfirmasi</div>
                                     </div>
 
-                                    <!-- Step 3: Completed -->
+                                    <!-- Step 3 -->
                                     <div class="step-item text-center position-relative" style="z-index: 2; flex: 1;">
-                                        <div class="step-icon d-flex align-items-center justify-content-center mx-auto mb-2" style="width: 35px; height: 35px; border-radius: 50%; background: {{ $order->status == 'completed' ? '#2ecc71' : '#eee' }}; color: white;">
-                                            <i class="fas fa-check"></i>
+                                        <div class="step-icon d-flex align-items-center justify-content-center mx-auto mb-1" style="width: 30px; height: 30px; border-radius: 50%; background: {{ in_array($order->status, ['processing', 'completed']) ? '#2ecc71' : '#eee' }}; color: white; font-size: 12px;">
+                                            <i class="fas fa-calendar-alt"></i>
                                         </div>
-                                        <div class="step-label font-weight-bold {{ $order->status == 'completed' ? 'text-primary' : '' }}">Selesai</div>
+                                        <div class="step-label font-weight-bold" style="font-size: 10px; color: {{ in_array($order->status, ['processing', 'completed']) ? '#333' : '#999' }};">Jadwal<br>Dismentel</div>
+                                        @if($order->status == 'processing' && $order->dismantel_schedule) 
+                                            <div class="badge badge-primary mt-1" style="font-size: 9px; padding: 2px 5px;">{{ $order->dismantel_schedule }}</div>
+                                        @endif
+                                    </div>
+
+                                    <!-- Step 4 -->
+                                    <div class="step-item text-center position-relative" style="z-index: 2; flex: 1;">
+                                        <div class="step-icon d-flex align-items-center justify-content-center mx-auto mb-1" style="width: 30px; height: 30px; border-radius: 50%; background: {{ $order->status == 'completed' ? '#2ecc71' : '#eee' }}; color: white; font-size: 12px;">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <div class="step-label font-weight-bold" style="font-size: 10px; color: {{ $order->status == 'completed' ? '#333' : '#999' }};">Selesai</div>
                                     </div>
                                 </div>
                             </div>
 
-                            <hr style="border-top: 2px dashed #eee;">
+                            <div class="row no-gutters bg-light rounded p-3 mb-3" style="font-size: 13px;">
+                                <div class="col-md-6 border-right pr-md-3">
+                                    <h6 class="font-weight-bold mb-2 text-primary" style="font-size: 13px;"><i class="fas fa-user-circle mr-1"></i> Data Pemesan</h6>
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span class="text-muted">Nama:</span>
+                                        <span class="font-weight-600">{{ $order->customer_name }}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span class="text-muted">Unit:</span>
+                                        <span class="font-weight-600 text-right" style="max-width: 150px;">{{ str_replace(['(Lihat Detail)', 'Lihat Detail'], '', $order->customer_unit) }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 pl-md-3 mt-3 mt-md-0">
+                                    <h6 class="font-weight-bold mb-2 text-primary" style="font-size: 13px;"><i class="fas fa-shopping-bag mr-1"></i> Ringkasan Order</h6>
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span class="text-muted">Item:</span>
+                                        <span class="font-weight-600">{{ $order->items->sum('quantity') }} Produk</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span class="text-muted">Total Bayar:</span>
+                                        <span class="font-weight-bold text-success">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</span>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <!-- Order Details -->
-                            <h5 class="font-weight-bold mb-3 mt-4" style="color: #004aad;">Rincian Produk</h5>
-                            <div class="table-responsive">
-                                <table class="table table-borderless">
-                                    <thead style="background: #f1faff;">
+                            <div class="table-responsive" style="max-height: 200px; overflow-y: auto; border: 1px solid #eee; border-radius: 8px;">
+                                <table class="table table-sm table-hover mb-0" style="font-size: 13px;">
+                                    <thead class="bg-white sticky-top">
                                         <tr>
-                                            <th>Produk</th>
-                                            <th class="text-right">Harga</th>
-                                            <th class="text-center">Qty</th>
-                                            <th class="text-right">Total</th>
+                                            <th class="border-top-0 px-3">Produk</th>
+                                            <th class="text-center border-top-0">Qty</th>
+                                            <th class="text-right border-top-0 px-3">Subtotal</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($order->items as $item)
                                         <tr>
-                                            <td data-label="Produk">
-                                                @if($item->product)
-                                                {{ $item->product->title }}
-                                                @else
-                                                Produk Dihapus
-                                                @endif
-                                            </td>
-                                            <td class="text-right" data-label="Harga">Rp {{ number_format($item->price, 0, ',', '.') }}</td>
-                                            <td class="text-center" data-label="Qty">{{ $item->quantity }}</td>
-                                            <td class="text-right font-weight-bold" data-label="Total">Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
+                                            <td class="px-3 py-2">{{ $item->product ? $item->product->title : 'Produk Dihapus' }}</td>
+                                            <td class="text-center py-2">{{ $item->quantity }}</td>
+                                            <td class="text-right px-3 py-2">Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
-                                    <tfoot style="border-top: 2px solid #eee;">
-                                        <tr>
-                                            <td colspan="3" class="text-right font-weight-bold pt-3 tfoot-total-label" style="font-size: 18px;">Total Bayar</td>
-                                            <td class="text-right font-weight-bold pt-3" style="color: #004aad; font-size: 18px;" data-label="Total Bayar">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</td>
-                                        </tr>
-                                    </tfoot>
                                 </table>
-                            </div>
-
-                            <div class="row mt-4">
-                                <div class="col-12">
-                                    <div class="bg-light p-3 rounded">
-                                        <h6 class="font-weight-bold mb-2">Info Pemesan</h6>
-                                        <p class="mb-1"><strong>Nama:</strong> {{ $order->customer_name }}</p>
-                                        <p class="mb-1"><strong>Kontak:</strong> {{ $order->customer_contact }}</p>
-                                        <p class="mb-0"><strong>Unit:</strong> {{ str_replace(['(Lihat Detail)', 'Lihat Detail'], '', $order->customer_unit) }}</p>
-                                    </div>
-                                </div>
                             </div>
 
                             @if(!$order->signed_document_path && $order->status == 'pending')

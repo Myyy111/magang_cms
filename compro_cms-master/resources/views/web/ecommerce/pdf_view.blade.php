@@ -192,8 +192,14 @@
 
     <div class="signature-section">
         <div class="sign-box">
-            <p>................., ........................... {{ date('Y') }}</p>
-            <br><br><br><br>
+            <p>Jakarta, {{ date('d F Y') }}</p>
+            @if($order->esign_path)
+                <div style="margin-top: 10px; margin-bottom: 10px;">
+                    <img src="{{ asset('uploads/signatures/' . $order->esign_path) }}" alt="Tanda Tangan" style="max-height: 100px; width: auto;">
+                </div>
+            @else
+                <br><br><br><br>
+            @endif
             <p style="text-decoration: underline; font-weight: bold;">( {{ strtoupper($order->customer_name) }} )</p>
             <p>NPP. {{ $order->customer_id_num }}</p>
         </div>

@@ -53,6 +53,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="#pdf-template-tab" data-toggle="tab" aria-expanded="false" class="nav-link">
+                            Order PDF Template
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="#account-tab" data-toggle="tab" aria-expanded="false" class="nav-link">
                             {{ __('dashboard.account') }}
                         </a>
@@ -389,6 +394,39 @@
                       </form>
                       <!-- Form End -->
 
+                    </div>
+                    <div class="tab-pane" id="pdf-template-tab">
+                         <div class="alert alert-info">
+                            <h5>Daftar Placeholder Produk & Order:</h5>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <code>[order_number]</code>, <code>[customer_name]</code>, <code>[customer_id_num]</code>, <code>[customer_contact]</code>, <code>[total_amount]</code>, <code>[date]</code>
+                                </div>
+                                <div class="col-md-4">
+                                    <code>[checkbox_pusat]</code>, <code>[checkbox_wilayah]</code>, <code>[checkbox_cabang]</code>, <code>[checkbox_pengguna]</code>, <code>[checkbox_bukan_pengguna]</code>, <code>[laptop_serial]</code>
+                                </div>
+                                <div class="col-md-4">
+                                    <code>[unit_kab_kota]</code>, <code>[unit_cabang]</code>, <code>[unit_deputi]</code>, <code>[signature_image]</code>, <code>[checkbox_transfer]</code>, <code>[checkbox_cicil_1-4]</code>
+                                </div>
+                            </div>
+                            <small class="d-block mt-2">Gunakan placeholder di atas untuk menampilkan data dinamis dari pesanan ke dalam PDF.</small>
+                        </div>
+                        
+                        <!-- Form Start -->
+                        <form class="needs-validation" novalidate action="{{ route($route.'.pdftemplate') }}" method="post">
+                            @csrf
+                            <input name="id" type="hidden" value="{{ (isset($row->id))?$row->id:-1 }}">
+
+                            <div class="form-group">
+                                <label for="order_pdf_template">Struktur HTML PDF (Surat Pernyataan):</label>
+                                <textarea class="form-control codeEditor" name="order_pdf_template" id="order_pdf_template" rows="25">{{ isset($row->order_pdf_template)?$row->order_pdf_template:'' }}</textarea>
+                            </div>
+
+                            <div class="form-group mb-0">
+                                <button type="submit" class="btn btn-primary btn-lg px-4" style="font-weight: 700;">{{ __('dashboard.update') }}</button>
+                            </div>
+                        </form>
+                        <!-- Form End -->
                     </div>
                     <div class="tab-pane" id="account-tab">
 

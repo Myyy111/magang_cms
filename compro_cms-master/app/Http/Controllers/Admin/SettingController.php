@@ -380,4 +380,33 @@ class SettingController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function pdfTemplate(Request $request)
+    {
+        $id = $request->id;
+
+        // -1 means no data row found
+        if($id == -1){
+            // Insert Data
+            $data = new Setting;
+            $data->order_pdf_template = $request->order_pdf_template;
+            $data->save();
+        }
+        else{
+            // Update Data
+            $data = Setting::find($id);
+            $data->order_pdf_template = $request->order_pdf_template;
+            $data->save();
+        }
+
+        Toastr::success(__('dashboard.updated_successfully'), __('dashboard.success'));
+
+        return redirect()->back();
+    }
 }

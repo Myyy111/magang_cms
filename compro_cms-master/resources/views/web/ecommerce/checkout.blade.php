@@ -91,6 +91,46 @@
                 width: 100%;
             }
         }
+        /* Signature Pad Styles */
+        .signature-wrapper {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            background-color: #fbfbfb;
+            margin-bottom: 10px;
+        }
+        .signature-pad {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+        }
+        .signature-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+        .btn-clear-sig {
+            background: #f8d7da;
+            color: #721c24;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-clear-sig:hover {
+            background: #f5c6cb;
+        }
     </style>
 
     <section class="page-title-premium text-center">
@@ -136,18 +176,12 @@
 
                                     <div class="col-md-12 form-group mb-3">
                                         <label class="form-label font-weight-bold d-block">3. Wilayah Kerja</label>
+                                        @foreach($wilayah_options as $value => $label)
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="wilayah_kerja" id="wilayah_pusat" value="pusat" required>
-                                            <label class="form-check-label" for="wilayah_pusat">KANTOR PUSAT</label>
+                                            <input class="form-check-input" type="radio" name="wilayah_kerja" id="wilayah_{{ $value }}" value="{{ $value }}" required>
+                                            <label class="form-check-label" for="wilayah_{{ $value }}">{{ strtoupper($label) }}</label>
                                         </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="wilayah_kerja" id="wilayah_wilayah" value="wilayah" required>
-                                            <label class="form-check-label" for="wilayah_wilayah">KANTOR WILAYAH</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="wilayah_kerja" id="wilayah_cabang" value="cabang" required>
-                                            <label class="form-check-label" for="wilayah_cabang">KANTOR CABANG</label>
-                                        </div>
+                                        @endforeach
                                     </div>
 
                                     <div class="col-md-12 form-group mb-3">
@@ -156,21 +190,28 @@
                                              <div class="label-text">a. Kab / Kota </div>
                                              <div class="colon">:</div>
                                              <div class="flex-grow-1">
-                                                 <input type="text" class="form-control" name="unit_kerja_detail_a" placeholder="Isi nama Kab/Kota" required value="{{ old('unit_kerja_detail_a') }}" style="border-radius: 4px;">
+                                                 <input type="text" class="form-control" name="unit_kerja_detail_a" id="unit_a" list="list_kab_kota" placeholder="Cari atau Ketik Kab/Kota" required value="{{ old('unit_kerja_detail_a') }}" style="border-radius: 4px;">
+                                                 <datalist id="list_kab_kota">
+                                                     @foreach($work_areas->unique('kab_kota') as $wa)
+                                                        <option value="{{ $wa->kab_kota }}">
+                                                     @endforeach
+                                                 </datalist>
                                              </div>
                                          </div>
                                          <div class="unit-row">
                                              <div class="label-text">b. Kantor Cabang/As.Dep</div>
                                              <div class="colon">:</div>
                                              <div class="flex-grow-1">
-                                                 <input type="text" class="form-control" name="unit_kerja_detail_b" placeholder="Isi nama Kantor Cabang" required value="{{ old('unit_kerja_detail_b') }}" style="border-radius: 4px;">
+                                                 <input type="text" class="form-control" name="unit_kerja_detail_b" id="unit_b" list="list_cabang" placeholder="Cari atau Ketik Kantor Cabang" required value="{{ old('unit_kerja_detail_b') }}" style="border-radius: 4px;">
+                                                 <datalist id="list_cabang"></datalist>
                                              </div>
                                          </div>
                                          <div class="unit-row">
-                                             <div class="label-text">c. Dep.Dir.Bid/Dep.Dir.Wil</div>
+                                             <div class="label-text">c. Dep.Dir.Bld/Dep.Dir.Wil</div>
                                              <div class="colon">:</div>
                                              <div class="flex-grow-1">
-                                                 <input type="text" class="form-control" name="unit_kerja_detail_c" placeholder="Isi nama Deputi" required value="{{ old('unit_kerja_detail_c') }}" style="border-radius: 4px;">
+                                                 <input type="text" class="form-control" name="unit_kerja_detail_c" id="unit_c" list="list_deputi" placeholder="Cari atau Ketik Deputi" required value="{{ old('unit_kerja_detail_c') }}" style="border-radius: 4px;">
+                                                 <datalist id="list_deputi"></datalist>
                                              </div>
                                          </div>
                                      </div>
@@ -245,6 +286,20 @@
                                     </div>
                                     
                                     <input type="hidden" name="customer_unit" id="legacy_unit">
+                                    <input type="hidden" name="esign_data" id="esign_data">
+
+                                    <div class="col-md-12 form-group mb-3">
+                                        <label class="form-label font-weight-bold">Tanda Tangan Elektronik (E-Sign)</label>
+                                        <p class="text-muted small mb-2">Silakan bubuhkan tanda tangan Anda pada kotak di bawah ini sebagai persetujuan pernyataan.</p>
+                                        <div class="signature-wrapper">
+                                            <canvas id="signature-pad" class="signature-pad"></canvas>
+                                        </div>
+                                        <div class="signature-actions">
+                                            <button type="button" id="clear-signature" class="btn-clear-sig">
+                                                <i class="fas fa-eraser mr-1"></i> Bersihkan Tanda Tangan
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- Button with specialized override styles -->
                                 <style>
@@ -266,13 +321,118 @@
                                     }
                                 </style>
                                 <button type="submit" id="btn-pdf-submit" class="btn-premium">
-                                    <i class="fas fa-file-pdf" style="font-size: 16px;"></i> Unduh Surat Pernyataan (PDF)
+                                    <i class="fas fa-check-circle" style="font-size: 16px;"></i> Konfirmasi & Kirim Pesanan
                                 </button>
-                                <p class="text-center mt-2 text-muted" style="font-size: 11px;">PDF akan diunduh otomatis.</p>
+                                <p class="text-center mt-2 text-muted" style="font-size: 11px;">Dengan menekan tombol di atas, Anda menyetujui syarat & ketentuan yang berlaku.</p>
                             </form>
                             
+                            <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
                             <script>
                             document.addEventListener('DOMContentLoaded', function() {
+                                // Signature Pad Logic
+                                const canvas = document.getElementById('signature-pad');
+                                const signaturePad = new SignaturePad(canvas, {
+                                    backgroundColor: 'rgba(255, 255, 255, 0)',
+                                    penColor: 'rgb(0, 0, 0)'
+                                });
+
+                                function resizeCanvas() {
+                                    const ratio = Math.max(window.devicePixelRatio || 1, 1);
+                                    canvas.width = canvas.offsetWidth * ratio;
+                                    canvas.height = canvas.offsetHeight * ratio;
+                                    canvas.getContext("2d").scale(ratio, ratio);
+                                    signaturePad.clear();
+                                }
+
+                                window.addEventListener("resize", resizeCanvas);
+                                resizeCanvas();
+
+                                document.getElementById('clear-signature').addEventListener('click', function() {
+                                    signaturePad.clear();
+                                });
+
+                                // Work Area Data for Dynamic Loading
+                                const workAreas = @json($work_areas);
+
+                                // Handle Dynamic Filtering for Unit Kerja
+                                const wilayahRadios = document.querySelectorAll('input[name="wilayah_kerja"]');
+                                const datalistCabang = document.getElementById('list_cabang');
+                                const datalistDeputi = document.getElementById('list_deputi');
+                                const inputA = document.getElementById('unit_a');
+                                const inputB = document.getElementById('unit_b');
+                                const inputC = document.getElementById('unit_c');
+
+                                function updateUnitLists(isInitial = false) {
+                                    const selectedWilayah = document.querySelector('input[name="wilayah_kerja"]:checked')?.value;
+                                    
+                                    // Clear datalists
+                                    datalistCabang.innerHTML = '';
+                                    datalistDeputi.innerHTML = '';
+                                    document.getElementById('list_kab_kota').innerHTML = '';
+                                    
+                                    // Clear inputs when changing wilayah type to avoid "leaked" data from previous selection (e.g. from PUSAT)
+                                    // Only clear if NOT the initial load (to preserve old() values on validation error)
+                                    if(!isInitial) {
+                                        inputA.value = '';
+                                        inputB.value = '';
+                                        inputC.value = '';
+                                    }
+                                    
+                                    if(selectedWilayah) {
+                                        const filtered = workAreas.filter(wa => wa.wilayah_kerja === selectedWilayah);
+                                        
+                                        // Update Kab/Kota Datalist
+                                        const uniqueKab = [...new Set(filtered.map(wa => wa.kab_kota))];
+                                        uniqueKab.forEach(kab => {
+                                            if(kab) document.getElementById('list_kab_kota').innerHTML += `<option value="${kab}">`;
+                                        });
+
+                                        // Update Cabang Datalist
+                                        const uniqueCabang = [...new Set(filtered.map(wa => wa.kantor_cabang))];
+                                        uniqueCabang.forEach(cabang => {
+                                            if(cabang) datalistCabang.innerHTML += `<option value="${cabang}">`;
+                                        });
+
+                                        // Update Deputi Datalist
+                                        const uniqueDeputi = [...new Set(filtered.map(wa => wa.deputi_direktorat))];
+                                        uniqueDeputi.forEach(deputi => {
+                                            if(deputi) datalistDeputi.innerHTML += `<option value="${deputi}">`;
+                                        });
+
+                                        // Auto-fill if there is only a single match (like Kantor PUSAT)
+                                        if(filtered.length === 1) {
+                                            inputA.value = filtered[0].kab_kota;
+                                            inputB.value = filtered[0].kantor_cabang;
+                                            inputC.value = filtered[0].deputi_direktorat;
+                                        }
+                                    }
+                                }
+
+                                wilayahRadios.forEach(radio => {
+                                    radio.addEventListener('change', () => updateUnitLists(false));
+                                });
+
+                                // Event listener when Kab/Kota is typed/selected to filter branch
+                                inputA.addEventListener('input', function() {
+                                    const val = this.value;
+                                    const selectedWilayah = document.querySelector('input[name="wilayah_kerja"]:checked')?.value;
+                                    const matches = workAreas.filter(wa => wa.kab_kota === val && wa.wilayah_kerja === selectedWilayah);
+                                    
+                                    if(matches.length > 0) {
+                                        datalistCabang.innerHTML = '';
+                                        const uniqueCabang = [...new Set(matches.map(wa => wa.kantor_cabang))];
+                                        uniqueCabang.forEach(cabang => {
+                                            if(cabang) datalistCabang.innerHTML += `<option value="${cabang}">`;
+                                        });
+
+                                        // If only one branch in this city, auto-fill it
+                                        if(matches.length === 1) {
+                                            inputB.value = matches[0].kantor_cabang;
+                                            inputC.value = matches[0].deputi_direktorat;
+                                        }
+                                    }
+                                });
+
                                 // Logic for Serial Number
                                 const statusRadios = document.querySelectorAll('input[name="user_status"]');
                                 const serialRow = document.getElementById('serial_row');
@@ -317,13 +477,23 @@
                                 // Submit Handler
                                 const form = document.getElementById('checkoutForm');
                                 form.addEventListener('submit', function(e) {
+                                    if (signaturePad.isEmpty()) {
+                                        e.preventDefault();
+                                        alert("Silakan bubuhkan tanda tangan Anda terlebih dahulu.");
+                                        return;
+                                    }
+
                                     const a = document.querySelector('input[name="unit_kerja_detail_a"]').value;
                                     const b = document.querySelector('input[name="unit_kerja_detail_b"]').value;
                                     const c = document.querySelector('input[name="unit_kerja_detail_c"]').value;
                                     document.getElementById('legacy_unit').value = `${a} | ${b} | ${c}`;
+
+                                    // Store signature data
+                                    document.getElementById('esign_data').value = signaturePad.toDataURL();
                                 });
                                 
                                 togglePayroll(); // Initial check
+                                updateUnitLists(); // Initial list setup
                             });
                             </script>
                         </div>

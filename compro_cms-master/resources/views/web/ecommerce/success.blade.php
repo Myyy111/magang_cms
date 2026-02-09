@@ -39,8 +39,15 @@
                         Kami telah menerima pesanan Anda. Tim kami akan segera memprosesnya dan menghubungi Anda melalui WhatsApp di nomor <strong>{{ $order->customer_contact }}</strong> untuk konfirmasi dan mekanisme pembayaran selanjutnya.
                     </p>
 
-                    <div class="btn-box">
-                        <a href="{{ route('ecommerce.index') }}" class="btn-premium">Kembali ke Katalog</a>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6 mb-3">
+                            <a href="{{ route('ecommerce.index') }}" class="btn-premium w-100">Kembali ke Katalog</a>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <a href="{{ route('ecommerce.download_pdf', $order->id) }}" class="btn-premium w-100" target="_blank" style="background: #6c757d;">
+                                <i class="fas fa-file-pdf mr-2"></i> Download Surat Pernyataan
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

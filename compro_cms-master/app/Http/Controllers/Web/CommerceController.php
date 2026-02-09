@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Setting;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ProductCategory;
@@ -174,6 +175,8 @@ class CommerceController extends Controller
 
         $data['title'] = 'Checkout';
         $data['cart'] = $cart;
+        $data['work_areas'] = \App\Models\WorkArea::all();
+        $data['wilayah_options'] = \App\Models\WorkArea::getWilayahKerjaOptions();
         
         return view('web.ecommerce.checkout', $data);
     }
@@ -238,6 +241,25 @@ class CommerceController extends Controller
                 'payroll_deduction_periods' => $request->payroll_deduction_periods,
             ]);
 
+            // 3. Handle E-Signature
+            if ($request->esign_data) {
+                $esign_data = $request->esign_data;
+                $image_parts = explode(";base64,", $esign_data);
+                if (isset($image_parts[1])) {
+                    $image_base64 = base64_decode($image_parts[1]);
+                    $filename = 'esign_' . $order->order_number . '_' . time() . '.png';
+                    
+                    if(!file_exists(public_path('uploads/signatures'))) {
+                        mkdir(public_path('uploads/signatures'), 0777, true);
+                    }
+                    
+                    file_put_contents(public_path('uploads/signatures/' . $filename), $image_base64);
+                    
+                    $order->esign_path = $filename;
+                    $order->save();
+                }
+            }
+
             // Create Order Items
             foreach($cart as $item) {
                 OrderItem::create([
@@ -261,9 +283,14 @@ class CommerceController extends Controller
                 Log::error('WooCommerce Sync Failed: ' . $e->getMessage());
             }
 
-            // Redirect to Document Upload Page
-            Toastr::success('Data berhasil disimpan! Silakan unduh dan upload surat pernyataan.', 'Langkah Selanjutnya');
-            return redirect()->route('ecommerce.upload_document', ['order_id' => $order->id]);
+            // Redirect based on sign status
+            if ($order->esign_path) {
+                Toastr::success('Data berhasil disimpan! Pesanan Anda telah diterima.', 'Sukses');
+                return redirect()->route('ecommerce.success', ['order_id' => $order->id]);
+            } else {
+                Toastr::success('Data berhasil disimpan! Silakan unduh dan upload surat pernyataan.', 'Langkah Selanjutnya');
+                return redirect()->route('ecommerce.upload_document', ['order_id' => $order->id]);
+            }
 
         } catch (\Exception $e) {
             DB::rollback();
@@ -297,6 +324,7 @@ class CommerceController extends Controller
                 $data['order'] = $order;
             } else {
                 Toastr::error('Pesanan tidak ditemukan!', 'Error');
+                $data['old_order_number'] = $request->order_number;
             }
         }
 
@@ -423,6 +451,54 @@ class CommerceController extends Controller
     public function downloadPdf($order_id)
     {
         $order = Order::findOrFail($order_id);
+        $setting = Setting::first();
+
+        if ($setting && $setting->order_pdf_template) {
+            $template = $setting->order_pdf_template;
+            
+            // Helper for checkboxes
+            $check = '<span style="display: inline-block; width: 15px; height: 15px; border: 1px solid #000; margin-right: 5px; text-align: center; line-height: 13px; font-size: 12px; font-weight: bold;">X</span>';
+            $uncheck = '<span style="display: inline-block; width: 15px; height: 15px; border: 1px solid #000; margin-right: 5px; text-align: center; line-height: 13px; font-size: 12px;"></span>';
+
+            $unit_detail = json_decode($order->unit_kerja_detail, true);
+
+            // Placeholder replacements
+            $placeholders = [
+                '[order_number]' => $order->order_number,
+                '[customer_name]' => $order->customer_name,
+                '[customer_id_num]' => $order->customer_id_num,
+                '[customer_contact]' => $order->customer_contact,
+                '[total_amount]' => number_format($order->total_amount, 0, ',', '.'),
+                '[date]' => date('d F Y'),
+                '[laptop_serial]' => $order->laptop_serial_number ?? '__________________________',
+                
+                '[checkbox_pusat]' => ($order->wilayah_kerja == 'pusat') ? $check : $uncheck,
+                '[checkbox_wilayah]' => ($order->wilayah_kerja == 'wilayah') ? $check : $uncheck,
+                '[checkbox_cabang]' => ($order->wilayah_kerja == 'cabang') ? $check : $uncheck,
+                
+                '[checkbox_pengguna]' => ($order->user_status == 'pengguna') ? $check : $uncheck,
+                '[checkbox_bukan_pengguna]' => ($order->user_status == 'bukan_pengguna') ? $check : $uncheck,
+                
+                '[checkbox_transfer]' => ($order->payment_mechanism == 'transfer') ? $check : $uncheck,
+                '[checkbox_cicil_1]' => ($order->payment_mechanism == 'potong_gaji' && $order->payroll_deduction_periods == 1) ? $check : $uncheck,
+                '[checkbox_cicil_2]' => ($order->payment_mechanism == 'potong_gaji' && $order->payroll_deduction_periods == 2) ? $check : $uncheck,
+                '[checkbox_cicil_3]' => ($order->payment_mechanism == 'potong_gaji' && $order->payroll_deduction_periods == 3) ? $check : $uncheck,
+                '[checkbox_cicil_4]' => ($order->payment_mechanism == 'potong_gaji' && $order->payroll_deduction_periods == 4) ? $check : $uncheck,
+
+                '[unit_kab_kota]' => $unit_detail['kab_kota'] ?? '',
+                '[unit_cabang]' => $unit_detail['cabang'] ?? '',
+                '[unit_deputi]' => $unit_detail['deputi'] ?? '',
+                
+                '[signature_image]' => $order->esign_path ? '<img src="'.asset('uploads/signatures/' . $order->esign_path).'" style="max-height: 100px; width: auto;">' : '',
+            ];
+
+            foreach ($placeholders as $key => $value) {
+                $template = str_replace($key, $value, $template);
+            }
+
+            return view('web.ecommerce.pdf_rendered', ['html' => $template]);
+        }
+
         return view('web.ecommerce.pdf_view', compact('order'));
     }
 

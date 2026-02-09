@@ -146,6 +146,10 @@ Route::middleware(['auth:web', 'XSS'])->name('admin.')->namespace('Admin')->pref
     // Work Process Routes
     Route::resource('work-process', 'WorkProcessController');
 
+    // Work Area Routes
+    Route::resource('work-area', 'WorkAreaController');
+
+
     // Why Us Routes
     Route::resource('why-choose-us', 'WhyChooseUsController');
 
@@ -188,4 +192,5 @@ Route::middleware(['auth:web', 'XSS'])->name('admin.')->namespace('Admin')->pref
     Route::post('changepass', 'SettingController@changePass')->name('setting.changepass');
     Route::post('socialinfo', 'SettingController@socialInfo')->name('setting.socialinfo');
     Route::post('customcode', 'SettingController@customCode')->name('setting.customcode');
+    Route::post('pdftemplate', 'SettingController@pdfTemplate')->name('setting.pdftemplate');
 });

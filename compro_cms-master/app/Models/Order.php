@@ -27,6 +27,8 @@ class Order extends Model
         'payment_mechanism',
         'payroll_deduction_periods',
         'signed_document_path',
+        'esign_path',
+        'dismantel_schedule',
     ];
 
     public function items()

@@ -54,7 +54,9 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if($row->signed_document_path)
+                                    @if($row->esign_path)
+                                        <span class="badge badge-success"><i class="fas fa-signature mr-1"></i> E-Signed</span>
+                                    @elseif($row->signed_document_path)
                                         <span class="badge badge-info"><i class="fas fa-file-pdf mr-1"></i> Uploaded</span>
                                     @else
                                         <span class="badge badge-warning"><i class="fas fa-clock mr-1"></i> Missing</span>
@@ -62,13 +64,20 @@
                                 </td>
                                 <td>
                                     @if( $row->status == 'completed' )
-                                    <span class="badge badge-success">Completed</span>
+                                    <span class="badge badge-success">Selesai</span>
+                                    @elseif( $row->status == 'processing' )
+                                    <span class="badge badge-info">Menunggu Dismantel</span>
+                                    @if($row->dismantel_schedule)
+                                        <small class="d-block text-muted mt-1" style="font-size: 10px;">
+                                            <i class="fas fa-calendar-day mr-1"></i> {{ $row->dismantel_schedule }}
+                                        </small>
+                                    @endif
                                     @elseif( $row->status == 'paid' )
-                                    <span class="badge badge-primary">Paid</span>
+                                    <span class="badge badge-primary">Dibayar</span>
                                     @elseif( $row->status == 'failed' )
-                                    <span class="badge badge-danger">Failed</span>
+                                    <span class="badge badge-danger">Dibatalkan</span>
                                     @else
-                                    <span class="badge badge-warning">Pending</span>
+                                    <span class="badge badge-warning">Pesanan Diterima</span>
                                     @endif
                                 </td>
                                 <td>

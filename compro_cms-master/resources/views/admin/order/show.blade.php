@@ -1,5 +1,8 @@
 @extends('admin.layouts.master')
 @section('title', $title)
+@section('page_css')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+@endsection
 @section('content')
 
 <style>
@@ -168,14 +171,26 @@
                         @method('PUT')
 
                         <div class="form-group">
+                            <label class="info-label">Pilih Status Baru:</label>
                             <select class="form-control custom-select-lg border-primary mb-3" name="status" id="status" style="height: 50px; font-weight: bold;">
-                                <option value="pending" {{ $row->status == 'pending' ? 'selected' : '' }}>🕒 Pending</option>
-                                <option value="paid" {{ $row->status == 'paid' ? 'selected' : '' }}>💳 Paid (Selesaikan Stok)</option>
-                                <option value="completed" {{ $row->status == 'completed' ? 'selected' : '' }}>✅ Completed</option>
-                                <option value="failed" {{ $row->status == 'failed' ? 'selected' : '' }}>❌ Failed/Cancel</option>
+                                <option value="pending" {{ $row->status == 'pending' ? 'selected' : '' }}>🕒 Pesanan Diterima</option>
+                                <option value="paid" {{ $row->status == 'paid' ? 'selected' : '' }}>💳 Pembayaran Dikonfirmasi</option>
+                                <option value="processing" {{ $row->status == 'processing' ? 'selected' : '' }}>🗓️ Menunggu Jadwal Dismentel</option>
+                                <option value="completed" {{ $row->status == 'completed' ? 'selected' : '' }}>✅ Selesai / Dismentel</option>
+                                <option value="failed" {{ $row->status == 'failed' ? 'selected' : '' }}>❌ Batal / Gagal</option>
                             </select>
                         </div>
 
+                        <div id="dismantel_input_group" class="form-group mb-3" style="display: {{ $row->status == 'processing' ? 'block' : 'none' }}; background: #f0f7ff; padding: 15px; border-radius: 12px; border: 1px solid #d0e7ff;">
+                            <label class="info-label" style="color: #004aad;">🗓️ Tentukan Jadwal Dismentel:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-white border-primary border-right-0"><i class="fas fa-calendar-alt text-primary"></i></span>
+                                </div>
+                                <input type="text" name="dismantel_schedule" id="dismantel_schedule_input" class="form-control border-primary" value="{{ $row->dismantel_schedule }}" placeholder="Pilih Tanggal & Waktu..." readonly style="background: white;">
+                            </div>
+                            <small class="text-muted">Klik untuk membuka kalender. Jadwal akan tampil di pelacakan user.</small>
+                        </div>
                         <button type="submit" class="btn btn-primary btn-block btn-lg shadow">
                             Update Status <i class="fas fa-save ml-1"></i>
                         </button>
@@ -195,19 +210,31 @@
             <!-- Documents -->
             <div class="card order-card">
                 <div class="card-header bg-white border-bottom-0 pt-4 px-4">
-                    <h5 class="card-title mb-0">Dokumen Digital</h5>
+                    <h5 class="card-title mb-0">Dokumen & Persetujuan</h5>
                 </div>
                 <div class="card-body px-4 pb-4">
                     <div class="doc-preview">
-                        @if($row->signed_document_path)
-                            <div class="mb-3"><i class="far fa-file-pdf fa-4x text-danger"></i></div>
-                            <h6 class="mb-3">Surat Pernyataan (TTD)</h6>
-                            <a href="{{ asset('uploads/documents/' . $row->signed_document_path) }}" class="btn btn-danger btn-sm btn-block" target="_blank">
-                                <i class="fas fa-eye mr-1"></i> Lihat Dokumen
+                        @if($row->esign_path)
+                            <div class="mb-3">
+                                <small class="text-muted d-block mb-2">Tanda Tangan Elektronik (E-Sign):</small>
+                                <img src="{{ asset('uploads/signatures/' . $row->esign_path) }}" alt="E-Sign" class="img-fluid border rounded bg-white p-2" style="max-height: 120px;">
+                            </div>
+                            <a href="{{ route('ecommerce.download_pdf', $row->id) }}" class="btn btn-info btn-sm btn-block mb-3" target="_blank">
+                                <i class="fas fa-file-pdf mr-1"></i> Lihat PDF Pernyataan
                             </a>
-                        @else
+                        @endif
+
+                        @if($row->signed_document_path)
+                            <div class="mb-3 pt-3 {{ $row->esign_path ? 'border-top' : '' }}">
+                                <i class="far fa-file-pdf fa-3x text-danger mb-2"></i>
+                                <h6 class="mb-2">Surat Pernyataan (Upload)</h6>
+                                <a href="{{ asset('uploads/documents/' . $row->signed_document_path) }}" class="btn btn-danger btn-sm btn-block" target="_blank">
+                                    <i class="fas fa-eye mr-1"></i> Lihat Dokumen Upload
+                                </a>
+                            </div>
+                        @elseif(!$row->esign_path)
                             <div class="mb-3"><i class="far fa-file-pdf fa-4x text-muted opacity-3"></i></div>
-                            <p class="text-muted mb-0"><i>User belum mengunggah surat pernyataan yang ditandatangani.</i></p>
+                            <p class="text-muted mb-0"><i>User belum memberikan persetujuan (E-Sign atau Upload).</i></p>
                         @endif
                     </div>
                 </div>
@@ -217,4 +244,36 @@
     
 </div> <!-- container -->
 
+@endsection
+
+@section('page_js')
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        (function() {
+            const statusSelect = document.getElementById('status');
+            const inputGroup = document.getElementById('dismantel_input_group');
+            
+            // Initialize Flatpickr
+            flatpickr("#dismantel_schedule_input", {
+                enableTime: true,
+                dateFormat: "d M Y, H:i",
+                minDate: "today",
+                time_24hr: true
+            });
+
+            function toggleDismantelInput() {
+                if(statusSelect.value === 'processing') {
+                    inputGroup.style.display = 'block';
+                } else {
+                    inputGroup.style.display = 'none';
+                }
+            }
+
+            if (statusSelect) {
+                statusSelect.addEventListener('change', toggleDismantelInput);
+                // Initial check
+                toggleDismantelInput();
+            }
+        })();
+    </script>
 @endsection

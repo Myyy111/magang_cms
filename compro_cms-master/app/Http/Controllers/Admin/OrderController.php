@@ -70,16 +70,20 @@ class OrderController extends Controller
         $order = Order::with('items')->findOrFail($id);
         
         $request->validate([
-            'status' => 'required|in:pending,paid,completed,failed',
+            'status' => 'required|in:pending,paid,processing,completed,failed',
+            'dismantel_schedule' => 'nullable|string',
         ]);
 
         $oldStatus = $order->status;
         $newStatus = $request->status;
 
-        $acceptedStatuses = ['paid', 'completed'];
+        $acceptedStatuses = ['paid', 'processing', 'completed'];
         $notAcceptedStatuses = ['pending', 'failed'];
 
-        // If status changes FROM (Pending/Failed) TO (Paid/Completed) -> Reduce Stock
+        // Update dismantel schedule
+        $order->dismantel_schedule = $request->dismantel_schedule;
+
+        // If status changes FROM (Pending/Failed) TO (Paid/Processing/Completed) -> Reduce Stock
         if (in_array($oldStatus, $notAcceptedStatuses) && in_array($newStatus, $acceptedStatuses)) {
             foreach ($order->items as $item) {
                 // Decrement main product
@@ -128,7 +132,7 @@ class OrderController extends Controller
         $order = Order::with('items')->findOrFail($id);
         
         // Restore stock if it was already accepted (stock was reduced then)
-        $acceptedStatuses = ['paid', 'completed'];
+        $acceptedStatuses = ['paid', 'processing', 'completed'];
         if (in_array($order->status, $acceptedStatuses)) {
             foreach ($order->items as $item) {
                 Product::where('id', $item->product_id)->increment('stock', $item->quantity);

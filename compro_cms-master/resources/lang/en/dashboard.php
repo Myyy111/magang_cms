@@ -227,4 +227,7 @@ return array (
   'template-invoice-paid' => 'Invoice Paid',
   'template-invoice-cancelled' => 'Invoice Cancelled',
   'template-subscription' => 'Subscription',
+  'product' => 'Product|Products',
+  'order' => 'Order|Orders',
+  'work_area' => 'Work Area',
 );
