@@ -11,17 +11,84 @@
         <div class="col-12">
             <div class="card shadow-sm border-0" style="border-radius: 12px;">
                 <div class="card-header bg-white border-bottom-0 pt-4 px-4 d-flex justify-content-between align-items-center">
-                    <h4 class="header-title mb-0" style="font-weight: 700; color: #333;">{{ $title }}</h4>
-                    <a href="{{ route($route.'.index') }}" class="btn btn-soft-secondary btn-sm"><i class="fas fa-sync-alt mr-1"></i> Refresh</a>
+                    <h4 class="header-title mb-0">{{ $title }}</h4>
+                    <div class="d-flex" style="gap: 10px;">
+                        <button class="btn btn-info btn-sm" type="button" data-toggle="collapse" data-target="#filterBox" aria-expanded="false">
+                            <i class="fas fa-filter mr-1"></i> FILTER
+                        </button>
+                        <a href="{{ route($route.'.index') }}" class="btn btn-secondary btn-sm"><i class="fas fa-sync-alt mr-1"></i> REFRESH</a>
+                    </div>
                 </div>
                 <div class="card-body px-4 pb-4">
                   
+                  <!-- Filter Box -->
+                  <div class="collapse {{ request()->has('status') || request()->has('wilayah') ? 'show' : '' }}" id="filterBox">
+                    <div class="card card-body bg-light border-0 shadow-none mb-4" style="border-radius: 12px;">
+                        <form action="{{ route($route.'.index') }}" method="GET">
+                            <div class="row align-items-end">
+                                <div class="col-md-4">
+                                    <label class="font-weight-600 small text-uppercase text-muted">Status Pesanan</label>
+                                    <select name="status" class="form-control" style="border-radius: 8px;">
+                                        <option value="">Semua Status</option>
+                                        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pesanan Diterima</option>
+                                        <option value="paid" {{ request('status') == 'paid' ? 'selected' : '' }}>Dibayar</option>
+                                        <option value="processing" {{ request('status') == 'processing' ? 'selected' : '' }}>Menunggu Dismantel</option>
+                                        <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Selesai</option>
+                                        <option value="failed" {{ request('status') == 'failed' ? 'selected' : '' }}>Dibatalkan</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="font-weight-600 small text-uppercase text-muted">Wilayah Kerja</label>
+                                    <select name="wilayah" class="form-control" style="border-radius: 8px;">
+                                        <option value="">Semua Wilayah</option>
+                                        <option value="pusat" {{ request('wilayah') == 'pusat' ? 'selected' : '' }}>Kantor Pusat</option>
+                                        <option value="wilayah" {{ request('wilayah') == 'wilayah' ? 'selected' : '' }}>Kantor Wilayah</option>
+                                        <option value="cabang" {{ request('wilayah') == 'cabang' ? 'selected' : '' }}>Kantor Cabang</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-dark px-4" style="border-radius: 8px; font-weight: 600;"><i class="fas fa-search mr-1"></i> Telusuri</button>
+                                    @if(request()->has('status') || request()->has('wilayah'))
+                                        <a href="{{ route($route.'.index') }}" class="btn btn-light ml-2" style="border-radius: 8px;">Reset</a>
+                                    @endif
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                  </div>
+                  
+                  <!-- Bulk Action Panel -->
+                  <form action="{{ route($route.'.bulk-update') }}" method="POST" id="bulkActionForm">
+                    @csrf
+                    <div id="bulk-action-bar" class="alert alert-light border shadow-sm mb-3 d-none align-items-center justify-content-between" style="border-radius: 12px; padding: 10px 20px;">
+                        <div class="d-flex align-items-center">
+                            <span class="badge badge-primary mr-3" id="selected-count">0 Terpilih</span>
+                            <h5 class="mb-0 text-dark" style="font-size: 14px; font-weight: 700;">Aksi Masal: Ubah Status ke</h5>
+                        </div>
+                        <div class="d-flex align-items-center" style="gap: 10px;">
+                            <select name="status" class="form-control form-control-sm" style="width: 180px; border-radius: 8px;" required>
+                                <option value="">-- Pilih Status --</option>
+                                <option value="pending">Pesanan Diterima</option>
+                                <option value="paid">Dibayar</option>
+                                <option value="processing">Menunggu Dismantel</option>
+                                <option value="completed">Selesai</option>
+                                <option value="failed">Dibatalkan</option>
+                            </select>
+                            <button type="submit" class="btn btn-dark btn-sm px-3" style="border-radius: 8px; font-weight: 700;">Terapkan</button>
+                        </div>
+                    </div>
+
                   <!-- Data Table Start -->
                   <div class="table-responsive">
                     <table id="basic-datatable" class="table full-width">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                <th width="40">
+                                    <div class="custom-control custom-checkbox text-center">
+                                        <input type="checkbox" class="custom-control-input" id="checkAll">
+                                        <label class="custom-control-label" for="checkAll"></label>
+                                    </div>
+                                </th>
                                 <th>Order Number</th>
                                 <th>Customer</th>
                                 <th>Amount</th>
@@ -35,7 +102,12 @@
                         <tbody>
                           @foreach( $rows as $key => $row )
                             <tr>
-                                <td>{{ $key + 1 }}</td>
+                                <td>
+                                    <div class="custom-control custom-checkbox text-center">
+                                        <input type="checkbox" name="order_ids[]" value="{{ $row->id }}" class="custom-control-input order-checkbox" id="check_{{ $row->id }}">
+                                        <label class="custom-control-label" for="check_{{ $row->id }}"></label>
+                                    </div>
+                                </td>
                                 <td>
                                     <span class="text-primary font-weight-bold">{{ $row->order_number }}</span>
                                 </td>
@@ -45,39 +117,57 @@
                                 </td>
                                 <td class="font-weight-bold">Rp {{ number_format($row->total_amount, 0, ',', '.') }}</td>
                                 <td>
-                                    @if($row->wilayah_kerja == 'pusat')
-                                        <span class="badge badge-primary">Pusat</span>
-                                    @elseif($row->wilayah_kerja == 'wilayah')
-                                        <span class="badge badge-info">Wilayah</span>
+                                    @php
+                                        $detailStr = $row->unit_kerja_detail;
+                                        $jsonDetail = json_decode($row->unit_kerja_detail, true);
+                                        if (json_last_error() === JSON_ERROR_NONE && is_array($jsonDetail)) {
+                                            $detailStr = implode(', ', array_filter($jsonDetail)); 
+                                        }
+                                    @endphp
+
+                                    @if(!empty($row->wilayah_kerja))
+                                        <span class="status-badge status-neutral">{{ ucwords(str_replace('_', ' ', $row->wilayah_kerja)) }}</span>
+                                        @if(!empty($detailStr))
+                                            <br><small class="text-muted d-block mt-1" style="line-height: 1.2;">{{ str_limit($detailStr, 50) }}</small>
+                                        @elseif(!empty($row->kdkc))
+                                            <br><small class="text-muted d-block mt-1" style="line-height: 1.2;">{{ $row->kdkc }}</small>
+                                        @endif
+                                    @elseif(!empty($row->customer_unit))
+                                        <span class="status-badge status-neutral">{{ $row->customer_unit }}</span>
+                                        @if(!empty($detailStr))
+                                            <br><small class="text-muted d-block mt-1" style="line-height: 1.2;">{{ \Illuminate\Support\Str::limit($detailStr, 50) }}</small>
+                                        @elseif(!empty($row->kdkc))
+                                            <br><small class="text-muted d-block mt-1" style="line-height: 1.2;">{{ $row->kdkc }}</small>
+                                        @endif
                                     @else
-                                        <span class="text-muted">-</span>
+                                        <span class="text-muted small">-</span>
                                     @endif
                                 </td>
                                 <td>
                                     @if($row->esign_path)
-                                        <span class="badge badge-success"><i class="fas fa-signature mr-1"></i> E-Signed</span>
+                                        <span class="status-badge status-completed"><i class="fas fa-signature mr-1"></i> E-Signed</span>
                                     @elseif($row->signed_document_path)
-                                        <span class="badge badge-info"><i class="fas fa-file-pdf mr-1"></i> Uploaded</span>
+                                        <span class="status-badge status-processing"><i class="fas fa-file-pdf mr-1"></i> Uploaded</span>
                                     @else
-                                        <span class="badge badge-warning"><i class="fas fa-clock mr-1"></i> Missing</span>
+                                        <span class="status-badge status-missing"><i class="fas fa-clock mr-1"></i> Missing</span>
                                     @endif
                                 </td>
                                 <td>
                                     @if( $row->status == 'completed' )
-                                    <span class="badge badge-success">Selesai</span>
+                                    <span class="status-badge status-completed">Selesai</span>
                                     @elseif( $row->status == 'processing' )
-                                    <span class="badge badge-info">Menunggu Dismantel</span>
+                                    <span class="status-badge status-processing">Menunggu Dismantel</span>
                                     @if($row->dismantel_schedule)
-                                        <small class="d-block text-muted mt-1" style="font-size: 10px;">
+                                        <small class="d-block text-muted mt-1" style="font-size: 10px; font-weight: 600;">
                                             <i class="fas fa-calendar-day mr-1"></i> {{ $row->dismantel_schedule }}
                                         </small>
                                     @endif
                                     @elseif( $row->status == 'paid' )
-                                    <span class="badge badge-primary">Dibayar</span>
+                                    <span class="status-badge status-paid">Dibayar</span>
                                     @elseif( $row->status == 'failed' )
-                                    <span class="badge badge-danger">Dibatalkan</span>
+                                    <span class="status-badge status-failed">Dibatalkan</span>
                                     @else
-                                    <span class="badge badge-warning">Pesanan Diterima</span>
+                                    <span class="status-badge status-pending">Diterima</span>
                                     @endif
                                 </td>
                                 <td>
@@ -101,6 +191,8 @@
                   </div>
                   <!-- Data Table End -->
 
+                  </form>
+
                   @foreach( $rows as $row )
                     @include('admin.inc.delete')
                   @endforeach
@@ -112,4 +204,35 @@
     
 </div> <!-- container -->
 
+@endsection
+
+@section('page_js')
+<script>
+$(document).ready(function() {
+    // Check All logic
+    $("#checkAll").click(function() {
+        $(".order-checkbox").prop('checked', $(this).prop('checked'));
+        toggleBulkBar();
+    });
+
+    $(".order-checkbox").change(function() {
+        if ($(".order-checkbox:checked").length == $(".order-checkbox").length) {
+            $("#checkAll").prop('checked', true);
+        } else {
+            $("#checkAll").prop('checked', false);
+        }
+        toggleBulkBar();
+    });
+
+    function toggleBulkBar() {
+        var count = $(".order-checkbox:checked").length;
+        if (count > 0) {
+            $("#bulk-action-bar").removeClass('d-none').addClass('d-flex');
+            $("#selected-count").text(count + " Terpilih");
+        } else {
+            $("#bulk-action-bar").removeClass('d-flex').addClass('d-none');
+        }
+    }
+});
+</script>
 @endsection

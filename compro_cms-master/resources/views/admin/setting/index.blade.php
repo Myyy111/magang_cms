@@ -13,16 +13,14 @@
 
     <div class="row">
         <div class="col-12">
-            <a href="{{ route($route.'.index') }}" class="btn btn-info">{{ __('dashboard.refresh') }}</a>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-12">
-
-            <div class="card shadow border-0" style="border-radius: 12px;">
-                <div class="card-header bg-white border-bottom-0 pt-4 px-4">
-                    <h4 class="header-title" style="font-weight: 800; color: #333; text-transform: uppercase;">{{ $title }}</h4>
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white border-bottom-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                    <h4 class="header-title mb-0">{{ $title }}</h4>
+                    <div class="d-flex" style="gap: 10px;">
+                        <a href="{{ route($route.'.index') }}" class="btn btn-secondary btn-sm">
+                            <i class="fas fa-sync-alt mr-1"></i> REFRESH
+                        </a>
+                    </div>
                 </div>
                 <div class="card-body px-4 pb-4">
 
@@ -142,7 +140,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-lg px-4" style="font-weight: 700;">{{ __('dashboard.update') }}</button>
+                            <button type="submit" class="btn btn-dark px-4">{{ __('dashboard.update') }}</button>
                         </div>
 
                       </form>
@@ -183,7 +181,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-lg px-4" style="font-weight: 700;">{{ __('dashboard.update') }}</button>
+                                <button type="submit" class="btn btn-dark px-4">{{ __('dashboard.update') }}</button>
                             </div>
                         </form>
                     </div>
@@ -273,7 +271,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-lg px-4" style="font-weight: 700;">{{ __('dashboard.update') }}</button>
+                            <button type="submit" class="btn btn-dark px-4">{{ __('dashboard.update') }}</button>
                         </div>
 
                       </form>
@@ -368,7 +366,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-lg px-4" style="font-weight: 700;">{{ __('dashboard.update') }}</button>
+                            <button type="submit" class="btn btn-dark px-4">{{ __('dashboard.update') }}</button>
                         </div>
 
                       </form>
@@ -388,29 +386,36 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-lg px-4" style="font-weight: 700;">{{ __('dashboard.update') }}</button>
+                            <button type="submit" class="btn btn-dark px-4">{{ __('dashboard.update') }}</button>
                         </div>
 
                       </form>
                       <!-- Form End -->
 
                     </div>
-                    <div class="tab-pane" id="pdf-template-tab">
-                         <div class="alert alert-info">
-                            <h5>Daftar Placeholder Produk & Order:</h5>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <code>[order_number]</code>, <code>[customer_name]</code>, <code>[customer_id_num]</code>, <code>[customer_contact]</code>, <code>[total_amount]</code>, <code>[date]</code>
-                                </div>
-                                <div class="col-md-4">
-                                    <code>[checkbox_pusat]</code>, <code>[checkbox_wilayah]</code>, <code>[checkbox_cabang]</code>, <code>[checkbox_pengguna]</code>, <code>[checkbox_bukan_pengguna]</code>, <code>[laptop_serial]</code>
-                                </div>
-                                <div class="col-md-4">
-                                    <code>[unit_kab_kota]</code>, <code>[unit_cabang]</code>, <code>[unit_deputi]</code>, <code>[signature_image]</code>, <code>[checkbox_transfer]</code>, <code>[checkbox_cicil_1-4]</code>
-                                </div>
-                            </div>
-                            <small class="d-block mt-2">Gunakan placeholder di atas untuk menampilkan data dinamis dari pesanan ke dalam PDF.</small>
-                        </div>
+                     <div class="tab-pane" id="pdf-template-tab">
+                          <div class="alert alert-info">
+                             <h5 class="mb-2"><i class="fas fa-info-circle mr-1"></i> Daftar Placeholder Produk & Order:</h5>
+                             <div class="row">
+                                 <div class="col-md-3">
+                                     <small class="font-weight-bold d-block text-uppercase mb-1">Informasi Dasar</small>
+                                     <code>[order_number]</code>, <code>[customer_name]</code>, <code>[customer_id_num]</code>, <code>[customer_contact]</code>, <code>[total_amount]</code>, <code>[date]</code>, <code>[year]</code>
+                                 </div>
+                                 <div class="col-md-3">
+                                     <small class="font-weight-bold d-block text-uppercase mb-1">Lokasi & Unit</small>
+                                     <code>[checkbox_pusat]</code>, <code>[checkbox_wilayah]</code>, <code>[checkbox_cabang]</code>, <code>[unit_kab_kota]</code>, <code>[unit_cabang]</code>, <code>[unit_deputi]</code>
+                                 </div>
+                                 <div class="col-md-3">
+                                     <small class="font-weight-bold d-block text-uppercase mb-1">Status & Serial</small>
+                                     <code>[checkbox_pengguna]</code>, <code>[checkbox_bukan_pengguna]</code>, <code>[laptop_serial]</code>, <code>[signature_image]</code>
+                                 </div>
+                                 <div class="col-md-3">
+                                     <small class="font-weight-bold d-block text-uppercase mb-1">Pembayaran</small>
+                                     <code>[checkbox_transfer]</code>, <code>[checkbox_cicil_1]</code>, <code>[checkbox_cicil_2]</code>, <code>[checkbox_cicil_3]</code>, <code>[checkbox_cicil_4]</code>
+                                 </div>
+                             </div>
+                             <small class="d-block mt-3 border-top pt-2">Gunakan placeholder di atas untuk menampilkan data dinamis dari pesanan ke dalam PDF. Pastikan struktur HTML rapi agar tampilan PDF tidak berantakan.</small>
+                         </div>
                         
                         <!-- Form Start -->
                         <form class="needs-validation" novalidate action="{{ route($route.'.pdftemplate') }}" method="post">
@@ -423,7 +428,7 @@
                             </div>
 
                             <div class="form-group mb-0">
-                                <button type="submit" class="btn btn-primary btn-lg px-4" style="font-weight: 700;">{{ __('dashboard.update') }}</button>
+                                <button type="submit" class="btn btn-dark px-4">{{ __('dashboard.update') }}</button>
                             </div>
                         </form>
                         <!-- Form End -->
@@ -455,7 +460,7 @@
                             </div>
 
                             <div class="form-group mb-0">
-                                <button type="submit" class="btn btn-primary btn-lg px-4" style="font-weight: 700;">{{ __('dashboard.change') }}</button>
+                                <button type="submit" class="btn btn-dark px-4">{{ __('dashboard.change') }}</button>
                             </div>
 
                           </form>
@@ -511,7 +516,7 @@
                             </div>
 
                             <div class="form-group mb-0">
-                                <button type="submit" class="btn btn-primary btn-lg px-4" style="font-weight: 700;">{{ __('dashboard.change') }}</button>
+                                <button type="submit" class="btn btn-dark px-4">{{ __('dashboard.change') }}</button>
                             </div>
 
                           </form>

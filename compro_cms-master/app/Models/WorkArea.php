@@ -17,6 +17,10 @@ class WorkArea extends Model
      */
     protected $fillable = [
         'wilayah_kerja',
+        'kdkr',
+        'nama_kw',
+        'kdkc',
+        'nmkc',
         'kab_kota',
         'kantor_cabang',
         'deputi_direktorat',

@@ -28,14 +28,26 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
         $data['title'] = $this->title;
         $data['route'] = $this->route;
         $data['view'] = $this->view;
 
-        $data['rows'] = Order::orderBy('created_at', 'desc')->get();
+        $rows = Order::orderBy('created_at', 'desc');
+
+        // Filter by Status
+        if (!empty($request->status)) {
+            $rows->where('status', $request->status);
+        }
+
+        // Filter by Wilayah Kerja
+        if (!empty($request->wilayah)) {
+            $rows->where('wilayah_kerja', $request->wilayah);
+        }
+
+        $data['rows'] = $rows->get();
 
         return view($this->view.'.index', $data);
     }
@@ -81,7 +93,9 @@ class OrderController extends Controller
         $notAcceptedStatuses = ['pending', 'failed'];
 
         // Update dismantel schedule
-        $order->dismantel_schedule = $request->dismantel_schedule;
+        if ($request->has('dismantel_schedule')) {
+            $order->dismantel_schedule = $request->dismantel_schedule;
+        }
 
         // If status changes FROM (Pending/Failed) TO (Paid/Processing/Completed) -> Reduce Stock
         if (in_array($oldStatus, $notAcceptedStatuses) && in_array($newStatus, $acceptedStatuses)) {
@@ -150,5 +164,62 @@ class OrderController extends Controller
         Toastr::success(__('dashboard.deleted_successfully'), __('dashboard.success'));
 
         return redirect()->route($this->route.'.index');
+    }
+    /**
+     * Handle bulk update of order statuses.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function bulkUpdate(Request $request)
+    {
+        $request->validate([
+            'order_ids' => 'required|array',
+            'order_ids.*' => 'exists:orders,id',
+            'status' => 'required|in:pending,paid,processing,completed,failed',
+        ]);
+
+        $orderIds = $request->order_ids;
+        $newStatus = $request->status;
+        $acceptedStatuses = ['paid', 'processing', 'completed'];
+        $notAcceptedStatuses = ['pending', 'failed'];
+
+        foreach ($orderIds as $id) {
+            $order = Order::with('items')->find($id);
+            if (!$order) continue;
+
+            $oldStatus = $order->status;
+
+            // If status changes FROM (Pending/Failed) TO (Paid/Processing/Completed) -> Reduce Stock
+            if (in_array($oldStatus, $notAcceptedStatuses) && in_array($newStatus, $acceptedStatuses)) {
+                foreach ($order->items as $item) {
+                    Product::where('id', $item->product_id)->decrement('stock', $item->quantity);
+                    if ($item->variant_ids) {
+                        foreach ($item->variant_ids as $vid) {
+                            \App\Models\ProductVariant::where('id', $vid)->decrement('stock', $item->quantity);
+                        }
+                    }
+                }
+            }
+            
+            // If status changes FROM (Paid/Processing/Completed) TO (Pending/Failed) -> Restore Stock
+            if (in_array($oldStatus, $acceptedStatuses) && in_array($newStatus, $notAcceptedStatuses)) {
+                foreach ($order->items as $item) {
+                    Product::where('id', $item->product_id)->increment('stock', $item->quantity);
+                    if ($item->variant_ids) {
+                        foreach ($item->variant_ids as $vid) {
+                            \App\Models\ProductVariant::where('id', $vid)->increment('stock', $item->quantity);
+                        }
+                    }
+                }
+            }
+
+            $order->status = $newStatus;
+            $order->save();
+        }
+
+        Toastr::success(__('dashboard.updated_successfully'), __('dashboard.success'));
+
+        return redirect()->back();
     }
 }

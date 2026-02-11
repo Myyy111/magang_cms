@@ -13,15 +13,14 @@
 
     <div class="row">
         <div class="col-12">
-            <a href="{{ route($route.'.index') }}" class="btn btn-info">{{ __('dashboard.refresh') }}</a>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="header-title">{{ $title }} {{ __('dashboard.list') }}</h4>
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white border-bottom-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                    <h4 class="header-title mb-0">{{ $title }}</h4>
+                    <div class="d-flex" style="gap: 10px;">
+                        <a href="{{ route($route.'.index') }}" class="btn btn-secondary btn-sm">
+                            <i class="fas fa-sync-alt mr-1"></i> REFRESH
+                        </a>
+                    </div>
                 </div>
                 <div class="card-body">
 
@@ -56,7 +55,7 @@
                                             <i class="fas fa-eye"></i>
                                         </a>
 
-                                        <a href="{{ route($route.'.edit', $row->id) }}" class="btn btn-primary" title="Edit">
+                                        <a href="{{ route($route.'.edit', $row->id) }}" class="btn btn-info" title="Edit">
                                             <i class="far fa-edit"></i>
                                         </a>
                                     </div>

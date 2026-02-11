@@ -25,6 +25,7 @@
 
         <!-- third party css -->
         <link href="{{ asset('dashboard/css/vendor/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('dashboard/css/datatable-custom.css') }}?v=1.0.1" rel="stylesheet" type="text/css" />
         <link href="{{ asset('dashboard/css/vendor/switchery.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('dashboard/css/vendor/toastr.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- third party css end -->

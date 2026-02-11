@@ -231,6 +231,10 @@ class CommerceController extends Controller
                 'shipping_cost' => $shipping_cost,
                 'status' => 'pending',
 
+                'npp' => $request->customer_id_num,
+                'kdkr' => null,
+                'kdkc' => null,
+
                 // New Fields
                 'wilayah_kerja' => $request->wilayah_kerja,
                 'unit_kerja_type' => 'complete', // Marking as complete/all filled
@@ -240,6 +244,17 @@ class CommerceController extends Controller
                 'payment_mechanism' => $request->payment_mechanism,
                 'payroll_deduction_periods' => $request->payroll_deduction_periods,
             ]);
+
+            // Try to find matching kdkr/kdkc from WorkArea
+            $wa = \App\Models\WorkArea::where('wilayah_kerja', $request->wilayah_kerja)
+                                    ->where('kab_kota', $request->unit_kerja_detail_a)
+                                    ->where('kantor_cabang', $request->unit_kerja_detail_b)
+                                    ->first();
+            if ($wa) {
+                $order->kdkr = $wa->kdkr;
+                $order->kdkc = $wa->kdkc;
+                $order->save();
+            }
 
             // 3. Handle E-Signature
             if ($request->esign_data) {
@@ -470,11 +485,12 @@ class CommerceController extends Controller
                 '[customer_contact]' => $order->customer_contact,
                 '[total_amount]' => number_format($order->total_amount, 0, ',', '.'),
                 '[date]' => date('d F Y'),
+                '[year]' => date('Y'),
                 '[laptop_serial]' => $order->laptop_serial_number ?? '__________________________',
                 
-                '[checkbox_pusat]' => ($order->wilayah_kerja == 'pusat') ? $check : $uncheck,
-                '[checkbox_wilayah]' => ($order->wilayah_kerja == 'wilayah') ? $check : $uncheck,
-                '[checkbox_cabang]' => ($order->wilayah_kerja == 'cabang') ? $check : $uncheck,
+                '[checkbox_pusat]' => ($order->wilayah_kerja == 'kantor_pusat') ? $check : $uncheck,
+                '[checkbox_wilayah]' => ($order->wilayah_kerja == 'kantor_wilayah') ? $check : $uncheck,
+                '[checkbox_cabang]' => ($order->wilayah_kerja == 'kantor_cabang') ? $check : $uncheck,
                 
                 '[checkbox_pengguna]' => ($order->user_status == 'pengguna') ? $check : $uncheck,
                 '[checkbox_bukan_pengguna]' => ($order->user_status == 'bukan_pengguna') ? $check : $uncheck,

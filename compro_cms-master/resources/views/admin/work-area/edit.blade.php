@@ -19,8 +19,8 @@
     <div class="row">
         <div class="col-12 col-lg-8">
             <div class="card">
-                <div class="card-header">
-                    <h4 class="header-title">{{ __('dashboard.edit') }} Wilayah & Unit Kerja</h4>
+                <div class="card-header bg-primary py-2 text-white">
+                    <h4 class="header-title mb-0">{{ __('dashboard.edit') }} Wilayah & Unit Kerja</h4>
                 </div>
                 <div class="card-body">
 
@@ -29,68 +29,65 @@
                         @csrf
                         @method('PUT')
                         
-                        <!-- Bagian 3 – Wilayah Kerja -->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h4>Bagian 3 – Wilayah Kerja</h4>
-                                <hr/>
-                                <div class="form-group mb-4">
-                                    <label class="font-weight-600">Pilih Wilayah Kerja <span class="text-danger">*</span></label>
-                                    <div class="custom-control custom-radio mb-2">
-                                        <input type="radio" id="kantor_pusat" name="wilayah_kerja" class="custom-control-input" value="kantor_pusat" @if($workArea->wilayah_kerja == 'kantor_pusat') checked @endif required>
-                                        <label class="custom-control-label" for="kantor_pusat">Kantor Pusat</label>
-                                    </div>
-                                    <div class="custom-control custom-radio mb-2">
-                                        <input type="radio" id="kantor_wilayah" name="wilayah_kerja" class="custom-control-input" value="kantor_wilayah" @if($workArea->wilayah_kerja == 'kantor_wilayah') checked @endif required>
-                                        <label class="custom-control-label" for="kantor_wilayah">Kedeputian Wilayah</label>
-                                    </div>
-                                    <div class="custom-control custom-radio mb-2">
-                                        <input type="radio" id="kantor_cabang" name="wilayah_kerja" class="custom-control-input" value="kantor_cabang" @if($workArea->wilayah_kerja == 'kantor_cabang') checked @endif required>
-                                        <label class="custom-control-label" for="kantor_cabang">Kantor Cabang</label>
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        {{ __('dashboard.please_provide') }} Wilayah Kerja
-                                    </div>
+                        <div class="form-group mb-4">
+                            <label class="font-weight-600">Pilih Wilayah Kerja <span class="text-danger">*</span></label>
+                            <div class="d-flex gap-3">
+                                <div class="custom-control custom-radio mr-3">
+                                    <input type="radio" id="kantor_pusat" name="wilayah_kerja" class="custom-control-input" value="kantor_pusat" @if($workArea->wilayah_kerja == 'kantor_pusat') checked @endif required>
+                                    <label class="custom-control-label" for="kantor_pusat">Kantor Pusat</label>
+                                </div>
+                                <div class="custom-control custom-radio mr-3">
+                                    <input type="radio" id="kantor_wilayah" name="wilayah_kerja" class="custom-control-input" value="kantor_wilayah" @if($workArea->wilayah_kerja == 'kantor_wilayah') checked @endif required>
+                                    <label class="custom-control-label" for="kantor_wilayah">Kantor Wilayah</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="kantor_cabang" name="wilayah_kerja" class="custom-control-input" value="kantor_cabang" @if($workArea->wilayah_kerja == 'kantor_cabang') checked @endif required>
+                                    <label class="custom-control-label" for="kantor_cabang">Kantor Cabang</label>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Bagian 4 – Unit Kerja -->
-                        <div id="unit_kerja_section">
-                            <div class="row mt-3">
-                                <div class="col-md-12">
-                                    <h4>Bagian 4 – Unit Kerja</h4>
-                                    <hr/>
-                                    
-                                    <div class="form-group">
-                                        <label for="kab_kota" class="font-weight-600">a. Kab / Kota <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="kab_kota" id="kab_kota" value="{{ $workArea->kab_kota }}" placeholder="Nama Kabupaten atau Kota" required>
-                                        <div class="invalid-feedback">
-                                            {{ __('dashboard.please_provide') }} Kab / Kota
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="kantor_cabang_text" class="font-weight-600">b. Kantor Cabang / Asisten Deputi <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="kantor_cabang" id="kantor_cabang_text" value="{{ $workArea->kantor_cabang }}" placeholder="Nama Kantor Cabang atau unit setara" required>
-                                        <div class="invalid-feedback">
-                                            {{ __('dashboard.please_provide') }} Kantor Cabang / Asisten Deputi
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="deputi_direktorat" class="font-weight-600">c. Deputi / Direktorat / Bidang / Deputi Direktorat Wilayah <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="deputi_direktorat" id="deputi_direktorat" value="{{ $workArea->deputi_direktorat }}" placeholder="Nama unit struktural" required>
-                                        <div class="invalid-feedback">
-                                            {{ __('dashboard.please_provide') }} Unit Struktural
-                                        </div>
-                                    </div>
-                                </div>
+                        <!-- Universal Field: KDKR (isi untuk semua) -->
+                        <div id="universal_fields" class="p-3 border rounded bg-light mb-3">
+                            <div class="form-group">
+                                <label for="kdkr" class="font-weight-600">KDKR <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="kdkr" id="kdkr" value="{{ $workArea->kdkr }}" placeholder="Masukkan Kode Regional/Wilayah" required>
                             </div>
                         </div>
 
-                        <div class="form-group mt-4">
-                            <button type="submit" class="btn btn-primary" id="submit_button">{{ __('dashboard.update') }}</button>
+                        <!-- Kantor Wilayah Fields -->
+                        <div id="kw_fields" style="{{ $workArea->wilayah_kerja == 'kantor_wilayah' ? '' : 'display: none;' }}" class="p-3 border rounded bg-light mb-3">
+                            <h5 class="mb-3">Informasi Kantor Wilayah</h5>
+                            <div class="form-group">
+                                <label for="nama_kw" class="font-weight-600">Nama KW <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="nama_kw" id="nama_kw" value="{{ $workArea->nama_kw }}" placeholder="Masukkan Nama Kantor Wilayah" {{ $workArea->wilayah_kerja == 'kantor_wilayah' ? 'required' : '' }}>
+                            </div>
+                        </div>
+
+                        <!-- Kantor Cabang Fields -->
+                        <div id="kc_fields" style="{{ $workArea->wilayah_kerja == 'kantor_cabang' ? '' : 'display: none;' }}" class="p-3 border rounded bg-light mb-3">
+                            <h5 class="mb-3">Informasi Kantor Cabang</h5>
+                            <div class="form-group">
+                                <label for="nmkc" class="font-weight-600">NMKC <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="nmkc" id="nmkc" value="{{ $workArea->nmkc }}" placeholder="Masukkan Nama Kantor Cabang" {{ $workArea->wilayah_kerja == 'kantor_cabang' ? 'required' : '' }}>
+                            </div>
+                            <div class="form-group">
+                                <label for="kdkc" class="font-weight-600">KDKC <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="kdkc" id="kdkc" value="{{ $workArea->kdkc }}" placeholder="Masukkan Kode Kantor Cabang" {{ $workArea->wilayah_kerja == 'kantor_cabang' ? 'required' : '' }}>
+                            </div>
+                        </div>
+
+                        <!-- Kantor Pusat Fields (Existing) -->
+                        <div id="kp_fields" style="{{ $workArea->wilayah_kerja == 'kantor_pusat' ? '' : 'display: none;' }}" class="p-3 border rounded bg-light mb-3">
+                            <h5 class="mb-3">Informasi Kantor Pusat</h5>
+                            <div class="form-group">
+                                <label for="kantor_cabang_text" class="font-weight-600">Asisten Deputi</label>
+                                <input type="text" class="form-control" name="kantor_cabang" id="kantor_cabang_text" value="{{ $workArea->kantor_cabang }}" placeholder="Nama Asisten Deputi">
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-4 text-center">
+                            <button type="submit" class="btn btn-primary btn-lg" style="min-width: 200px;">{{ __('dashboard.update') }}</button>
                         </div>
 
                     </form>
@@ -100,44 +97,40 @@
             </div> <!-- end card -->
         </div><!-- end col-->
     </div>
-    <!-- end row-->
     
-</div> <!-- container -->
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const radios = document.querySelectorAll('input[name="wilayah_kerja"]');
-        const submitButton = document.getElementById('submit_button');
-        const unitKerjaSection = document.getElementById('unit_kerja_section');
-        const unitKerjaInputs = unitKerjaSection.querySelectorAll('input[required]');
+        const kwFields = document.getElementById('kw_fields');
+        const kcFields = document.getElementById('kc_fields');
+        const kpFields = document.getElementById('kp_fields');
+        const kwInputs = kwFields.querySelectorAll('input');
+        const kcInputs = kcFields.querySelectorAll('input');
 
         radios.forEach(radio => {
-            radio.addEventListener('change', validateForm);
+            radio.addEventListener('change', function() {
+                // Hide all
+                kwFields.style.display = 'none';
+                kcFields.style.display = 'none';
+                kpFields.style.display = 'none';
+                
+                // Remove required
+                kwInputs.forEach(i => i.required = false);
+                kcInputs.forEach(i => i.required = false);
+
+                if (this.value === 'kantor_wilayah') {
+                    kwFields.style.display = 'block';
+                    kwInputs.forEach(i => i.required = true);
+                } else if (this.value === 'kantor_cabang') {
+                    kcFields.style.display = 'block';
+                    kcInputs.forEach(i => i.required = true);
+                } else if (this.value === 'kantor_pusat') {
+                    kpFields.style.display = 'block';
+                }
+            });
         });
-
-        unitKerjaInputs.forEach(input => {
-            input.addEventListener('input', validateForm);
-        });
-
-        function validateForm() {
-            let isValid = true;
-            const anyRadioChecked = Array.from(radios).some(r => r.checked);
-            
-            if (!anyRadioChecked) {
-                isValid = false;
-            } else {
-                unitKerjaInputs.forEach(input => {
-                    if (input.value.trim() === '') {
-                        isValid = false;
-                    }
-                });
-            }
-
-            submitButton.disabled = !isValid;
-        }
-
-        // Initial check
-        validateForm();
     });
 </script>
 

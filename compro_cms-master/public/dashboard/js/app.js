@@ -1,24 +1,24 @@
-! function(t) {
+! function (t) {
     "use strict";
-    var e = function() {
+    var e = function () {
         this.$body = t("body"), this.$window = t(window)
     };
-    e.prototype.initSelect2 = function() {
+    e.prototype.initSelect2 = function () {
         t('[data-toggle="select2"]').select2()
-    }, e.prototype.initMask = function() {
-        t('[data-toggle="input-mask"]').each(function(e, n) {
+    }, e.prototype.initMask = function () {
+        t('[data-toggle="input-mask"]').each(function (e, n) {
             var i = t(n).data("maskFormat"),
                 o = t(n).data("reverse");
             null != o ? t(n).mask(i, {
                 reverse: o
             }) : t(n).mask(i)
         })
-    }, e.prototype.initDateRange = function() {
+    }, e.prototype.initDateRange = function () {
         var e = {
             cancelClass: "btn-light",
             applyButtonClasses: "btn-success"
         };
-        t('[data-toggle="date-picker"]').each(function(n, i) {
+        t('[data-toggle="date-picker"]').each(function (n, i) {
             var o = t.extend({}, e, t(i).data());
             t(i).daterangepicker(o)
         });
@@ -34,118 +34,118 @@
                 "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
             }
         };
-        t('[data-toggle="date-picker-range"]').each(function(e, i) {
+        t('[data-toggle="date-picker-range"]').each(function (e, i) {
             var o = t.extend({}, n, t(i).data()),
                 a = o.targetDisplay;
-            t(i).daterangepicker(o, function(e, n) {
+            t(i).daterangepicker(o, function (e, n) {
                 a && t(a).html(e.format("MMMM D, YYYY") + " - " + n.format("MMMM D, YYYY"))
             })
         })
-    }, e.prototype.init = function() {
+    }, e.prototype.init = function () {
         this.initSelect2(), this.initMask(), this.initDateRange()
     }, t.AdvanceFormApp = new e, t.AdvanceFormApp.Constructor = e
 }(window.jQuery),
-function(t) {
-    "use strict";
-    var e = function() {};
-    e.prototype.initTooltipPlugin = function() {
-        t.fn.tooltip && t('[data-toggle="tooltip"]').tooltip()
-    }, e.prototype.initPopoverPlugin = function() {
-        t.fn.popover && t('[data-toggle="popover"]').popover()
-    }, e.prototype.initCustomSelect = function() {
-        t('[data-plugin="customselect"]').niceSelect()
-    }, e.prototype.initSlimScrollPlugin = function() {
-        t.fn.slimScroll && t(".slimscroll").slimScroll({
-            height: "auto",
-            position: "right",
-            size: "8px",
-            touchScrollStep: 20,
-            color: "#9ea5ab"
-        })
-    }, e.prototype.initFormValidation = function() {
-        t(".needs-validation").on("submit", function(e) {
-            return t(this).addClass("was-validated"), !1 !== t(this)[0].checkValidity() || (e.preventDefault(), e.stopPropagation(), !1)
-        })
-    }, e.prototype.init = function() {
-        this.initTooltipPlugin(), this.initPopoverPlugin(), this.initCustomSelect(), this.initSlimScrollPlugin(), this.initFormValidation()
-    }, t.Components = new e, t.Components.Constructor = e
-}(window.jQuery),
-function(t) {
-    "use strict";
-    var e = function() {
-        this.$body = t("body"), this.$window = t(window)
-    };
-    e.prototype.initMenu = function() {
-        var e = this;
-        t(".button-menu-mobile").on("click", function(n) {
-            n.preventDefault(), e.$window.width() < 768 && e.$body.toggleClass("sidebar-enable"), t(".slimscroll-menu").slimscroll({
+    function (t) {
+        "use strict";
+        var e = function () { };
+        e.prototype.initTooltipPlugin = function () {
+            t.fn.tooltip && t('[data-toggle="tooltip"]').tooltip()
+        }, e.prototype.initPopoverPlugin = function () {
+            t.fn.popover && t('[data-toggle="popover"]').popover()
+        }, e.prototype.initCustomSelect = function () {
+            t('[data-plugin="customselect"]').niceSelect()
+        }, e.prototype.initSlimScrollPlugin = function () {
+            t.fn.slimScroll && t(".slimscroll").slimScroll({
+                height: "auto",
+                position: "right",
+                size: "8px",
+                touchScrollStep: 20,
+                color: "#9ea5ab"
+            })
+        }, e.prototype.initFormValidation = function () {
+            t(".needs-validation").on("submit", function (e) {
+                return t(this).addClass("was-validated"), !1 !== t(this)[0].checkValidity() || (e.preventDefault(), e.stopPropagation(), !1)
+            })
+        }, e.prototype.init = function () {
+            this.initTooltipPlugin(), this.initPopoverPlugin(), this.initCustomSelect(), this.initSlimScrollPlugin(), this.initFormValidation()
+        }, t.Components = new e, t.Components.Constructor = e
+    }(window.jQuery),
+    function (t) {
+        "use strict";
+        var e = function () {
+            this.$body = t("body"), this.$window = t(window)
+        };
+        e.prototype.initMenu = function () {
+            var e = this;
+            t(".button-menu-mobile").on("click", function (n) {
+                n.preventDefault(), e.$window.width() < 768 && e.$body.toggleClass("sidebar-enable"), t(".slimscroll-menu").slimscroll({
+                    height: "auto",
+                    position: "right",
+                    size: "8px",
+                    color: "#9ea5ab",
+                    wheelStep: 5,
+                    touchScrollStep: 20
+                })
+            }), t("#side-menu").metisMenu(), t(".slimscroll-menu").slimscroll({
                 height: "auto",
                 position: "right",
                 size: "8px",
                 color: "#9ea5ab",
                 wheelStep: 5,
                 touchScrollStep: 20
+            }), t(".right-bar-toggle").on("click", function (e) {
+                t("body").toggleClass("right-bar-enabled")
+            }), t(document).on("click", "body", function (e) {
+                t(e.target).closest(".right-bar-toggle, .right-bar").length > 0 || t(e.target).closest(".left-side-menu, #sidebar-menu").length > 0 || t(e.target).hasClass("button-menu-mobile") || t(e.target).closest(".button-menu-mobile").length > 0 || (t("body").removeClass("right-bar-enabled"), t("body").removeClass("sidebar-enable"))
+            }), t("#sidebar-menu a").each(function () {
+                var e = window.location.href.split(/[?#]/)[0];
+                this.href == e && (t(this).addClass("active"), t(this).parent().addClass("active"), t(this).parent().parent().addClass("in"), t(this).parent().parent().prev().addClass("active"), t(this).parent().parent().parent().addClass("active"), t(this).parent().parent().parent().parent().addClass("in"), t(this).parent().parent().parent().parent().parent().addClass("active"))
             })
-        }), t("#side-menu").metisMenu(), t(".slimscroll-menu").slimscroll({
-            height: "auto",
-            position: "right",
-            size: "8px",
-            color: "#9ea5ab",
-            wheelStep: 5,
-            touchScrollStep: 20
-        }), t(".right-bar-toggle").on("click", function(e) {
-            t("body").toggleClass("right-bar-enabled")
-        }), t(document).on("click", "body", function(e) {
-            t(e.target).closest(".right-bar-toggle, .right-bar").length > 0 || t(e.target).closest(".left-side-menu, #sidebar-menu").length > 0 || t(e.target).hasClass("button-menu-mobile") || t(e.target).closest(".button-menu-mobile").length > 0 || (t("body").removeClass("right-bar-enabled"), t("body").removeClass("sidebar-enable"))
-        }), t("#sidebar-menu a").each(function() {
-            var e = window.location.href.split(/[?#]/)[0];
-            this.href == e && (t(this).addClass("active"), t(this).parent().addClass("active"), t(this).parent().parent().addClass("in"), t(this).parent().parent().prev().addClass("active"), t(this).parent().parent().parent().addClass("active"), t(this).parent().parent().parent().parent().addClass("in"), t(this).parent().parent().parent().parent().parent().addClass("active"))
-        })
-    }, e.prototype.initLayout = function() {
-        this.$window.width() >= 768 && this.$window.width() <= 1028 ? this.$body.addClass("enlarged") : 1 != this.$body.data("keep-enlarged") && this.$body.removeClass("enlarged")
-    }, e.prototype.init = function() {
-        var e = this;
-        this.initLayout(), this.initMenu(), t.AdvanceFormApp.init(), t.Components.init(), e.$window.on("resize", function(t) {
-            t.preventDefault(), console.log("resized"), e.initLayout()
-        })
-    }, t.App = new e, t.App.Constructor = e
-}(window.jQuery),
-function(t) {
-    "use strict";
-    t.App.init()
-}(window.jQuery);
+        }, e.prototype.initLayout = function () {
+            this.$window.width() >= 768 && this.$window.width() <= 1028 ? this.$body.addClass("enlarged") : 1 != this.$body.data("keep-enlarged") && this.$body.removeClass("enlarged")
+        }, e.prototype.init = function () {
+            var e = this;
+            this.initLayout(), this.initMenu(), t.AdvanceFormApp.init(), t.Components.init(), e.$window.on("resize", function (t) {
+                t.preventDefault(), console.log("resized"), e.initLayout()
+            })
+        }, t.App = new e, t.App.Constructor = e
+    }(window.jQuery),
+    function (t) {
+        "use strict";
+        t.App.init()
+    }(window.jQuery);
 //# sourceMappingURL=app.min.js.map
 
 
 
 // Example starter JavaScript for disabling form submissions if there are invalid fields
-(function() {
-  'use strict';
-  window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-      form.addEventListener('submit', function(event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  }, false);
+(function () {
+    'use strict';
+    window.addEventListener('load', function () {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function (form) {
+            form.addEventListener('submit', function (event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
 })();
 
 
 // Text Editor Plugin
-$(document).ready(function() {
-	"use strict";
+$(document).ready(function () {
+    "use strict";
 
     // Basic
     $('.summernote').summernote({
-      height: 200,
-      toolbar: [
+        height: 200,
+        toolbar: [
             ["style", ["style"]],
             ["font", ["bold", "italic", "underline", "clear"]],
             //["font", ['strikethrough', 'superscript', 'subscript']],
@@ -159,27 +159,27 @@ $(document).ready(function() {
             //["view", ["fullscreen", "codeview", "help"]],
             //['height', ['height']]
         ],
-        
-      // Clean text formatting
-      callbacks: {
-        onPaste: function (e) {
-            var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
 
-            e.preventDefault();
+        // Clean text formatting
+        callbacks: {
+            onPaste: function (e) {
+                var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
 
-            // Firefox fix
-            setTimeout(function () {
-                document.execCommand('insertText', false, bufferText);
-            }, 10);
+                e.preventDefault();
+
+                // Firefox fix
+                setTimeout(function () {
+                    document.execCommand('insertText', false, bufferText);
+                }, 10);
+            }
         }
-      }
 
     });
 
     // Media
     $('.textMediaEditor').summernote({
-      height: 200,
-      toolbar: [
+        height: 200,
+        toolbar: [
             ["style", ["style"]],
             ["font", ["bold", "italic", "underline", "clear"]],
             //["font", ['strikethrough', 'superscript', 'subscript']],
@@ -193,76 +193,101 @@ $(document).ready(function() {
             //['height', ['height']]
         ],
 
-      // Clean text formatting
-      callbacks: {
-        onPaste: function (e) {
-            var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+        // Clean text formatting
+        callbacks: {
+            onPaste: function (e) {
+                var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
 
-            e.preventDefault();
+                e.preventDefault();
 
-            // Firefox fix
-            setTimeout(function () {
-                document.execCommand('insertText', false, bufferText);
-            }, 10);
+                // Firefox fix
+                setTimeout(function () {
+                    document.execCommand('insertText', false, bufferText);
+                }, 10);
+            }
         }
-      }
 
     });
 
     // Code
     $('.codeEditor').summernote({
-      height: 600,
-      toolbar: [
-            
+        height: 600,
+        toolbar: [
+
         ],
 
-      // Code View
-      callbacks: {
-        onInit: function() {
-            $("div.note-editor button.btn-codeview").click();
+        // Code View
+        callbacks: {
+            onInit: function () {
+                $("div.note-editor button.btn-codeview").click();
+            }
         }
-      }
 
     });
 });
 
 
 // Data Table Init
-$(document).ready(function() {
-	"use strict";
-    $('#basic-datatable').DataTable();
-} );
+$(document).ready(function () {
+    "use strict";
+    $('#basic-datatable').DataTable({
+        "language": {
+            "lengthMenu": "Tampilkan _MENU_ data per halaman",
+            "zeroRecords": "Data tidak ditemukan",
+            "info": "Menampilkan halaman _PAGE_ dari _PAGES_",
+            "infoEmpty": "Tidak ada data yang tersedia",
+            "infoFiltered": "(difilter dari _MAX_ total data)",
+            "search": "Cari:",
+            "paginate": {
+                "first": "Pertama",
+                "last": "Terakhir",
+                "next": "Selanjutnya",
+                "previous": "Sebelumnya"
+            }
+        },
+        "pageLength": 10,
+        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Semua"]],
+        "responsive": true,
+        "dom": '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>' +
+            '<"row"<"col-sm-12"tr>>' +
+            '<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+        "drawCallback": function () {
+            // Add custom styling to pagination
+            $('.dataTables_paginate .pagination').addClass('pagination-rounded');
+        }
+    });
+});
 
 
 // Sweet Alert
-function deleteFunction(action,id){
+function deleteFunction(action, id) {
     swal({
-      title: "Are You Sure?",
-      text: "You will not be able to recover this!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
+        title: "Are You Sure?",
+        text: "You will not be able to recover this!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
     })
-    .then((willDelete) => {
-      if (willDelete) {
-        document.getElementById(action+id).submit();
-        swal("Successfully", {
-          icon: "success",
+        .then((willDelete) => {
+            if (willDelete) {
+                document.getElementById(action + id).submit();
+                swal("Successfully", {
+                    icon: "success",
+                });
+            }
         });
-      }
-    });
 };
 
 
 // Button switcher
-! function(e) {
+! function (e) {
     "use strict";
-    var a = function() {};
-    a.prototype.initSwitchery = function() {
-        e('[data-plugin="switchery"]').each(function(a, t) {
+    var a = function () { };
+    a.prototype.initSwitchery = function () {
+        e('[data-plugin="switchery"]').each(function (a, t) {
             new Switchery(e(this)[0], e(this).data())
         })
-    }, a.prototype.initMaxLength = function() {
+    }, a.prototype.initMaxLength = function () {
         e("input#defaultconfig").maxlength({
             warningClass: "badge badge-success",
             limitReachedClass: "badge badge-danger"
@@ -288,11 +313,11 @@ function deleteFunction(action,id){
             warningClass: "badge badge-success",
             limitReachedClass: "badge badge-danger"
         })
-    }, a.prototype.init = function() {
+    }, a.prototype.init = function () {
         this.initSwitchery(), this.initMaxLength()
     }, e.Components = new a, e.Components.Constructor = a
 }(window.jQuery),
-function(e) {
-    "use strict";
-    e.Components.init()
-}(window.jQuery);
+    function (e) {
+        "use strict";
+        e.Components.init()
+    }(window.jQuery);

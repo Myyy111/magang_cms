@@ -12,6 +12,16 @@
             </a>
         </li>
 
+        @if(auth()->user()->role == 'teknisi')
+        <li>
+            <a href="{{ route('admin.dismantle.index') }}">
+                <span class="icon"><i class="fas fa-calendar-check"></i></span>
+                <span> Jadwal Dismantle </span>
+            </a>
+        </li>
+        @endif
+
+        @if(in_array(auth()->user()->role, ['super_admin', 'admin']))
         <li>
             <a href="{{ route('admin.get-quote.index') }}">
                 <span class="icon"><i class="fas fa-quote-right"></i></span>
@@ -79,6 +89,13 @@
             <a href="{{ route('admin.order.index') }}">
                 <span class="icon"><i class="fas fa-cart-arrow-down"></i></span>
                 <span> {{ trans_choice('dashboard.order', 2) }} </span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ route('admin.dismantle.index') }}">
+                <span class="icon"><i class="fas fa-calendar-check"></i></span>
+                <span> Jadwal Dismantle </span>
             </a>
         </li>
 
@@ -218,6 +235,9 @@
                 </li>
             </ul>
         </li>
+
+
+        @endif
 
     </ul>
 

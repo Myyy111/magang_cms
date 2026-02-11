@@ -32,15 +32,24 @@ class WorkAreaController extends Controller
             $query->where(function($q) use ($search) {
                 $q->where('kab_kota', 'like', "%{$search}%")
                   ->orWhere('kantor_cabang', 'like', "%{$search}%")
-                  ->orWhere('deputi_direktorat', 'like', "%{$search}%");
+                  ->orWhere('deputi_direktorat', 'like', "%{$search}%")
+                  ->orWhere('kdkr', 'like', "%{$search}%")
+                  ->orWhere('nama_kw', 'like', "%{$search}%")
+                  ->orWhere('kdkc', 'like', "%{$search}%")
+                  ->orWhere('nmkc', 'like', "%{$search}%");
             });
         }
 
-        $workAreas = $query->latest()->paginate(10);
+        $allWorkAreas = $query->latest()->get();
+        
+        $kantorWilayah = $allWorkAreas->where('wilayah_kerja', WorkArea::KANTOR_WILAYAH);
+        $kantorCabang = $allWorkAreas->where('wilayah_kerja', WorkArea::KANTOR_CABANG);
+        $kantorPusat = $allWorkAreas->where('wilayah_kerja', WorkArea::KANTOR_PUSAT);
+
         $title = 'Wilayah & Unit Kerja';
         $route = 'admin.work-area';
 
-        return view('admin.work-area.index', compact('workAreas', 'title', 'route'));
+        return view('admin.work-area.index', compact('kantorWilayah', 'kantorCabang', 'kantorPusat', 'title', 'route'));
     }
 
     /**
@@ -59,8 +68,15 @@ class WorkAreaController extends Controller
     public function store(StoreWorkAreaRequest $request)
     {
         try {
+            $kdkc = $request->wilayah_kerja === 'kantor_cabang' ? $request->kdkc : null;
+            $nmkc = $request->wilayah_kerja === 'kantor_cabang' ? $request->nmkc : null;
+
             $workArea = WorkArea::create([
                 'wilayah_kerja' => $request->wilayah_kerja,
+                'kdkr' => $request->kdkr,
+                'nama_kw' => $request->nama_kw,
+                'kdkc' => $kdkc,
+                'nmkc' => $nmkc,
                 'kab_kota' => $request->kab_kota,
                 'kantor_cabang' => $request->kantor_cabang,
                 'deputi_direktorat' => $request->deputi_direktorat,
@@ -116,8 +132,15 @@ class WorkAreaController extends Controller
     public function update(StoreWorkAreaRequest $request, WorkArea $workArea)
     {
         try {
+            $kdkc = $request->wilayah_kerja === 'kantor_cabang' ? $request->kdkc : null;
+            $nmkc = $request->wilayah_kerja === 'kantor_cabang' ? $request->nmkc : null;
+
             $workArea->update([
                 'wilayah_kerja' => $request->wilayah_kerja,
+                'kdkr' => $request->kdkr,
+                'nama_kw' => $request->nama_kw,
+                'kdkc' => $kdkc,
+                'nmkc' => $nmkc,
                 'kab_kota' => $request->kab_kota,
                 'kantor_cabang' => $request->kantor_cabang,
                 'deputi_direktorat' => $request->deputi_direktorat,

@@ -28,31 +28,47 @@ class StoreWorkAreaRequest extends FormRequest
                 'in:kantor_pusat,kantor_wilayah,kantor_cabang'
             ],
             
+            // Validasi Unit Kerja - KDKR, Nama KW, KDKC, NMKC
+            'kdkr' => [
+                'nullable',
+                'string',
+                'max:10'
+            ],
+            'nama_kw' => [
+                'nullable',
+                'string',
+                'max:100'
+            ],
+            'kdkc' => [
+                'nullable',
+                'string',
+                'max:10'
+            ],
+            'nmkc' => [
+                'nullable',
+                'string',
+                'max:100'
+            ],
+            
             // Validasi Unit Kerja - Kab/Kota
             'kab_kota' => [
-                'required',
+                'nullable',
                 'string',
-                'min:3',
-                'max:100',
-                'regex:/^[a-zA-Z0-9\s\-\/\.\,]+$/u' // Huruf, angka, spasi, dan tanda baca umum
+                'max:100'
             ],
             
             // Validasi Unit Kerja - Kantor Cabang/Asisten Deputi
             'kantor_cabang' => [
-                'required',
+                'nullable',
                 'string',
-                'min:3',
-                'max:150',
-                'regex:/^[a-zA-Z0-9\s\-\/\.\,]+$/u'
+                'max:150'
             ],
             
             // Validasi Unit Kerja - Deputi/Direktorat/Bidang
             'deputi_direktorat' => [
-                'required',
+                'nullable',
                 'string',
-                'min:3',
-                'max:150',
-                'regex:/^[a-zA-Z0-9\s\-\/\.\,]+$/u'
+                'max:150'
             ]
         ];
     }

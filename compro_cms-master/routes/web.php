@@ -99,6 +99,15 @@ Route::middleware(['auth:web', 'XSS'])->name('admin.')->namespace('Admin')->pref
     Route::get('/', 'DashboardController@index')->name('dashboard.index');
     Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
 
+    // Dismantle Routes
+    Route::get('dismantle', 'DismantleController@index')->name('dismantle.index');
+    Route::get('dismantle/create', 'DismantleController@create')->name('dismantle.create');
+    Route::get('dismantle/edit', 'DismantleController@edit')->name('dismantle.edit');
+    Route::post('dismantle/bulk-update', 'DismantleController@bulkUpdate')->name('dismantle.bulk-update');
+
+    // Admin & Super Admin Only Routes
+    Route::middleware(['role:admin,super_admin'])->group(function () {
+
     // Get Quote Routes
     Route::resource('get-quote', 'GetQuoteController');
     Route::post('quote-action/{id}/{action}', 'GetQuoteController@action')->name('get-quote.action');
@@ -122,6 +131,7 @@ Route::middleware(['auth:web', 'XSS'])->name('admin.')->namespace('Admin')->pref
     // Product Routes
     Route::resource('product', 'ProductController');
     Route::resource('order', 'OrderController');
+    Route::post('order/bulk-update', 'OrderController@bulkUpdate')->name('order.bulk-update');
 
     // Pricing Routes
     Route::resource('pricing', 'PricingController');
@@ -148,6 +158,8 @@ Route::middleware(['auth:web', 'XSS'])->name('admin.')->namespace('Admin')->pref
 
     // Work Area Routes
     Route::resource('work-area', 'WorkAreaController');
+
+
 
 
     // Why Us Routes
@@ -193,4 +205,5 @@ Route::middleware(['auth:web', 'XSS'])->name('admin.')->namespace('Admin')->pref
     Route::post('socialinfo', 'SettingController@socialInfo')->name('setting.socialinfo');
     Route::post('customcode', 'SettingController@customCode')->name('setting.customcode');
     Route::post('pdftemplate', 'SettingController@pdfTemplate')->name('setting.pdftemplate');
+    });
 });

@@ -50,9 +50,17 @@
                             <div class="info-label">Nama Lengkap</div>
                             <div class="info-value">{{ $row->customer_name }}</div>
                         </div>
+                         <div class="col-md-4 mb-3">
+                            <div class="info-label">N P P / N I P</div>
+                            <div class="info-value">{{ $row->npp ?: ($row->customer_id_num ?: '-') }}</div>
+                        </div>
                         <div class="col-md-4 mb-3">
-                            <div class="info-label">N P P</div>
-                            <div class="info-value">{{ $row->customer_id_num }}</div>
+                            <div class="info-label">KDKR</div>
+                            <div class="info-value"><span class="badge badge-soft-primary">{{ $row->kdkr ?? '-' }}</span></div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="info-label">KDKC</div>
+                            <div class="info-value"><span class="badge badge-soft-success">{{ $row->kdkc ?? '-' }}</span></div>
                         </div>
                         <div class="col-md-4 mb-3">
                             <div class="info-label">Nomor WhatsApp</div>
@@ -66,20 +74,20 @@
                                 @elseif($row->wilayah_kerja == 'wilayah')
                                     KANTOR WILAYAH
                                 @else
-                                    {{ $row->wilayah_kerja ?: '-' }}
+                                    {{ ucfirst($row->wilayah_kerja) ?: '-' }}
                                 @endif
                             </div>
                         </div>
-                        <div class="col-md-8 mb-3">
+                        <div class="col-md-12 mb-3">
                             <div class="info-label">Unit Kerja Detail</div>
                             <div class="info-value">
                                 @php $unit_detail = json_decode($row->unit_kerja_detail, true); @endphp
                                 @if(is_array($unit_detail))
-                                    <small class="text-muted d-block mt-1">
-                                        Kab/Kota: {{ $unit_detail['kab_kota'] ?? '-' }} | 
-                                        Cabang: {{ $unit_detail['cabang'] ?? '-' }} | 
-                                        Deputi: {{ $unit_detail['deputi'] ?? '-' }}
-                                    </small>
+                                    <div class="bg-light p-2 rounded mt-1" style="font-size: 0.9rem;">
+                                        <strong>Kab/Kota:</strong> {{ $unit_detail['kab_kota'] ?? '-' }} <br>
+                                        <strong>Cabang/As.Dep:</strong> {{ $unit_detail['cabang'] ?? '-' }} <br>
+                                        <strong>Deputi/Bld/Wil:</strong> {{ $unit_detail['deputi'] ?? '-' }}
+                                    </div>
                                 @else
                                     {{ $row->unit_kerja_detail }}
                                 @endif

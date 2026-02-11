@@ -5,129 +5,219 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
         <style>
             :root {
-                --primary: #6366f1;
-                --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-                --success: #10b981;
-                --success-soft: #dcfce7;
-                --danger: #f43f5e;
-                --danger-soft: #fee2e2;
-                --warning: #f59e0b;
-                --warning-soft: #fef3c7;
-                --info: #0ea5e9;
-                --info-soft: #e0f2fe;
-                --dark: #0f172a;
+                --primary: #475569;
+                --primary-soft: #f1f5f9;
+                --accent: #3b82f6;
+                --success: #059669;
+                --success-soft: #ecfdf5;
+                --danger: #dc2626;
+                --danger-soft: #fef2f2;
+                --warning: #d97706;
+                --warning-soft: #fffbeb;
+                --info: #0284c7;
+                --info-soft: #f0f9ff;
+                --dark: #1e293b;
                 --slate-50: #f8fafc;
                 --slate-100: #f1f5f9;
                 --slate-200: #e2e8f0;
+                --slate-300: #cbd5e1;
                 --slate-400: #94a3b8;
                 --slate-600: #475569;
                 --slate-800: #1e293b;
-                --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+                --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
             }
 
             body { 
                 font-family: 'Inter', sans-serif !important; 
-                background-color: var(--slate-50) !important;
-                color: var(--slate-800);
-                letter-spacing: -0.015em;
+                background-color: #fcfcfd !important;
+                color: #334155;
+                letter-spacing: -0.01em;
             }
 
-            /* Premium Layout */
-            .left-side-menu { background: var(--dark) !important; box-shadow: 10px 0 30px rgba(0,0,0,0.05); }
-            .navbar-custom { background: white !important; box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important; padding: 0 20px; border-bottom: 1px solid var(--slate-100) !important; }
+            /* Minimal Layout */
+            .left-side-menu { background: #ffffff !important; border-right: 1px solid var(--slate-200) !important; box-shadow: none !important; }
+            .navbar-custom { background: white !important; box-shadow: none !important; padding: 0 20px; border-bottom: 1px solid var(--slate-200) !important; }
             .content-page { padding: 30px 25px !important; }
             
-            /* Sidebar Typography */
+            /* Sidebar Minimalism */
             #sidebar-menu .menu-title { 
                 color: var(--slate-400) !important; 
                 text-transform: uppercase !important; 
-                font-size: 0.65rem !important; 
-                font-weight: 800 !important; 
-                letter-spacing: 0.1em !important; 
-                padding: 15px 25px 5px !important;
-                opacity: 0.6;
+                font-size: 0.7rem !important; 
+                font-weight: 700 !important; 
+                letter-spacing: 0.05em !important; 
+                padding: 20px 25px 10px !important;
             }
             #sidebar-menu > ul > li > a { 
-                border-radius: 12px; 
-                margin: 4px 18px; 
-                padding: 12px 18px; 
-                color: #cbd5e1 !important;
+                border-radius: 8px; 
+                margin: 2px 15px; 
+                padding: 10px 15px; 
+                color: var(--slate-600) !important;
                 font-weight: 500;
-                transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+                transition: all 0.15s ease;
             }
-            #sidebar-menu > ul > li > a:hover { background: rgba(255,255,255,0.08); color: white !important; }
-            #sidebar-menu > ul > li > a.active { background: var(--primary) !important; color: white !important; box-shadow: 0 8px 16px rgba(99, 102, 241, 0.4); }
-            #sidebar-menu > ul > li > a i { font-size: 1.1rem; margin-right: 12px; opacity: 0.8; }
+            #sidebar-menu > ul > li > a:hover { background: var(--slate-100); color: var(--dark) !important; }
+            #sidebar-menu > ul > li > a.active { background: var(--slate-800) !important; color: white !important; box-shadow: none !important; }
+            #sidebar-menu > ul > li > a i { font-size: 1.1rem; margin-right: 12px; opacity: 0.7; }
+            
+            /* Submenu minimalism */
+            #sidebar-menu .nav-second-level li a { color: var(--slate-600) !important; padding: 8px 15px 8px 45px !important; }
+            #sidebar-menu .nav-second-level li a:hover { color: var(--dark) !important; }
 
             /* Modern Breadcrumb */
-            .breadcrumb-item a { color: var(--slate-400); font-weight: 600; }
-            .breadcrumb-item.active { color: var(--dark); font-weight: 800; }
+            .breadcrumb-item a { color: var(--slate-400); font-weight: 500; }
+            .breadcrumb-item.active { color: var(--slate-600); font-weight: 600; }
 
-            /* Floating Luxury Tables */
-            .table-responsive { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+            /* Simple & Clean Tables */
             .table { 
-                border-collapse: separate !important; 
-                border-spacing: 0 12px !important; 
                 width: 100% !important; 
-                min-width: 1000px; /* Ensure table doesn't get too squeezed */
-                margin-top: -12px !important;
-                background: transparent !important;
+                margin-bottom: 1rem !important;
+                background-color: transparent !important;
+                border-collapse: collapse !important;
             }
             .table thead th { 
-                background: transparent !important; 
+                background: var(--slate-50) !important; 
                 color: var(--slate-600) !important; 
-                font-weight: 700 !important; 
-                text-transform: uppercase !important; 
-                font-size: 0.75rem !important; 
-                letter-spacing: 0.05em !important; 
-                padding: 10px 20px !important; 
-                border: none !important;
+                font-weight: 600 !important; 
+                text-transform: none !important; 
+                font-size: 0.8rem !important; 
+                padding: 12px 15px !important; 
+                border-bottom: 1px solid var(--slate-200) !important;
+                border-top: none !important;
             }
-            .table tbody tr { background: white !important; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: transform 0.2s ease, box-shadow 0.2s ease; cursor: default; }
-            .table tbody tr:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.06) !important; }
+            .table tbody tr { background: white !important; transition: background 0.1s ease; }
+            .table tbody tr:hover { background: var(--slate-50) !important; transform: none !important; box-shadow: none !important; }
             .table tbody td { 
-                padding: 15px 20px !important; 
-                border: none !important;
+                padding: 12px 15px !important; 
+                border-top: none !important;
+                border-bottom: 1px solid var(--slate-100) !important;
                 vertical-align: middle !important;
-                color: var(--slate-800);
+                color: var(--slate-700);
+                font-size: 0.85rem;
             }
-            .table tbody td:first-child { border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
-            .table tbody td:last-child { border-top-right-radius: 12px; border-bottom-right-radius: 12px; }
             
-            /* Table Thumbnails */
-            .table img { width: 60px !important; height: 40px !important; object-fit: cover !important; border-radius: 8px !important; box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important; }
+            /* Minimal Buttons */
+            .btn { border-radius: 6px !important; font-weight: 600 !important; font-size: 0.85rem !important; padding: 8px 16px !important; transition: all 0.2s ease !important; border: 1px solid transparent !important; }
+            .btn-primary { background: var(--slate-800) !important; border-color: var(--slate-800) !important; color: white !important; box-shadow: none !important; }
+            .btn-primary:hover { background: var(--dark) !important; opacity: 0.9; }
+            
+            
+            .btn-info { background: #17a2b8 !important; border-color: #17a2b8 !important; color: white !important; }
+            .btn-info:hover { background: #138496 !important; border-color: #117a8b !important; }
 
-            /* Luxury Buttons */
-            .btn { border-radius: 10px !important; font-weight: 700 !important; transition: all 0.3s ease !important; }
-            .btn-primary { background: var(--primary-gradient) !important; border: none !important; color: white !important; box-shadow: 0 8px 15px rgba(99, 102, 241, 0.25) !important; }
-            .btn-info { background: white !important; border: 1px solid var(--slate-200) !important; color: var(--primary) !important; }
-            .btn-info:hover { background: var(--slate-50) !important; border-color: var(--primary) !important; }
-
-            /* Action Buttons in Grid */
-            .btn-group .btn { 
-                width: 38px !important; 
-                height: 38px !important; 
+            /* Grid Action Buttons - Consistent sizing for all */
+            .btn-group .btn,
+            table .btn-group .btn,
+            .table .btn-group .btn,
+            #basic-datatable .btn-group .btn { 
+                width: 36px !important; 
+                height: 36px !important; 
                 padding: 0 !important; 
                 display: inline-flex !important; 
                 align-items: center !important; 
                 justify-content: center !important; 
                 margin: 0 3px !important;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.08) !important;
-                border: none !important;
+                box-shadow: none !important;
+                border: 1px solid transparent !important;
+                transition: all 0.2s ease !important;
+                font-size: 14px !important;
+                border-radius: 6px !important;
             }
-            .btn-success { background: var(--success) !important; color: white !important; }
-            .btn-success:hover { filter: brightness(0.9); }
-            .btn-danger { background: var(--danger) !important; color: white !important; }
-            .btn-danger:hover { filter: brightness(0.9); }
-            .btn-primary-solid { background: var(--primary) !important; color: white !important; } /* Custom for edit button if needed */
+            
+            /* Success Button (View) - Green */
+            .btn-group .btn-success,
+            table .btn-group .btn-success,
+            .table .btn-group .btn-success,
+            #basic-datatable .btn-group .btn-success { 
+                background: #28a745 !important; 
+                border-color: #28a745 !important; 
+                color: white !important; 
+            }
+            .btn-group .btn-success:hover,
+            table .btn-group .btn-success:hover,
+            .table .btn-group .btn-success:hover,
+            #basic-datatable .btn-group .btn-success:hover { 
+                background: #218838 !important; 
+                border-color: #1e7e34 !important; 
+                transform: translateY(-1px);
+            }
+            
+            /* Info Button (Edit) - Cyan */
+            .btn-group .btn-info,
+            table .btn-group .btn-info,
+            .table .btn-group .btn-info,
+            #basic-datatable .btn-group .btn-info { 
+                background: #17a2b8 !important; 
+                border-color: #17a2b8 !important; 
+                color: white !important; 
+            }
+            .btn-group .btn-info:hover,
+            table .btn-group .btn-info:hover,
+            .table .btn-group .btn-info:hover,
+            #basic-datatable .btn-group .btn-info:hover { 
+                background: #138496 !important; 
+                border-color: #117a8b !important; 
+                transform: translateY(-1px);
+            }
+            
+            /* Danger Button (Delete) - Red */
+            .btn-group .btn-danger,
+            table .btn-group .btn-danger,
+            .table .btn-group .btn-danger,
+            #basic-datatable .btn-group .btn-danger { 
+                background: #dc3545 !important; 
+                border-color: #dc3545 !important; 
+                color: white !important; 
+            }
+            .btn-group .btn-danger:hover,
+            table .btn-group .btn-danger:hover,
+            .table .btn-group .btn-danger:hover,
+            #basic-datatable .btn-group .btn-danger:hover { 
+                background: #c82333 !important; 
+                border-color: #bd2130 !important; 
+                transform: translateY(-1px);
+            }
 
-            /* Luxury Status Badges */
-            .badge { padding: 8px 16px !important; border-radius: 30px !important; font-weight: 700 !important; letter-spacing: 0.02em !important; font-size: 0.72rem !important; }
+            /* Minimal Status Badges & Labels */
+            .badge, .status-badge { 
+                padding: 5px 12px !important; 
+                border-radius: 6px !important; 
+                font-weight: 600 !important; 
+                font-size: 0.72rem !important; 
+                display: inline-flex !important;
+                align-items: center;
+                white-space: nowrap !important;
+                border: 1px solid transparent !important;
+                line-height: 1.2;
+            }
             .badge-success { background: var(--success-soft) !important; color: var(--success) !important; }
             .badge-danger { background: var(--danger-soft) !important; color: var(--danger) !important; }
             .badge-info { background: var(--info-soft) !important; color: var(--info) !important; }
             .badge-warning { background: var(--warning-soft) !important; color: var(--warning) !important; }
-            .badge-primary { background: #e0e7ff !important; color: var(--primary) !important; }
+            .badge-primary { background: var(--primary-soft) !important; color: var(--slate-700) !important; }
+            .badge-secondary { background: var(--slate-100) !important; color: var(--slate-600) !important; }
+
+            /* Specific Soft Status Classes (Consistent across app) */
+            .status-completed { background-color: #ecfdf5 !important; color: #065f46 !important; }
+            .status-completed i { color: #10b981 !important; } /* Vibrant Green Icon */
+
+            .status-processing { background-color: #eff6ff !important; color: #1e40af !important; }
+            .status-processing i { color: #3b82f6 !important; } /* Vibrant Blue Icon */
+
+            .status-paid { background-color: #f5f3ff !important; color: #5b21b6 !important; }
+            .status-paid i { color: #8b5cf6 !important; } /* Vibrant Purple Icon */
+
+            .status-pending { background-color: #fffbeb !important; color: #92400e !important; }
+            .status-pending i { color: #f59e0b !important; } /* Vibrant Amber Icon */
+
+            .status-failed { background-color: #fef2f2 !important; color: #991b1b !important; }
+            .status-failed i { color: #ef4444 !important; } /* Vibrant Red Icon */
+
+            .status-missing { background-color: #f8fafc !important; color: #64748b !important; border: 1px solid #e2e8f0 !important; }
+            .status-missing i { color: #94a3b8 !important; }
+
+            .status-neutral { background-color: #f1f5f9 !important; color: #475569 !important; }
+            .status-neutral i { color: #64748b !important; }
 
             /* DataTables Polish */
             .dataTables_wrapper .dataTables_filter input { 
@@ -171,17 +261,16 @@
                 color: var(--primary) !important;
             }
             .pagination .page-item.active .page-link { 
-                background: var(--primary-gradient) !important; 
-                border: none !important; 
+                background: var(--dark) !important; 
+                border-color: var(--dark) !important; 
                 color: white !important; 
-                box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3) !important; 
+                box-shadow: none !important; 
             }
             .pagination .page-item.disabled .page-link {
-                background: var(--slate-50) !important;
-                color: var(--slate-400) !important;
-                border-color: var(--slate-200) !important;
+                background: #ffffff !important;
+                color: var(--slate-300) !important;
+                border-color: var(--slate-100) !important;
                 cursor: not-allowed !important;
-                opacity: 0.6 !important;
             }
             /* Previous/Next buttons */
             .pagination .page-item:first-child .page-link,
