@@ -56,11 +56,11 @@
                         </div>
                         <div class="col-md-4 mb-3">
                             <div class="info-label">KDKR</div>
-                            <div class="info-value"><span class="badge badge-soft-primary">{{ $row->kdkr ?? '-' }}</span></div>
+                            <div class="info-value"><span class="badge badge-primary px-2" style="vertical-align: middle;">{{ $row->kdkr ?? '-' }}</span></div>
                         </div>
                         <div class="col-md-4 mb-3">
                             <div class="info-label">KDKC</div>
-                            <div class="info-value"><span class="badge badge-soft-success">{{ $row->kdkc ?? '-' }}</span></div>
+                            <div class="info-value"><span class="badge badge-success px-2" style="vertical-align: middle;">{{ $row->kdkc ?? '-' }}</span></div>
                         </div>
                         <div class="col-md-4 mb-3">
                             <div class="info-label">Nomor WhatsApp</div>
