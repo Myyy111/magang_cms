@@ -19,12 +19,24 @@
                         @csrf
                         
                         <div class="alert alert-light border mb-4" style="border-radius: 8px;">
-                            <i class="fas fa-info-circle mr-2 text-info"></i> Pilih beberapa pesanan yang ingin Anda masukkan ke dalam jadwal yang sama, lalu tentukan <b>Nama Jadwal</b> di bawah.
+                            <i class="fas fa-info-circle mr-2 text-info"></i> Pilih beberapa pesanan yang ingin Anda masukkan ke dalam jadwal yang sama, lalu tentukan <b>Tanggal Jadwal</b> di bawah.
                         </div>
 
                         <div class="form-group mb-4">
-                            <label for="dismantel_schedule" class="font-weight-600 small text-uppercase text-muted">Nama Jadwal:</label>
-                            <input type="text" name="dismantel_schedule" id="dismantel_schedule" class="form-control" placeholder="Contoh: Bongkaran Wilayah Jatim - Batch 1" required>
+                            <label for="dismantel_schedule" class="font-weight-600 small text-uppercase text-muted">Jadwal Dismantle:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-white border-right-0"><i class="far fa-calendar-alt text-primary"></i></span>
+                                </div>
+                                <input type="text" name="dismantel_schedule" id="dismantel_schedule" class="form-control border-left-0" 
+                                       placeholder="Pilih Tanggal dan Waktu" 
+                                       data-toggle="date-picker" 
+                                       data-single-date-picker="true" 
+                                       data-time-picker="true"
+                                       data-time-picker24-hour="true"
+                                       data-locale='{"format": "DD MMM YYYY, HH:mm"}'
+                                       required readonly style="background-color: #fff;">
+                            </div>
                         </div>
 
                         <div class="table-responsive">
@@ -130,7 +142,7 @@ $(document).ready(function() {
 
     $("#bulkScheduleForm").submit(function() {
         if ($("#dismantel_schedule").val() == "") {
-            alert("Harap isi Nama Jadwal terlebih dahulu.");
+            alert("Harap pilih Tanggal Jadwal terlebih dahulu.");
             return false;
         }
         return true;

@@ -32,11 +32,20 @@ class Order extends Model
         'signed_document_path',
         'esign_path',
         'dismantel_schedule',
+        'dismantle_schedule_id', // 🟡 Issue #2: FK to dismantle_schedules
     ];
 
     public function items()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    /**
+     * 🟡 Issue #2: Relationship to DismantleSchedule via FK
+     */
+    public function dismantleSchedule()
+    {
+        return $this->belongsTo(DismantleSchedule::class);
     }
 
     /**

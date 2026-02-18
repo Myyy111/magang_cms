@@ -11,9 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('work_areas', function (Blueprint $table) {
-            $table->renameColumn('kdkw', 'kdkr');
-        });
+        if (Schema::hasColumn('work_areas', 'kdkw') && !Schema::hasColumn('work_areas', 'kdkr')) {
+            // Use DB statement to support older MySQL versions (< 8.0)
+            // that do not support RENAME COLUMN syntax used by Laravel's renameColumn
+            try {
+                Schema::table('work_areas', function (Blueprint $table) {
+                    $table->renameColumn('kdkw', 'kdkr');
+                });
+            } catch (\Exception $e) {
+                DB::statement("ALTER TABLE work_areas CHANGE kdkw kdkr VARCHAR(10) NULL COMMENT 'Kode Kantor Wilayah'");
+            }
+        }
     }
 
     /**
@@ -21,8 +29,14 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('work_areas', function (Blueprint $table) {
-            $table->renameColumn('kdkr', 'kdkw');
-        });
+        if (Schema::hasColumn('work_areas', 'kdkr') && !Schema::hasColumn('work_areas', 'kdkw')) {
+            try {
+                Schema::table('work_areas', function (Blueprint $table) {
+                    $table->renameColumn('kdkr', 'kdkw');
+                });
+            } catch (\Exception $e) {
+                DB::statement("ALTER TABLE work_areas CHANGE kdkr kdkw VARCHAR(10) NULL COMMENT 'Kode Kantor Wilayah'");
+            }
+        }
     }
 };

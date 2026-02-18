@@ -246,15 +246,53 @@ class CommerceController extends Controller
             ]);
 
             // Try to find matching kdkr/kdkc from WorkArea
+            // We use 'like' or trim to be more flexible with human input from datalist
             $wa = \App\Models\WorkArea::where('wilayah_kerja', $request->wilayah_kerja)
-                                    ->where('kab_kota', $request->unit_kerja_detail_a)
-                                    ->where('kantor_cabang', $request->unit_kerja_detail_b)
+                                    ->where('kab_kota', trim($request->unit_kerja_detail_a))
+                                    ->where('kantor_cabang', trim($request->unit_kerja_detail_b))
                                     ->first();
-            if ($wa) {
-                $order->kdkr = $wa->kdkr;
-                $order->kdkc = $wa->kdkc;
-                $order->save();
+                                    
+            if (!$wa) {
+                throw new \Exception("Data Unit Kerja ({$request->unit_kerja_detail_b}) tidak ditemukan dalam database. Pastikan Anda memilih dari daftar yang tersedia.");
             }
+
+            $order->kdkr = $wa->kdkr;
+            $order->kdkc = $wa->kdkc;
+            
+            // ---------------------------------------------------------
+            // 2️⃣ Validate & Reserve Dismantle Schedule Slot (WITH ROW LOCK)
+            // ---------------------------------------------------------
+            // 🔒 Use SELECT FOR UPDATE to prevent race condition
+            $dismantleSchedule = \App\Models\DismantleSchedule::where('kode_wilayah', $wa->kdkr)
+                                ->where('kode_cabang', $wa->kdkc)
+                                ->where('status', 'open')
+                                ->whereDate('tanggal', '>=', now()->toDateString()) // 📅 Only future or today
+                                ->whereRaw('kapasitas > terpakai')
+                                ->whereRaw('kapasitas > 0') 
+                                ->orderBy('tanggal', 'asc')
+                                ->lockForUpdate()
+                                ->first();
+            
+            if (!$dismantleSchedule) {
+                throw new \Exception("Mohon maaf, jadwal dismantle untuk unit kerja {$wa->kantor_cabang} belum tersedia atau sudah penuh. Silakan pilih lokasi lain atau hubungi admin.");
+            }
+
+            // Increment Used Slot (Safe within transaction)
+            $dismantleSchedule->terpakai++;
+
+            // Auto-close if full
+            if ($dismantleSchedule->terpakai >= $dismantleSchedule->kapasitas) {
+                $dismantleSchedule->status = 'full';
+            }
+            
+            $dismantleSchedule->save();
+
+            // 🟡 Issue #2: Save FK (ID) for proper slot release via Observer
+            $order->dismantle_schedule_id = $dismantleSchedule->id;
+            // Keep date snapshot for display/reporting purposes
+            $order->dismantel_schedule = $dismantleSchedule->tanggal; 
+            
+            $order->save();
 
             // 3. Handle E-Signature
             if ($request->esign_data) {

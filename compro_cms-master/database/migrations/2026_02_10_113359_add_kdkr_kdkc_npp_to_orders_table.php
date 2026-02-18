@@ -12,9 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->string('kdkr', 10)->nullable()->after('customer_unit');
-            $table->string('kdkc', 10)->nullable()->after('kdkr');
-            $table->string('npp', 50)->nullable()->after('order_number');
+            if (!Schema::hasColumn('orders', 'kdkr')) {
+                $table->string('kdkr', 10)->nullable()->after('customer_unit');
+            }
+            if (!Schema::hasColumn('orders', 'kdkc')) {
+                $table->string('kdkc', 10)->nullable()->after('kdkr');
+            }
+            if (!Schema::hasColumn('orders', 'npp')) {
+                $table->string('npp', 50)->nullable()->after('order_number');
+            }
         });
     }
 

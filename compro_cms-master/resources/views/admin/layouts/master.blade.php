@@ -63,6 +63,8 @@
             /* Submenu minimalism */
             #sidebar-menu .nav-second-level li a { color: var(--slate-600) !important; padding: 8px 15px 8px 45px !important; }
             #sidebar-menu .nav-second-level li a:hover { color: var(--dark) !important; }
+            #sidebar-menu .nav-second-level li a.active { color: var(--accent) !important; font-weight: 600 !important; background: var(--slate-50) !important; }
+
 
             /* Modern Breadcrumb */
             .breadcrumb-item a { color: var(--slate-400); font-weight: 500; }

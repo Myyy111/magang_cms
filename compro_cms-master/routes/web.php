@@ -101,9 +101,12 @@ Route::middleware(['auth:web', 'XSS'])->name('admin.')->namespace('Admin')->pref
 
     // Dismantle Routes
     Route::get('dismantle', 'DismantleController@index')->name('dismantle.index');
-    Route::get('dismantle/create', 'DismantleController@create')->name('dismantle.create');
-    Route::get('dismantle/edit', 'DismantleController@edit')->name('dismantle.edit');
-    Route::post('dismantle/bulk-update', 'DismantleController@bulkUpdate')->name('dismantle.bulk-update');
+    Route::post('dismantle/store', 'DismantleController@store')->name('dismantle.store');
+    Route::get('dismantle/edit/{id}', 'DismantleController@edit')->name('dismantle.edit');
+    Route::get('dismantle/show/{id}', 'DismantleController@show')->name('dismantle.show');
+    Route::put('dismantle/update/{id}', 'DismantleController@update')->name('dismantle.update');
+    Route::delete('dismantle/destroy/{id}', 'DismantleController@destroy')->name('dismantle.destroy');
+    Route::post('dismantle/import', 'DismantleController@import')->name('dismantle.import');
 
     // Admin & Super Admin Only Routes
     Route::middleware(['role:admin,super_admin'])->group(function () {

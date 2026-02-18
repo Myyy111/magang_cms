@@ -93,6 +93,24 @@
                                 @endif
                             </div>
                         </div>
+
+                        <!-- 🗓️ Assigned Dismantle Schedule Info -->
+                        @if($row->dismantle_schedule_id)
+                        <div class="col-md-12 mb-3">
+                            <div class="info-label text-primary">🗓️ Jadwal Dismantle (Slot Terpesan)</div>
+                            <div class="info-value">
+                                <div class="alert alert-info border-0 mt-1 d-flex align-items-center" style="background: #eef7ff; color: #004aad;">
+                                    <i class="fas fa-calendar-check fa-2x mr-3 opacity-5"></i>
+                                    <div>
+                                        <div class="font-weight-bold" style="font-size: 1.1rem;">
+                                            {{ \Carbon\Carbon::parse($row->dismantleSchedule->tanggal)->translatedFormat('d F Y') }}
+                                        </div>
+                                        <div class="small">Terdaftar pada Cabang: {{ $row->dismantleSchedule->kantor_cabang ?? $row->kdkc }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                     
                     <hr class="my-3 opacity-5">
@@ -189,6 +207,7 @@
                             </select>
                         </div>
 
+                        @if(!$row->dismantle_schedule_id)
                         <div id="dismantel_input_group" class="form-group mb-3" style="display: {{ $row->status == 'processing' ? 'block' : 'none' }}; background: #f0f7ff; padding: 15px; border-radius: 12px; border: 1px solid #d0e7ff;">
                             <label class="info-label" style="color: #004aad;">🗓️ Tentukan Jadwal Dismentel:</label>
                             <div class="input-group">
@@ -199,6 +218,16 @@
                             </div>
                             <small class="text-muted">Klik untuk membuka kalender. Jadwal akan tampil di pelacakan user.</small>
                         </div>
+                        @else
+                        <div class="form-group mb-3 p-3 text-center" style="background: #f0f7ff; border-radius: 12px; border: 1px dashed #004aad;">
+                            <i class="fas fa-calendar-alt text-primary mb-2"></i>
+                            <div class="small text-muted mb-1">Jadwal Fix:</div>
+                            <div class="font-weight-bold text-primary">
+                                {{ \Carbon\Carbon::parse($row->dismantleSchedule->tanggal)->translatedFormat('d F Y') }}
+                            </div>
+                            <input type="hidden" name="dismantel_schedule" value="{{ $row->dismantleSchedule->tanggal }}">
+                        </div>
+                        @endif
                         <button type="submit" class="btn btn-primary btn-block btn-lg shadow">
                             Update Status <i class="fas fa-save ml-1"></i>
                         </button>

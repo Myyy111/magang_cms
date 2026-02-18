@@ -13,6 +13,8 @@ use App\Models\Article;
 use App\Models\Service;
 use App\Models\Social;
 use App\Models\Page;
+use App\Models\Order;
+use App\Observers\OrderObserver;
 use View;
 
 class AppServiceProvider extends ServiceProvider
@@ -37,6 +39,9 @@ class AppServiceProvider extends ServiceProvider
         //
         Schema::defaultStringLength(191);
         Paginator::useBootstrap();
+
+        // 🔴 Issue #1: Register OrderObserver for slot release on cancellation
+        Order::observe(OrderObserver::class);
 
 
         // Share view for Common Data

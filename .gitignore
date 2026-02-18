@@ -1,0 +1,12 @@
+compro_cms-master/node_modules/
+compro_cms-master/vendor/
+compro_cms-master/storage/*.log
+compro_cms-master/storage/framework/cache/data/*
+compro_cms-master/storage/framework/sessions/*
+compro_cms-master/storage/framework/testing/*
+compro_cms-master/storage/framework/views/*
+compro_cms-master/.env
+node_modules_compro_backup/
+.idea/
+.vscode/
+*.sql
