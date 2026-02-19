@@ -4130,3 +4130,776 @@ body {
     position: sticky;
     bottom: 0;
 }
+
+/* ==========================================================================
+   FOUNDATIONAL MOBILE UX IMPROVEMENTS (Audit 2026-02-18)
+   ========================================================================== */
+@media (max-width: 991px) {
+
+    /* Improve Section Spacing (80px is often too much for mobile) */
+    section,
+    .services-section,
+    .about-section-premium,
+    .track-section,
+    .checkout-section,
+    .cart-section,
+    .page-title-premium {
+        padding: 40px 0 !important;
+    }
+
+    /* Page Title Refinement */
+    .page-title-premium {
+        min-height: 180px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .page-title-premium h1 {
+        font-size: 28px !important;
+        margin-bottom: 10px !important;
+    }
+
+    /* Typography Scaling */
+    .sec-title h2,
+    .section-title-premium-dynamic {
+        font-size: 26px !important;
+        line-height: 1.2 !important;
+        margin-bottom: 20px !important;
+    }
+
+    /* Global Form Improvements */
+    .form-control,
+    .form-select,
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+        font-size: 16px !important;
+        /* Prevents iOS auto-zoom */
+        padding: 12px 15px !important;
+        height: auto !important;
+        border-radius: 12px !important;
+    }
+
+    .form-group {
+        margin-bottom: 20px !important;
+    }
+
+    .form-label,
+    label {
+        font-size: 14px !important;
+        margin-bottom: 8px !important;
+        font-weight: 600 !important;
+    }
+
+    /* Button Enhancements for Touch */
+    .btn-premium,
+    .theme-btn,
+    .btn-style-one {
+        min-height: 50px !important;
+        padding: 12px 25px !important;
+        font-size: 15px !important;
+        width: 100% !important;
+        /* Full width buttons on mobile are easier to tap */
+        justify-content: center !important;
+        display: flex !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Mobile Header Specifics */
+    .main-header-premium {
+        padding: 10px 0 !important;
+    }
+
+    .logo-box img {
+        height: 35px !important;
+    }
+
+    .header-cta-btn {
+        display: none !important;
+        /* Hide quote button on header to save space */
+    }
+
+    /* Table Scroll Indicators */
+    .table-responsive {
+        border-radius: 12px !important;
+        border: 1px solid #eee !important;
+        background: linear-gradient(to right, white 30%, rgba(255, 255, 255, 0)),
+            linear-gradient(to right, rgba(255, 255, 255, 0), white 70%) 100% 0,
+            radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)),
+            radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)) 100% 0;
+        background-repeat: no-repeat;
+        background-color: white;
+        background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
+        background-attachment: local, local, scroll, scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Hero Section Refinements */
+    .hero-enterprise-style h1 {
+        font-size: 34px !important;
+        line-height: 1.1 !important;
+        margin-bottom: 20px !important;
+    }
+
+    .hero-enterprise-style .text-description p {
+        font-size: 16px !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Team Modal Mobile Fix */
+    .team-profile-modal .modal-body {
+        padding: 30px 20px !important;
+    }
+
+    .member-photo-wrapper {
+        margin-bottom: 20px !important;
+    }
+
+    .member-name {
+        font-size: 24px !important;
+        text-align: center !important;
+    }
+
+    .member-designation {
+        text-align: center !important;
+        margin-bottom: 25px !important;
+    }
+
+    /* Blog Card Refinements */
+    .blog-image-wrapper {
+        height: 200px !important;
+    }
+
+    .blog-content-premium h3 {
+        font-size: 18px !important;
+    }
+
+    .blog-read-more {
+        display: flex !important;
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 12px !important;
+        background: #f8fafc !important;
+        border-radius: 8px !important;
+        margin-top: 15px !important;
+    }
+
+    /* Testimonial Refinements */
+    .testimonial-card-premium {
+        padding: 25px 20px !important;
+    }
+
+    .testimonial-text-premium {
+        font-size: 15px !important;
+        line-height: 1.6 !important;
+    }
+
+    /* Checkout Specific Mobile Fixes */
+    .checkout-section .card-body {
+        padding: 20px !important;
+    }
+
+    .unit-row {
+        gap: 5px !important;
+    }
+
+    /* Floating elements sometimes get in the way on small screens */
+    .floating-element {
+        display: none !important;
+    }
+
+    /* Service Single Specifics */
+    .sidebar-page-container {
+        padding: 40px 0 !important;
+    }
+
+    .service-detail-premium-box {
+        padding: 25px 20px !important;
+    }
+
+    .service-detail-premium-box .image-box {
+        height: 250px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .service-detail-premium-box h2 {
+        font-size: 24px !important;
+        margin-bottom: 15px !important;
+    }
+
+    .service-detail-premium-box .text {
+        font-size: 15px !important;
+        line-height: 1.7 !important;
+    }
+
+    /* Service Single Specifics - Compact Pill Design */
+    .sidebar-page-container {
+        padding: 30px 0 !important;
+    }
+
+    .sidebar-widget.categories-premium {
+        background: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        margin-bottom: 25px !important;
+    }
+
+    .categories-premium h3 {
+        display: none !important;
+    }
+
+    .cat-list {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        gap: 10px !important;
+        padding: 5px 15px 15px 15px !important;
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .cat-list::-webkit-scrollbar {
+        display: none;
+    }
+
+    .cat-list li {
+        margin-bottom: 0 !important;
+        flex: 0 0 auto !important;
+    }
+
+    .cat-list a {
+        padding: 10px 20px !important;
+        border-radius: 50px !important;
+        font-size: 13px !important;
+        white-space: nowrap !important;
+        border: 1px solid #eee !important;
+        background: #fff !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03) !important;
+    }
+
+    .cat-list a i {
+        display: none !important;
+    }
+
+    .cat-list a.bg-yellow-premium {
+        border-color: #f8be14 !important;
+        color: #000 !important;
+        background: #f8be14 !important;
+    }
+
+    .service-detail-premium-box {
+        padding: 20px !important;
+        box-shadow: none !important;
+        border-radius: 15px !important;
+    }
+
+    /* Standard order: nav on top is fine when it's just pills */
+    .sidebar-page-container .row {
+        display: block !important;
+    }
+
+    /* Portfolios Page - Ultra Compact Audit (2 columns) */
+    .gallery-section {
+        padding: 15px 0 !important;
+    }
+
+    /* Hide the repetitive description that takes up space on mobile */
+    .gallery-section .sec-title .text {
+        display: none !important;
+    }
+
+    .gallery-section .sec-title h2 {
+        font-size: 20px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .gallery-section .yellow-separator {
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    /* Filters: Ensure horizontal scroll and compact pills */
+    .portfolio-filter-premium {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        gap: 8px !important;
+        padding-bottom: 10px !important;
+        margin-bottom: 20px !important;
+        scrollbar-width: none;
+    }
+
+    .portfolio-filter-premium::-webkit-scrollbar {
+        display: none;
+    }
+
+    .portfolio-filter-premium li {
+        flex: 0 0 auto !important;
+        padding: 6px 14px !important;
+        font-size: 12px !important;
+        border-radius: 50px !important;
+    }
+
+    /* 2 columns layout to save vertical space */
+    .gallery-section .items-container {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        margin-left: -5px !important;
+        margin-right: -5px !important;
+    }
+
+    .gallery-section .items-container>div {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+        margin-bottom: 15px !important;
+    }
+
+    .portfolio-card-premium {
+        border-radius: 12px !important;
+    }
+
+    .portfolio-card-premium .image-box {
+        height: 140px !important;
+    }
+
+    .portfolio-card-premium .content h3 a {
+        font-size: 13px !important;
+        line-height: 1.2 !important;
+    }
+
+    .portfolio-card-premium .content .tags {
+        font-size: 9px !important;
+        margin-bottom: 3px !important;
+    }
+
+    .portfolio-card-premium .overlay-box {
+        padding: 12px !important;
+    }
+
+    /* Extra compact Page Titles for mobile - Header Wrap Fix */
+    .page-title-premium {
+        padding: 105px 0 25px !important;
+        /* Heavily increased to fully clear sticky header */
+        min-height: auto !important;
+        clip-path: none !important;
+        background: var(--primary-blue) !important;
+    }
+
+    .page-title-premium h1 {
+        display: none !important;
+        /* Hide redundant giant title */
+    }
+
+    .page-title-premium .bread-crumb {
+        margin-top: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        width: 100% !important;
+        padding: 0 15px !important;
+    }
+
+    .page-title-premium .bread-crumb ul {
+        background: rgba(255, 255, 255, 0.08) !important;
+        padding: 8px 18px !important;
+        border-radius: 50px !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 0 !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        width: auto !important;
+        max-width: 100% !important;
+    }
+
+    .bread-crumb ul li {
+        font-size: 10.5px !important;
+        white-space: nowrap !important;
+        display: flex !important;
+        align-items: center !important;
+        letter-spacing: 0 !important;
+    }
+
+    .bread-crumb ul li a {
+        font-size: 10.5px !important;
+        padding: 2px 0 !important;
+    }
+
+    /* Use a smaller separator for mobile to save horizontal space */
+    .bread-crumb ul li:not(:last-child)::after {
+        content: "›" !important;
+        font-family: Arial, sans-serif !important;
+        margin: 0 6px !important;
+        font-size: 14px !important;
+        opacity: 0.5 !important;
+        display: inline-block !important;
+    }
+
+    /* Portfolios Page - Grid Alignment Fix */
+    .gallery-section {
+        padding: 20px 0 !important;
+    }
+
+    .gallery-section .sec-title .text {
+        display: none !important;
+    }
+
+    .gallery-section .sec-title h2 {
+        font-size: 22px !important;
+        margin-bottom: 5px !important;
+        text-align: center !important;
+    }
+
+    .gallery-section .yellow-separator {
+        margin: 0 auto 15px !important;
+    }
+
+    /* Clean 2 Columns Grid - Force override plugin styles */
+    .gallery-section .items-container {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        margin: 0 -8px !important;
+        height: auto !important;
+        /* Fix masonry height */
+    }
+
+    .gallery-section .items-container>div {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+        padding: 0 8px !important;
+        margin-bottom: 16px !important;
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        display: block !important;
+    }
+
+    .portfolio-card-premium {
+        border-radius: 12px !important;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    .portfolio-card-premium .image-box {
+        height: 150px !important;
+    }
+
+    .portfolio-card-premium .overlay-box {
+        padding: 12px 10px !important;
+    }
+
+    .portfolio-card-premium .content h3 a {
+        font-size: 13px !important;
+        line-height: 1.3 !important;
+    }
+
+    .portfolio-card-premium .content .tags {
+        font-size: 9px !important;
+    }
+
+    .portfolio-card-premium .content .blog-read-more {
+        display: none !important;
+        /* Hide to save space in grid */
+    }
+
+    /* Blog Single Audit Fixes */
+    .blog-detail-premium {
+        padding: 25px 20px !important;
+        border-radius: 15px !important;
+    }
+
+    .blog-detail-premium .image-box {
+        height: 220px !important;
+        border-radius: 12px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .blog-detail-premium h2 {
+        font-size: 22px !important;
+        line-height: 1.3 !important;
+    }
+
+    .article-content {
+        font-size: 15px !important;
+        line-height: 1.7 !important;
+        text-align: left !important;
+        /* Better for narrow screens */
+    }
+
+    .post-meta {
+        gap: 15px !important;
+        margin-bottom: 15px !important;
+        font-size: 12px !important;
+    }
+
+    .latest-news-premium {
+        padding: 25px 20px !important;
+    }
+
+    /* About Page - Premium Compact Refinement */
+    .about-section-premium,
+    .why-choose-us,
+    .team-section-premium,
+    .process-section {
+        padding: 35px 0 !important;
+    }
+
+    /* Titles: Compact but not tiny */
+    .about-title-wrapper h2,
+    .why-choose-us .sec-title h2,
+    .team-section-premium .sec-title h2,
+    .process-section .sec-title h2 {
+        font-size: 24px !important;
+        margin-bottom: 12px !important;
+    }
+
+    /* Re-enable short descriptions with better scaling */
+    .team-section-premium .sec-title div[style*="color: #666666"],
+    .process-section .sec-title div[style*="color: #666666"] {
+        display: block !important;
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+        opacity: 0.8 !important;
+    }
+
+    /* Team Members: Compact 2-Column Grid (Rata Kiri) */
+    .team-section-premium .row {
+        justify-content: flex-start !important;
+    }
+
+    .team-section-premium .row>div {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+        padding: 0 6px !important;
+    }
+
+    .team-section-premium .blog-card-premium {
+        border-radius: 16px !important;
+        margin-bottom: 12px !important;
+        text-align: left !important;
+        background: #002d62 !important;
+        /* Deep blue background for better contrast */
+    }
+
+    .team-section-premium .blog-image-wrapper {
+        height: 190px !important;
+        border-radius: 16px !important;
+    }
+
+    .team-section-premium .blog-content-premium {
+        padding: 12px 10px !important;
+        text-align: left !important;
+    }
+
+    .team-section-premium .blog-content-premium h3 {
+        font-size: 14px !important;
+        font-weight: 800 !important;
+        margin-bottom: 2px !important;
+        text-align: left !important;
+        color: #ffffff !important;
+        /* Premium white */
+    }
+
+    .team-section-premium .blog-content-premium p {
+        font-size: 9px !important;
+        margin-bottom: 5px !important;
+        line-height: 1.2 !important;
+        text-transform: uppercase !important;
+        /* Tidy premium look */
+        letter-spacing: 0.3px !important;
+        text-align: left !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+        /* Subtle white */
+        font-weight: 700 !important;
+    }
+
+    /* Process Steps: Clean Single Column (REVERT TO LEFT ALIGN) */
+    .process-section .row>div {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+    .process-card-premium {
+        padding: 25px 20px !important;
+        border-radius: 20px !important;
+        margin-bottom: 20px !important;
+        text-align: left !important;
+    }
+
+    .process-card-premium .process-number {
+        margin: 0 auto 15px auto !important;
+        /* Balanced centered placement */
+    }
+
+    .process-card-premium h4 {
+        font-size: 18px !important;
+        margin-bottom: 12px !important;
+        text-align: center !important;
+    }
+
+    .process-card-premium .text-muted {
+        font-size: 14.5px !important;
+        text-align: justify !important;
+        text-justify: inter-word !important;
+        line-height: 1.6 !important;
+    }
+
+    /* Section Header Refinement */
+    .process-section .sec-title h2 {
+        font-size: 28px !important;
+    }
+}
+
+/* Extra small screens fix */
+@media (max-width: 480px) {
+    .sec-title h2 {
+        font-size: 20px !important;
+    }
+
+    .hero-enterprise-style h1 {
+        font-size: 26px !important;
+    }
+
+    .logo-box img {
+        height: 30px !important;
+    }
+
+    .blog-image-wrapper {
+        height: 170px !important;
+    }
+
+    .portfolio-card-premium .image-box {
+        height: 130px !important;
+    }
+
+    .blog-detail-premium .image-box {
+        height: 180px !important;
+    }
+
+    /* Contact Page Mobile Optimization */
+    .contact-section {
+        padding: 30px 0 !important;
+    }
+
+    .contact-section .sec-title h2 {
+        font-size: 24px !important;
+        margin-bottom: 15px !important;
+        text-align: center !important;
+    }
+
+    .contact-section .sec-title .rounded {
+        margin: 15px auto !important;
+        /* Center the yellow line */
+    }
+
+    .contact-section .sec-title .text-muted {
+        font-size: 13.5px !important;
+        text-align: center !important;
+        margin-bottom: 30px !important;
+        padding: 0 10px !important;
+    }
+
+    .contact-section .form-group input,
+    .contact-section .form-group textarea {
+        font-size: 14px !important;
+        padding: 15px !important;
+        border-radius: 12px !important;
+    }
+
+    .contact-section .btn-premium {
+        width: 100% !important;
+        justify-content: center !important;
+        margin-top: 10px !important;
+    }
+
+    /* Info Column */
+    .contact-info {
+        padding: 0 !important;
+        margin-top: 20px !important;
+    }
+
+    .contact-info li {
+        display: flex !important;
+        align-items: center !important;
+        /* Center vertically */
+        margin-bottom: 15px !important;
+        padding: 15px !important;
+        /* Reduce card padding for mobile */
+        gap: 15px !important;
+        /* Consistent spacing */
+        background: #fff !important;
+        border-radius: 16px !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02) !important;
+    }
+
+    .contact-info li i {
+        background: transparent !important;
+        /* Remove circle background */
+        min-width: 40px !important;
+        height: auto !important;
+        /* Auto height */
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 0 !important;
+        /* Remove radius */
+        font-size: 24px !important;
+        /* Slightly larger icon */
+        margin-right: 0 !important;
+        color: #002d62 !important;
+    }
+
+    .contact-info li div {
+        flex: 1 !important;
+    }
+
+    .contact-info li span {
+        font-size: 12px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+        color: #999 !important;
+        display: block !important;
+        margin-bottom: 5px !important;
+    }
+
+    .contact-info li a,
+    .contact-info li {
+        font-size: 14px !important;
+        color: #333 !important;
+        line-height: 1.6 !important;
+    }
+
+    /* Map Wrapper Mobile */
+    .map-wrapper {
+        margin-top: 30px !important;
+        border-radius: 15px !important;
+    }
+
+    .map-wrapper .ratio {
+        min-height: 300px !important;
+        /* Proper mobile height */
+    }
+}
+
+/* Ensure map looks good on desktop too (fixing the "kok jadi gini") */
+@media (min-width: 769px) {
+    .map-wrapper {
+        margin-top: 50px !important;
+    }
+
+    .contact-section .sec-title.left {
+        text-align: left !important;
+    }
+}

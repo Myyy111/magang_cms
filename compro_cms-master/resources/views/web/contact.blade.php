@@ -60,7 +60,7 @@
                 <div class="form-column col-lg-8 col-md-12 col-sm-12 wow fadeInLeft">
                      <div class="sec-title left mb-4">
                         <h2 class="fw-bold" style="color: #000 !important; font-size: 36px !important;">{{ $section_mail->title }}</h2>
-                        <div class="my-3 rounded" style="width: 60px; height: 3px; background: #f1c40f; display: block !important; margin: 0 !important;"></div>
+                        <div class="my-3 rounded" style="width: 60px; height: 3px; background: #f1c40f; display: block !important;"></div>
                         <div class="text-muted">{!! $section_mail->description !!}</div>
                     </div>
                     <div class="inner-column">
@@ -122,14 +122,7 @@
                                 </div>
                             </form>
                         </div>
-                        @if(isset($setting->google_map))
-                        <!-- Map Below Form -->
-                        <div class="map-wrapper mt-5 wow fadeInUp" data-wow-delay="0.3s" style="border-radius: 25px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);">
-                            <div class="ratio ratio-21x9" style="min-height: 350px;">
-                                {!! strip_tags($setting->google_map, '<iframe>') !!}
-                            </div>
-                        </div>
-                        @endif
+
                     </div>
                 </div>
                 @endif
@@ -142,7 +135,7 @@
                 <div class="info-column col-lg-4 col-md-12 col-sm-12 wow fadeInRight">
                     <div class="sec-title left mb-4">
                         <h2 class="fw-bold" style="color: #000 !important; font-size: 36px !important;">{{ $section_contact->title }}</h2>
-                        <div class="my-3 rounded" style="width: 60px; height: 3px; background: #f1c40f; display: block !important; margin: 0 !important;"></div>
+                        <div class="my-3 rounded" style="width: 60px; height: 3px; background: #f1c40f; display: block !important;"></div>
                     </div>
                     <div class="inner-column">
                         <ul class="contact-info">
@@ -184,6 +177,17 @@
                                 </div>
                             </li>
                         </ul>
+                    </div>
+                </div>
+                @endif
+
+                @if(isset($setting->google_map))
+                <!-- Map Section (Full Width Bottom) -->
+                <div class="col-12 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="map-wrapper mt-5" style="border-radius: 25px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);">
+                        <div class="ratio ratio-21x9" style="min-height: 450px;">
+                            {!! $setting->google_map !!}
+                        </div>
                     </div>
                 </div>
                 @endif

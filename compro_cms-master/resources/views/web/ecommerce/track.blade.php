@@ -20,110 +20,108 @@
         /* Mobile Optimization for Track Page */
         @media (max-width: 768px) {
             .track-section {
-                padding: 40px 0 !important;
+                padding: 30px 0 !important;
             }
             .card-body {
-                padding: 30px 20px !important;
-            }
-            .track-section h3 {
-                font-size: 22px !important;
-            }
-            .page-title-premium h1 {
-                font-size: 28px !important;
+                padding: 20px 15px !important;
             }
             
-            /* Breadcrumb Fix */
-            .bread-crumb ul li {
+            /* Compact Card Header */
+            .card-header.bg-gradient {
+                padding: 20px !important;
+            }
+            .card-header h4 {
+                font-size: 18px !important;
+            }
+            .card-header .input-group-modern {
+                margin-bottom: 15px !important;
+            }
+            .card-header .input-group-modern input {
+                height: 45px !important;
                 font-size: 13px !important;
-                margin-right: 5px !important;
             }
-            .bread-crumb ul li:after {
-                margin: 0 5px !important;
-            }
-
-            /* Search Form Mobile */
-            .track-form-container {
-                flex-direction: column;
-            }
-            .track-form-container .input-group {
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-                background: transparent !important;
-                border: none !important;
-                width: 100% !important;
-                max-width: 100% !important;
-            }
-            .track-form-container input {
-                border-radius: 12px !important;
-                border-right: 2px solid #eee !important;
-                text-align: center;
-                height: 55px !important;
-                padding: 0 20px !important;
-                width: 100% !important;
-            }
-            .track-form-container .btn-premium {
-                border-radius: 12px !important;
-                width: 100% !important;
-                height: 55px !important;
-                margin: 0 !important;
-                justify-content: center;
-                font-weight: 700;
-                box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3) !important;
-            }
-
-            /* Responsive Status Steps */
+            
+            /* Track Steps Refinement */
             .track-steps {
-                margin: 30px 0 !important;
+                margin: 25px 0 35px !important;
+                padding: 0 5px !important;
             }
             .step-label {
-                font-size: 11px !important;
-                line-height: 1.2;
-                margin-top: 5px;
+                font-size: 8.5px !important;
+                line-height: 1.1;
+                margin-top: 8px;
+                min-height: 25px;
+                word-wrap: break-word;
+                font-weight: 700 !important;
             }
             .step-icon {
-                width: 30px !important;
-                height: 30px !important;
-                font-size: 12px !important;
+                width: 26px !important;
+                height: 26px !important;
+                font-size: 10px !important;
+            }
+            .track-steps .position-absolute {
+                top: 13px !important;
             }
             
-            /* Table Mobile Fixes */
-            .table-responsive {
-                border: 0;
+            /* Flexible Unit Text */
+            .font-weight-600.text-right {
+                max-width: none !important;
+                width: auto !important;
+                flex: 1;
             }
-            .table thead {
-                display: none;
+
+            /* Info Box Mobile (Locked Alignment) */
+            .bg-light.rounded.p-3 {
+                padding: 15px !important;
             }
-            .table tbody tr {
-                display: block;
-                border-bottom: 1px solid #eee;
-                padding: 15px 0;
+            .col-md-6.border-right {
+                border-right: none !important;
+                border-bottom: 1px solid rgba(0,0,0,0.05);
+                padding-bottom: 15px !important;
+                margin-bottom: 15px !important;
+                padding-right: 0 !important;
             }
-            .table tbody td {
-                display: flex;
-                justify-content: space-between;
-                padding: 5px 0 !important;
+            .d-flex.justify-content-between {
+                margin-bottom: 8px !important;
+                align-items: baseline !important;
+            }
+            .d-flex.justify-content-between .text-muted {
+                font-size: 11px !important;
+                flex-shrink: 0;
+            }
+            .d-flex.justify-content-between .font-weight-600,
+            .d-flex.justify-content-between .font-weight-bold {
                 text-align: right !important;
+                padding-left: 15px;
+                font-size: 13px !important;
+            }
+            
+            /* Compact Product List */
+            .table-responsive {
+                max-height: none !important;
                 border: none !important;
+                background: white !important;
+                margin-top: 10px;
             }
-            .table tbody td:before {
-                content: attr(data-label);
-                float: left;
-                font-weight: bold;
-                color: #555;
+            .table-sm td, .table-sm th {
+                padding: 12px 5px !important;
+                font-size: 12px !important;
+                vertical-align: middle !important;
             }
-            .table tfoot tr {
-                display: block;
-                padding: 15px 0;
+            .table-sm th:first-child, .table-sm td:first-child {
+                width: 55%; /* More space for product name */
             }
-            .table tfoot td {
-                display: flex;
-                justify-content: space-between;
-                padding: 0 !important;
-                border: none !important;
+            
+            /* Header Search Button Fix */
+            .card-header .btn-search-animated {
+                padding: 10px 15px !important;
+                font-size: 12px !important;
             }
-            .tfoot-total-label {
-                display: none !important;
+            .card-header .btn-search-animated i {
+                margin: 0 !important;
+            }
+            .card-header .btn-search-animated span {
+                display: none; /* Hide text "Lacak" on small headers if needed, but here I'll just shrink it */
             }
         }
     </style>
