@@ -123,6 +123,15 @@
                             </form>
                         </div>
 
+                        @if(isset($setting->google_map))
+                        <!-- Desktop Map (Inside Form Column) -->
+                        <div class="map-wrapper mt-4 d-none d-lg-block wow fadeInUp" data-wow-delay="0.3s" style="border-radius: 25px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);">
+                            <div class="ratio ratio-21x9" style="min-height: 450px;">
+                                {!! $setting->google_map !!}
+                            </div>
+                        </div>
+                        @endif
+
                     </div>
                 </div>
                 @endif
@@ -182,10 +191,10 @@
                 @endif
 
                 @if(isset($setting->google_map))
-                <!-- Map Section (Full Width Bottom) -->
-                <div class="col-12 wow fadeInUp" data-wow-delay="0.4s">
-                    <div class="map-wrapper mt-5" style="border-radius: 25px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);">
-                        <div class="ratio ratio-21x9" style="min-height: 450px;">
+                <!-- Mobile Map (Bottom of Page) -->
+                <div class="col-12 d-lg-none wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="map-wrapper mt-3 mx-3" style="border-radius: 16px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.05); background: #fff; padding: 5px;">
+                        <div class="ratio ratio-21x9" style="min-height: 120px; border-radius: 12px; overflow: hidden;">
                             {!! $setting->google_map !!}
                         </div>
                     </div>

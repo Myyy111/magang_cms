@@ -4847,7 +4847,8 @@ body {
     .contact-info li i {
         background: transparent !important;
         /* Remove circle background */
-        min-width: 40px !important;
+        min-width: 50px !important;
+        /* Slightly wider container for better visual balance */
         height: auto !important;
         /* Auto height */
         display: flex !important;
@@ -4855,14 +4856,16 @@ body {
         justify-content: center !important;
         border-radius: 0 !important;
         /* Remove radius */
-        font-size: 24px !important;
-        /* Slightly larger icon */
+        font-size: 26px !important;
+        /* Optimal size */
         margin-right: 0 !important;
         color: #002d62 !important;
     }
 
     .contact-info li div {
         flex: 1 !important;
+        padding-left: 5px !important;
+        /* Slight push for text */
     }
 
     .contact-info li span {
@@ -4871,7 +4874,10 @@ body {
         letter-spacing: 1px !important;
         color: #999 !important;
         display: block !important;
-        margin-bottom: 5px !important;
+        margin-bottom: 2px !important;
+        /* Tighter label spacing */
+        margin-top: 2px !important;
+        /* Slight push down for balance */
     }
 
     .contact-info li a,
@@ -4883,20 +4889,31 @@ body {
 
     /* Map Wrapper Mobile */
     .map-wrapper {
-        margin-top: 30px !important;
-        border-radius: 15px !important;
+        margin: 15px !important;
+        /* Side margins to fix width */
+        width: auto !important;
+        /* Auto width */
+        border-radius: 16px !important;
+        background: #fff !important;
+        /* Card background */
+        padding: 5px !important;
+        /* Frame padding */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
     }
 
     .map-wrapper .ratio {
-        min-height: 300px !important;
-        /* Proper mobile height */
+        min-height: 120px !important;
+        /* Reduced height */
+        border-radius: 12px !important;
+        /* Inner radius */
     }
 }
 
-/* Ensure map looks good on desktop too (fixing the "kok jadi gini") */
+/* Ensure map looks good on desktop too*/
 @media (min-width: 769px) {
     .map-wrapper {
-        margin-top: 50px !important;
+        margin-top: 30px !important;
+        /* Reduced from 50px to pull it up */
     }
 
     .contact-section .sec-title.left {
