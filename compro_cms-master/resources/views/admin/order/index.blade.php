@@ -22,12 +22,12 @@
                 <div class="card-body px-4 pb-4">
                   
                   <!-- Filter Box -->
-                  <div class="collapse {{ request()->has('status') || request()->has('wilayah') ? 'show' : '' }}" id="filterBox">
+                  <div class="collapse {{ request()->has('status') || request()->has('wilayah') || request()->has('payment') ? 'show' : '' }}" id="filterBox">
                     <div class="card card-body bg-light border-0 shadow-none mb-4" style="border-radius: 12px;">
                         <form action="{{ route($route.'.index') }}" method="GET">
                             <div class="row align-items-end">
-                                <div class="col-md-4">
-                                    <label class="font-weight-600 small text-uppercase text-muted">Status Pesanan</label>
+                                <div class="col-md-3 mb-2 mb-md-0">
+                                    <label class="font-weight-600 small text-uppercase text-muted">Status</label>
                                     <select name="status" class="form-control" style="border-radius: 8px;">
                                         <option value="">Semua Status</option>
                                         <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pesanan Diterima</option>
@@ -37,20 +37,30 @@
                                         <option value="failed" {{ request('status') == 'failed' ? 'selected' : '' }}>Dibatalkan</option>
                                     </select>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3 mb-2 mb-md-0">
                                     <label class="font-weight-600 small text-uppercase text-muted">Wilayah Kerja</label>
                                     <select name="wilayah" class="form-control" style="border-radius: 8px;">
                                         <option value="">Semua Wilayah</option>
                                         <option value="pusat" {{ request('wilayah') == 'pusat' ? 'selected' : '' }}>Kantor Pusat</option>
-                                        <option value="wilayah" {{ request('wilayah') == 'wilayah' ? 'selected' : '' }}>Kantor Wilayah</option>
+                                        <option value="wilayah" {{ request('wilayah') == 'wilayah' ? 'selected' : '' }}>Kedeputian Wilayah</option>
                                         <option value="cabang" {{ request('wilayah') == 'cabang' ? 'selected' : '' }}>Kantor Cabang</option>
                                     </select>
                                 </div>
-                                <div class="col-md-4">
-                                    <button type="submit" class="btn btn-dark px-4" style="border-radius: 8px; font-weight: 600;"><i class="fas fa-search mr-1"></i> Telusuri</button>
-                                    @if(request()->has('status') || request()->has('wilayah'))
-                                        <a href="{{ route($route.'.index') }}" class="btn btn-light ml-2" style="border-radius: 8px;">Reset</a>
-                                    @endif
+                                <div class="col-md-3 mb-2 mb-md-0">
+                                    <label class="font-weight-600 small text-uppercase text-muted">Mekanisme Pembayaran</label>
+                                    <select name="payment" class="form-control" style="border-radius: 8px;">
+                                        <option value="">Semua Pembayaran</option>
+                                        <option value="transfer" {{ request('payment') == 'transfer' ? 'selected' : '' }}>VA Transfer</option>
+                                        <option value="potong_gaji" {{ request('payment') == 'potong_gaji' ? 'selected' : '' }}>Potong Gaji</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="d-flex">
+                                        <button type="submit" class="btn btn-dark flex-grow-1" style="border-radius: 8px; font-weight: 600;"><i class="fas fa-search mr-1"></i> Telusuri</button>
+                                        @if(request()->has('status') || request()->has('wilayah') || request()->has('payment'))
+                                            <a href="{{ route($route.'.index') }}" class="btn btn-light ml-2" style="border-radius: 8px;">Reset</a>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -91,7 +101,7 @@
                                 </th>
                                 <th>Order Number</th>
                                 <th>Customer</th>
-                                <th>Amount</th>
+                                <th>Amount / Payment</th>
                                 <th>Wilayah</th>
                                 <th>Document</th>
                                 <th>Status</th>
@@ -115,7 +125,10 @@
                                     <div class="font-weight-600 text-dark">{{ $row->customer_name }}</div>
                                     <small class="text-muted">{{ $row->customer_contact }}</small>
                                 </td>
-                                <td class="font-weight-bold">Rp {{ number_format($row->total_amount, 0, ',', '.') }}</td>
+                                <td class="font-weight-bold">
+                                    <div class="text-dark">Rp {{ number_format($row->total_amount, 0, ',', '.') }}</div>
+                                    <small class="badge badge-light border text-muted px-2 py-1" style="font-weight: 600; border-radius: 4px;">{{ $row->payment_mechanism == 'transfer' ? 'VA Transfer' : 'Potong Gaji' }}</small>
+                                </td>
                                 <td>
                                     @php
                                         $detailStr = $row->unit_kerja_detail;

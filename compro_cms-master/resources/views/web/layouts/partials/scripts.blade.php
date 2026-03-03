@@ -18,18 +18,22 @@
 <script src="{{ asset('web/js/script.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
-    @if(Session::has('success'))
-        toastr.success("{{ Session::get('success') }}");
+    // 🔍 Toastr Handlers for all common session keys
+    @if(Session::has('success')) toastr.success("{{ Session::get('success') }}"); @endif
+    @if(Session::has('message')) toastr.success("{{ Session::get('message') }}"); @endif
+    @if(Session::has('info')) toastr.info("{{ Session::get('info') }}"); @endif
+    @if(Session::has('warning')) toastr.warning("{{ Session::get('warning') }}"); @endif
+    @if(Session::has('error')) toastr.error("{{ Session::get('error') }}"); @endif
+    @if(Session::has('status')) toastr.info("{{ Session::get('status') }}"); @endif
+    @if(Session::has('alert')) toastr.warning("{{ Session::get('alert') }}"); @endif
+    
+    @if($errors->any())
+        @foreach($errors->all() as $error)
+            toastr.error("{{ $error }}", "Validasi Gagal");
+        @endforeach
     @endif
-    @if(Session::has('info'))
-        toastr.info("{{ Session::get('info') }}");
-    @endif
-    @if(Session::has('warning'))
-        toastr.warning("{{ Session::get('warning') }}");
-    @endif
-    @if(Session::has('error'))
-        toastr.error("{{ Session::get('error') }}");
-    @endif
+    
+    console.log("🚀 Toastr initialized");
 </script>
 
 

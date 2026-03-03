@@ -382,7 +382,7 @@
                                         const filtered = workAreas.filter(wa => wa.wilayah_kerja === selectedWilayah);
                                         
                                         // Update Kab/Kota Datalist
-                                        const uniqueKab = [...new Set(filtered.map(wa => wa.kab_kota))];
+                                        const uniqueKab = [...new Set(filtered.map(wa => wa.kab_kota || wa.nmkc))];
                                         uniqueKab.forEach(kab => {
                                             if(kab) document.getElementById('list_kab_kota').innerHTML += `<option value="${kab}">`;
                                         });
@@ -401,9 +401,9 @@
 
                                         // Auto-fill if there is only a single match (like Kantor PUSAT)
                                         if(filtered.length === 1) {
-                                            inputA.value = filtered[0].kab_kota;
-                                            inputB.value = filtered[0].kantor_cabang;
-                                            inputC.value = filtered[0].deputi_direktorat;
+                                            inputA.value = filtered[0].kab_kota || filtered[0].nmkc || '';
+                                            inputB.value = filtered[0].kantor_cabang || '';
+                                            inputC.value = filtered[0].deputi_direktorat || '';
                                         }
                                     }
                                 }
@@ -416,7 +416,7 @@
                                 inputA.addEventListener('input', function() {
                                     const val = this.value;
                                     const selectedWilayah = document.querySelector('input[name="wilayah_kerja"]:checked')?.value;
-                                    const matches = workAreas.filter(wa => wa.kab_kota === val && wa.wilayah_kerja === selectedWilayah);
+                                    const matches = workAreas.filter(wa => (wa.kab_kota === val || wa.nmkc === val) && wa.wilayah_kerja === selectedWilayah);
                                     
                                     if(matches.length > 0) {
                                         datalistCabang.innerHTML = '';
@@ -425,10 +425,10 @@
                                             if(cabang) datalistCabang.innerHTML += `<option value="${cabang}">`;
                                         });
 
-                                        // If only one branch in this city, auto-fill it
+                                        // If only one branch in this city/office, auto-fill it
                                         if(matches.length === 1) {
-                                            inputB.value = matches[0].kantor_cabang;
-                                            inputC.value = matches[0].deputi_direktorat;
+                                            inputB.value = matches[0].kantor_cabang || '';
+                                            inputC.value = matches[0].deputi_direktorat || '';
                                         }
                                     }
                                 });
@@ -477,19 +477,32 @@
                                 // Submit Handler
                                 const form = document.getElementById('checkoutForm');
                                 form.addEventListener('submit', function(e) {
+                                    console.log("📝 Form submission started...");
                                     if (signaturePad.isEmpty()) {
                                         e.preventDefault();
+                                        console.warn("⚠️ Signature is empty!");
                                         alert("Silakan bubuhkan tanda tangan Anda terlebih dahulu.");
                                         return;
                                     }
 
-                                    const a = document.querySelector('input[name="unit_kerja_detail_a"]').value;
-                                    const b = document.querySelector('input[name="unit_kerja_detail_b"]').value;
-                                    const c = document.querySelector('input[name="unit_kerja_detail_c"]').value;
-                                    document.getElementById('legacy_unit').value = `${a} | ${b} | ${c}`;
+                                    const submitBtn = document.getElementById('btn-pdf-submit');
+                                    if(submitBtn) {
+                                        submitBtn.disabled = true;
+                                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
+                                    }
+
+                                    const a = document.getElementById('unit_a')?.value || '';
+                                    const b = document.getElementById('unit_b')?.value || '';
+                                    const c = document.getElementById('unit_c')?.value || '';
+                                    
+                                    const legacyInput = document.getElementById('legacy_unit');
+                                    if(legacyInput) legacyInput.value = `${a} | ${b} | ${c}`;
 
                                     // Store signature data
-                                    document.getElementById('esign_data').value = signaturePad.toDataURL();
+                                    const esignInput = document.getElementById('esign_data');
+                                    if(esignInput) esignInput.value = signaturePad.toDataURL();
+                                    
+                                    console.log("✅ Form submitting...");
                                 });
                                 
                                 togglePayroll(); // Initial check

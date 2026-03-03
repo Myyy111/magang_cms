@@ -4920,3 +4920,182 @@ body {
         text-align: left !important;
     }
 }
+
+/* ==========================================================================
+   PORTFOLIO SINGLE PAGE - PREMIUM FIX
+   ========================================================================== */
+
+/* Fix spacing between the clipped page-title and the content section below */
+.project-details-section {
+    padding: 80px 0 100px !important;
+    background: #ffffff;
+    position: relative;
+    z-index: 10;
+}
+
+/* Main image: full width, rounded, with shadow */
+.project-detail .upper-box figure img {
+    width: 100% !important;
+    max-height: 550px;
+    height: auto !important;
+    display: block;
+    border-radius: 30px !important;
+    box-shadow: 0 30px 70px rgba(0, 46, 110, 0.12) !important;
+    object-fit: cover;
+}
+
+/* Portfolio Description Styles */
+.portfolio-description {
+    font-size: 16px !important;
+    line-height: 1.8 !important;
+    color: #4b5563 !important;
+    margin-bottom: 35px !important;
+}
+
+.portfolio-description p {
+    margin-bottom: 20px !important;
+}
+
+/* Sidebar Info Box Styles */
+.info-column .sidebar-card {
+    background: #ffffff !important;
+    border-radius: 28px !important;
+    padding: 35px !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.04) !important;
+}
+
+.info-column .sidebar-card ul li {
+    padding: 16px 0 !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 15px;
+}
+
+.info-column .sidebar-card ul li:last-child {
+    border-bottom: none !important;
+}
+
+.info-column .sidebar-card .label-text {
+    width: 100px !important;
+    min-width: 100px !important;
+    font-size: 13px !important;
+    color: #9ca3af !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    margin-top: 2px;
+}
+
+.info-column .sidebar-card .value-text {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: #001f3f !important;
+    line-height: 1.4 !important;
+}
+
+/* Share Button Style Fixes */
+.share-icon-btn {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    font-size: 18px !important;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.share-icon-btn:hover {
+    transform: scale(1.15) rotate(5deg) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Back Button & Action Buttons */
+.portfolio-action-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.btn-back-portfolio {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 14px 28px !important;
+    background: #f3f4f6 !important;
+    color: #4b5563 !important;
+    border-radius: 100px !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    border: none !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-back-portfolio:hover {
+    background: #e5e7eb !important;
+    color: #1f2937 !important;
+    transform: translateX(-5px) !important;
+}
+
+.btn-cta-portfolio {
+    padding: 14px 32px !important;
+    background: #f8be14 !important;
+    color: #000000 !important;
+    border-radius: 100px !important;
+    font-weight: 800 !important;
+    font-size: 14px !important;
+    box-shadow: 0 8px 25px rgba(248, 190, 20, 0.3) !important;
+    border: none !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+.btn-cta-portfolio:hover {
+    background: #e5af12 !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 12px 30px rgba(248, 190, 20, 0.45) !important;
+}
+
+/* Category Badge Enhancement */
+.category-badge-p {
+    display: inline-block;
+    background: #004aad;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 5px 16px;
+    border-radius: 100px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    box-shadow: 0 4px 12px rgba(0, 74, 173, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+    .project-details-section {
+        padding: 40px 0 60px !important;
+    }
+
+    .project-detail .upper-box {
+        margin-bottom: 30px !important;
+    }
+
+    .project-detail .lower-content h2 {
+        font-size: 24px !important;
+    }
+
+    .project-detail .lower-content p,
+    .project-detail .lower-content .inner-column>div {
+        font-size: 14px !important;
+    }
+}

@@ -54,11 +54,11 @@
             <td>Wilayah Kerja</td>
             <td>:</td>
             <td>
-                <span class="checkbox-box {{ $order->wilayah_kerja == 'pusat' ? 'checked' : '' }}"></span> KANTOR PUSAT
+                <span class="checkbox-box {{ $order->wilayah_kerja == 'kantor_pusat' ? 'checked' : '' }}"></span> KANTOR PUSAT
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <span class="checkbox-box {{ $order->wilayah_kerja == 'wilayah' ? 'checked' : '' }}"></span> KANTOR WILAYAH
+                <span class="checkbox-box {{ $order->wilayah_kerja == 'kantor_wilayah' ? 'checked' : '' }}"></span> KEDEPUTIAN WILAYAH
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <span class="checkbox-box {{ $order->wilayah_kerja == 'cabang' ? 'checked' : '' }}"></span> KANTOR CABANG
+                <span class="checkbox-box {{ $order->wilayah_kerja == 'kantor_cabang' ? 'checked' : '' }}"></span> KANTOR CABANG
                 <br>
                 <i>( beri tanda centang / tanda "X" pada pilihan )</i>
             </td>
@@ -70,23 +70,20 @@
             <td>
                 @php
                     $unit_detail = json_decode($order->unit_kerja_detail, true);
-                    // Fallback for legacy data/legacy switch logic if JSON fails
                     if(!is_array($unit_detail)) {
-                         $unit_detail = [
-                             'kab_kota' => ($order->unit_kerja_type == 'kab_kota') ? $order->unit_kerja_detail : '',
-                             'cabang' => ($order->unit_kerja_type == 'cabang') ? $order->unit_kerja_detail : '',
-                             'deputi' => ($order->unit_kerja_type == 'deputi') ? $order->unit_kerja_detail : '',
-                         ];
+                         $unit_detail = [];
                     }
                 @endphp
                 <div style="margin-bottom: 5px;">
-                    a. Kab / Kota / : <span style="border-bottom: 1px dotted #000; display: inline-block; min-width: 200px;">{{ $unit_detail['kab_kota'] ?? '' }}</span>
+                    a. Kab / Kota : <span style="border-bottom: 1px dotted #000; display: inline-block; min-width: 200px;">{{ $unit_detail['kab_kota'] ?? '' }}</span>
                 </div>
                 <div style="margin-bottom: 5px;">
                     b. Kantor Cabang/As.Dep : <span style="border-bottom: 1px dotted #000; display: inline-block; min-width: 200px;">{{ $unit_detail['cabang'] ?? '' }}</span>
+                    @if($order->kdkc) (KDKC: {{ $order->kdkc }}) @endif
                 </div>
                 <div>
                     c. Dep.Dir.Bid/Dep.Dir.Wil : <span style="border-bottom: 1px dotted #000; display: inline-block; min-width: 200px;">{{ $unit_detail['deputi'] ?? '' }}</span>
+                    @if($order->kdkr) (KDKR: {{ $order->kdkr }}) @endif
                 </div>
             </td>
         </tr>

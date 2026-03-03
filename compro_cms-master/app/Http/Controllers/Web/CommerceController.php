@@ -248,7 +248,11 @@ class CommerceController extends Controller
             // Try to find matching kdkr/kdkc from WorkArea
             // We use 'like' or trim to be more flexible with human input from datalist
             $wa = \App\Models\WorkArea::where('wilayah_kerja', $request->wilayah_kerja)
-                                    ->where('kab_kota', trim($request->unit_kerja_detail_a))
+                                    ->where(function($q) use ($request) {
+                                        $val = trim($request->unit_kerja_detail_a);
+                                        $q->where('kab_kota', $val)
+                                          ->orWhere('nmkc', $val);
+                                    })
                                     ->where('kantor_cabang', trim($request->unit_kerja_detail_b))
                                     ->first();
                                     
@@ -266,15 +270,21 @@ class CommerceController extends Controller
             $dismantleSchedule = \App\Models\DismantleSchedule::where('kode_wilayah', $wa->kdkr)
                                 ->where('kode_cabang', $wa->kdkc)
                                 ->where('status', 'open')
-                                ->whereDate('tanggal', '>=', now()->toDateString()) // 📅 Only future or today
+                                ->where(function($q) {
+                                    $q->whereDate('tanggal', '>=', now()->toDateString()) // 📅 Only future or today
+                                      ->orWhereNull('tanggal'); // 🟡 Allow NULL dates if not set (dev data)
+                                })
                                 ->whereRaw('kapasitas > terpakai')
                                 ->whereRaw('kapasitas > 0') 
-                                ->orderBy('tanggal', 'asc')
+                                ->orderBy('tanggal', 'asc') // Pick earliest date
+                                ->orderBy('id', 'asc')      // Stable pick if same/null date
                                 ->lockForUpdate()
                                 ->first();
             
             if (!$dismantleSchedule) {
-                throw new \Exception("Mohon maaf, jadwal dismantle untuk unit kerja {$wa->kantor_cabang} belum tersedia atau sudah penuh. Silakan pilih lokasi lain atau hubungi admin.");
+                 $msg = "Mohon maaf, jadwal dismantle untuk unit kerja {$wa->kantor_cabang} belum tersedia atau sudah penuh. Silakan pilih lokasi lain atau hubungi admin.";
+                 Session::flash('error', $msg); // 🟡 Better visibility
+                 throw new \Exception($msg);
             }
 
             // Increment Used Slot (Safe within transaction)
@@ -542,6 +552,8 @@ class CommerceController extends Controller
                 '[unit_kab_kota]' => $unit_detail['kab_kota'] ?? '',
                 '[unit_cabang]' => $unit_detail['cabang'] ?? '',
                 '[unit_deputi]' => $unit_detail['deputi'] ?? '',
+                '[kdkr]' => $order->kdkr ?? '',
+                '[kdkc]' => $order->kdkc ?? '',
                 
                 '[signature_image]' => $order->esign_path ? '<img src="'.asset('uploads/signatures/' . $order->esign_path).'" style="max-height: 100px; width: auto;">' : '',
             ];

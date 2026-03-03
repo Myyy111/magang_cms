@@ -231,6 +231,7 @@ return [
 
         //Image
         'Image' => Intervention\Image\Facades\Image::class,
+        'Toastr' => Yoeunes\Toastr\Facades\Toastr::class,
         //Paypal
         'PayPal' => Srmklive\PayPal\Facades\PayPal::class,
 

@@ -47,6 +47,11 @@ class OrderController extends Controller
             $rows->where('wilayah_kerja', $request->wilayah);
         }
 
+        // Filter by Payment Mechanism
+        if (!empty($request->payment)) {
+            $rows->where('payment_mechanism', $request->payment);
+        }
+
         $data['rows'] = $rows->get();
 
         return view($this->view.'.index', $data);
