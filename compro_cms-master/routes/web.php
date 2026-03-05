@@ -13,7 +13,7 @@
 
 Route::get('/clear-cache', function() {
     $exitCode = \Illuminate\Support\Facades\Artisan::call('optimize:clear');
-    // return what you want
+    return "<h1>Cache Cleared Successfully!</h1><p>Silakan refresh website di HP Anda.</p>";
 });
 
 
@@ -133,6 +133,8 @@ Route::middleware(['auth:web', 'XSS'])->name('admin.')->namespace('Admin')->pref
 
     // Product Routes
     Route::resource('product', 'ProductController');
+    Route::get('order/export-csv', 'OrderController@exportCsv')->name('order.export-csv');
+    Route::get('order/export-pdf', 'OrderController@exportPdf')->name('order.export-pdf');
     Route::resource('order', 'OrderController');
     Route::post('order/bulk-update', 'OrderController@bulkUpdate')->name('order.bulk-update');
 

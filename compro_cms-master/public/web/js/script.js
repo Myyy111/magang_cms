@@ -189,17 +189,21 @@
 			singleItem: true,
 			loop: true,
 			margin: 0,
-			nav: false,
-			smartSpeed: 1000,
+			nav: true,
+			smartSpeed: 700,
 			mouseDrag: true,
 			touchDrag: true,
+			pullDrag: true,
 			autoHeight: false,
 			autoplay: true,
 			autoplayTimeout: 8000,
+			dots: true,
 			navText: ['<span class="fa fa-angle-left"></span>', '<span class="fa fa-angle-right"></span>'],
 			responsive: {
 				0: {
-					items: 1
+					items: 1,
+					nav: false,
+					dots: true
 				},
 				600: {
 					items: 1
@@ -251,10 +255,17 @@
 			nav: true,
 			smartSpeed: 700,
 			autoplay: true,
+			mouseDrag: true,
+			touchDrag: true,
+			pullDrag: true,
+			dots: true,
 			navText: ['<span class="fa fa-angle-left"></span>', '<span class="fa fa-angle-right"></span>'],
 			responsive: {
 				0: {
-					items: 1
+					items: 1,
+					nav: false,
+					dots: true,
+					margin: 15
 				},
 				767: {
 					items: 2
@@ -538,13 +549,18 @@
 			nav: false,
 			smartSpeed: 1150,
 			autoplay: true,
-			autoplayTimeout: 5000,
+			autoplayTimeout: 3000,
+			mouseDrag: true,
+			touchDrag: true,
+			pullDrag: true,
+			dots: false,
 			responsive: {
 				0: {
-					items: 1
+					items: 2,
+					margin: 15
 				},
 				600: {
-					items: 2
+					items: 3
 				},
 				768: {
 					items: 3
@@ -553,7 +569,7 @@
 					items: 4
 				},
 				1400: {
-					items: 4
+					items: 5
 				},
 			}
 		});

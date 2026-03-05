@@ -204,70 +204,88 @@
     </section>
     <!--End Page Title-->
 
-    <!-- Floating Filter Button (Mobile Only) -->
-    <!-- Floating Filter Button Removed -->
 
-    <!-- Mobile Filter Modal -->
-    <div id="mobileFilterModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: flex-end; justify-content: center;">
-        <div style="background: #fff; width: 100%; max-height: 85vh; overflow-y: auto; border-radius: 20px 20px 0 0; animation: slideUp 0.3s ease;">
-            <div style="padding: 20px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: #fff; z-index: 10;">
-                <h4 style="font-size: 18px; font-weight: 800; color: #001f3f; margin: 0;">Filter Produk</h4>
-                <button onclick="document.getElementById('mobileFilterModal').style.display='none'" style="background: none; border: none; font-size: 24px; color: #64748b; cursor: pointer;">&times;</button>
+
+    <!-- Rewritten Mobile Filter Modal -->
+    <div id="filterOverlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 9999; backdrop-filter: blur(4px);" onclick="if(event.target===this)closeFilterModal()">
+        
+        <div id="filterSheet" style="position: absolute; bottom: 0; left: 0; right: 0; background: #fff; border-radius: 24px 24px 0 0; max-height: 92vh; display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 -10px 40px rgba(0,0,0,0.15);">
+            
+            <!-- Drag Grip Area -->
+            <div id="dragArea" style="width: 100%; padding: 12px 0; cursor: pointer; flex-shrink: 0;">
+                <div style="width: 45px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: 0 auto;"></div>
             </div>
-            <div style="padding: 20px;">
+
+            <!-- Header Section -->
+            <div style="padding: 0 20px 15px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 32px; height: 32px; background: #ecf3ff; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-sliders-h" style="color: #004aad; font-size: 14px;"></i>
+                    </div>
+                    <h4 style="font-size: 18px; font-weight: 800; color: #001f3f; margin: 0;">Filter Produk</h4>
+                </div>
+                <button onclick="closeFilterModal()" style="width: 36px; height: 36px; border-radius: 50%; border: none; background: #f8fafc; color: #64748b; font-size: 20px; display: flex; align-items: center; justify-content: center;">&times;</button>
+            </div>
+
+            <!-- Scrollable Body Section -->
+            <div id="filterScrollableBody" style="flex: 1; overflow-y: auto; padding: 20px; -webkit-overflow-scrolling: touch;">
                 <form action="{{ route('ecommerce.index') }}" method="GET">
-                    <!-- Search -->
-                    <div class="filter-group mb-4">
-                        <label style="font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; display: block;">Cari Nama</label>
+                    
+                    <!-- Search Field -->
+                    <div style="margin-bottom: 25px;">
+                        <label style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 10px; display: block;">Cari Produk</label>
                         <div style="position: relative;">
-                            <input type="text" name="search" value="{{ request('search') }}" placeholder="Contoh: ProBook..." style="width: 100%; height: 45px; padding: 0 15px 0 40px; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 14px; background: #f8fafc;">
-                            <i class="fas fa-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 14px;"></i>
+                            <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #004aad; font-size: 14px; pointer-events: none; z-index: 5;"></i>
+                            <input type="text" name="search" value="{{ request('search') }}" placeholder="Ketik nama laptop..." style="width: 100%; height: 52px; border-radius: 14px; border: 1.5px solid #e2e8f0; background: #f8fafc; padding-left: 60px !important; font-size: 15px; color: #1e293b; outline: none; transition: border-color 0.2s ease;">
                         </div>
                     </div>
 
-                    <!-- Categories -->
-                    <div class="filter-group mb-4">
-                        <label style="font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; display: block;">Pilih Kategori</label>
+                    <!-- Category Vertical List -->
+                    <div style="margin-bottom: 25px;">
+                        <label style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; display: block;">Pilih Kategori</label>
                         <div style="display: flex; flex-direction: column; gap: 8px;">
-                            <a href="{{ route('ecommerce.index') }}" class="cat-pill {{ !request('category') ? 'active' : '' }}">
-                                <span class="icon"><i class="fas fa-th-large"></i></span>
-                                <span class="text">Semua Produk</span>
+                            <a href="{{ route('ecommerce.index') }}" 
+                               style="display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-radius: 12px; text-decoration: none; transition: all 0.2s; {{ !request('category') ? 'background: #004aad; color: #fff; box-shadow: 0 4px 12px rgba(0,74,173,0.2);' : 'background: #f8fafc; color: #64748b; border: 1.5px solid #f1f5f9;' }}">
+                                <i class="fas fa-th-large" style="font-size: 14px;"></i>
+                                <span style="font-weight: 700; font-size: 14px;">Semua Produk</span>
                             </a>
                             @foreach($categories as $category)
-                                <a href="{{ route('ecommerce.index', ['category' => $category->slug]) }}" class="cat-pill {{ request('category') == $category->slug ? 'active' : '' }}">
-                                    <span class="icon"><i class="fas fa-laptop"></i></span>
-                                    <span class="text">{{ $category->title }}</span>
+                                <a href="{{ route('ecommerce.index', ['category' => $category->slug]) }}" 
+                                   style="display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-radius: 12px; text-decoration: none; transition: all 0.2s; {{ request('category') == $category->slug ? 'background: #004aad; color: #fff; box-shadow: 0 4px 12px rgba(0,74,173,0.2);' : 'background: #f8fafc; color: #64748b; border: 1.5px solid #f1f5f9;' }}">
+                                    <i class="fas fa-laptop" style="font-size: 14px;"></i>
+                                    <span style="font-weight: 700; font-size: 14px;">{{ $category->title }}</span>
                                 </a>
                             @endforeach
                         </div>
                     </div>
 
-                    <!-- Sorting -->
-                    <div class="filter-group mb-4">
-                        <label style="font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; display: block;">Urutkan Berdasarkan</label>
-                        <select name="sort" class="form-control" style="border-radius: 12px; height: 48px; border: 1px solid #e2e8f0; background: #f8fafc; font-weight: 500; padding: 0 15px;">
-                            <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Terbaru Dirilis</option>
-                            <option value="price_low" {{ request('sort') == 'price_low' ? 'selected' : '' }}>Harga: Terendah ke Tinggi</option>
-                            <option value="price_high" {{ request('sort') == 'price_high' ? 'selected' : '' }}>Harga: Tinggi ke Terendah</option>
-                        </select>
+                    <!-- Sorting Options -->
+                    <div style="margin-bottom: 30px;">
+                        <label style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; display: block;">Urutkan</label>
+                        <div style="position: relative;">
+                            <select name="sort" style="width: 100%; height: 52px; border-radius: 14px; border: 1.5px solid #e2e8f0; background: #f8fafc; font-weight: 700; font-size: 15px; padding: 0 40px 0 18px; color: #1e293b; appearance: none; -webkit-appearance: none; outline: none;">
+                                <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Terbaru Dirilis</option>
+                                <option value="price_low" {{ request('sort') == 'price_low' ? 'selected' : '' }}>Harga: Terendah ke Tinggi</option>
+                                <option value="price_high" {{ request('sort') == 'price_high' ? 'selected' : '' }}>Harga: Tinggi ke Terendah</option>
+                            </select>
+                            <i class="fas fa-chevron-down" style="position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: #004aad; pointer-events: none; font-size: 14px;"></i>
+                        </div>
                     </div>
 
-                    <button type="submit" style="width: 100%; border: none; height: 50px; border-radius: 12px; font-weight: 800; font-size: 15px; background: #f8be14; color: #000; margin-bottom: 10px;">Terapkan Filter</button>
-                    
-                    @if(request()->anyFilled(['search', 'category', 'sort']))
-                        <a href="{{ route('ecommerce.index') }}" style="display: block; text-align: center; font-size: 13px; color: #ff2d55; font-weight: 700; text-decoration: none;">Bersihkan Filter</a>
-                    @endif
+                    <!-- Action Buttons -->
+                    <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 10px;">
+                        <button type="submit" style="width: 100%; height: 55px; border-radius: 16px; border: none; background: #f8be14; color: #000; font-weight: 800; font-size: 16px; box-shadow: 0 6px 20px rgba(248,190,20,0.3); cursor: pointer;">Terapkan Filter</button>
+                        
+                        @if(request()->anyFilled(['search', 'category', 'sort']))
+                            <a href="{{ route('ecommerce.index') }}" style="text-align: center; color: #ef4444; font-weight: 700; font-size: 14px; text-decoration: none; padding: 10px;">Hapus Semua Filter</a>
+                        @endif
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <style>
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
-    </style>
+
 
     <!-- Modern E-Commerce Layout -->
     <section class="ecommerce-main-section" style="background: #fcfdfe; padding: 60px 0;">
@@ -354,8 +372,10 @@
                 <!-- Product Grid Area -->
                 <div class="col-lg-9">
                     
+
+
                     <!-- Mobile Inline Filter (Visible Mobile Only) -->
-                    <div class="mobile-inline-filter" onclick="document.getElementById('mobileFilterModal').style.display='flex'">
+                    <div class="mobile-inline-filter" onclick="openFilterModal()">
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <i class="fas fa-sliders-h" style="color: #004aad;"></i>
                             <span>Filter & Pencarian</span>
@@ -384,9 +404,9 @@
                                     <!-- Image Area -->
                                     <div class="card-img-wrapper" style="position: relative; aspect-ratio: 1; overflow: hidden; background: #f8fafc;">
                                         @if(strpos($product->image_path, 'http') === 0)
-                                            <img src="{{ $product->image_path }}" class="main-img" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
+                                            <img src="{{ $product->image_path }}" class="main-img" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;" loading="lazy">
                                         @else
-                                            <img src="{{ asset('uploads/product/'.$product->image_path) }}" class="main-img" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
+                                            <img src="{{ asset('uploads/product/'.$product->image_path) }}" class="main-img" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;" loading="lazy">
                                         @endif
                                         
                                         <!-- Bottom Image Badges -->
@@ -529,5 +549,76 @@
         }
     </style>
 
-@endsection
+    <script>
+    function openFilterModal() {
+        const overlay = document.getElementById('filterOverlay');
+        const sheet = document.getElementById('filterSheet');
+        if (overlay && sheet) {
+            overlay.style.display = 'block';
+            // Disable background scrolling
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
+            
+            // Trigger slide up animation
+            setTimeout(() => {
+                sheet.style.transform = 'translateY(0)';
+            }, 10);
+        }
+    }
 
+    function closeFilterModal() {
+        const overlay = document.getElementById('filterOverlay');
+        const sheet = document.getElementById('filterSheet');
+        if (overlay && sheet) {
+            sheet.style.transform = 'translateY(100%)';
+            // Enable background scrolling back after transition
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                document.body.style.overflow = '';
+                document.documentElement.style.overflow = '';
+            }, 300);
+        }
+    }
+
+    // Modern Swipe-to-close Implementation (Handle Only)
+    (function() {
+        const dragArea = document.getElementById('dragArea');
+        const sheet = document.getElementById('filterSheet');
+        if (!dragArea || !sheet) return;
+
+        let startY = 0;
+        let currentY = 0;
+        let isDragging = false;
+
+        dragArea.addEventListener('touchstart', (e) => {
+            startY = e.touches[0].clientY;
+            isDragging = true;
+            sheet.style.transition = 'none';
+        }, { passive: true });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const y = e.touches[0].clientY;
+            const delta = y - startY;
+            if (delta > 0) {
+                if (e.cancelable) e.preventDefault();
+                currentY = delta;
+                sheet.style.transform = `translateY(${delta}px)`;
+            }
+        }, { passive: false });
+
+        document.addEventListener('touchend', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            if (currentY > 100) {
+                closeFilterModal();
+            } else {
+                sheet.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                sheet.style.transform = 'translateY(0)';
+            }
+            currentY = 0;
+        });
+    })();
+    </script>
+```

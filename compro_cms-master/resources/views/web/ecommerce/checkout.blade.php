@@ -91,19 +91,20 @@
                 width: 100%;
             }
         }
-        /* Signature Pad Styles */
+        /* Signature Pad Styles - Mobile Friendly */
         .signature-wrapper {
             position: relative;
             width: 100%;
-            height: 200px;
+            height: 220px;
             -moz-user-select: none;
             -webkit-user-select: none;
             -ms-user-select: none;
             user-select: none;
-            border: 2px dashed #ccc;
-            border-radius: 8px;
-            background-color: #fbfbfb;
+            border: 2px dashed #004aad;
+            border-radius: 12px;
+            background-color: #f8faff;
             margin-bottom: 10px;
+            touch-action: none; /* Penting: mencegah scroll saat menandatangani */
         }
         .signature-pad {
             position: absolute;
@@ -112,6 +113,17 @@
             width: 100%;
             height: 100%;
             cursor: crosshair;
+            touch-action: none;
+        }
+        .signature-hint {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #94a3b8;
+            font-size: 14px;
+            pointer-events: none;
         }
         .signature-actions {
             display: flex;
@@ -119,17 +131,53 @@
             margin-bottom: 20px;
         }
         .btn-clear-sig {
-            background: #f8d7da;
-            color: #721c24;
+            background: #fee2e2;
+            color: #dc2626;
             border: none;
-            padding: 5px 15px;
-            border-radius: 4px;
+            padding: 8px 18px;
+            border-radius: 8px;
             font-size: 13px;
+            font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .btn-clear-sig:hover {
-            background: #f5c6cb;
+            background: #fecaca;
+        }
+        /* Fix iPhone Signature Pad & Scrolling */
+        .signature-wrapper {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            background-color: #ffffff;
+            border: 2px dashed #004aad;
+            border-radius: 15px;
+            touch-action: none; /* Penting untuk iPhone: cegah scroll saat ttd */
+            overflow: hidden;
+        }
+        .signature-pad {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+            cursor: crosshair;
+        }
+
+        /* Wilayah Kerja Card Fix (iPhone Friendly) */
+        .wilayah-card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        @media (max-width: 576px) {
+            .wilayah-card-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 
@@ -175,13 +223,15 @@
                                     </div>
 
                                     <div class="col-md-12 form-group mb-3">
-                                        <label class="form-label font-weight-bold d-block">3. Wilayah Kerja</label>
+                                        <label class="form-label font-weight-bold d-block mb-2">3. Wilayah Kerja</label>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
                                         @foreach($wilayah_options as $value => $label)
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="wilayah_kerja" id="wilayah_{{ $value }}" value="{{ $value }}" required>
-                                            <label class="form-check-label" for="wilayah_{{ $value }}">{{ strtoupper($label) }}</label>
-                                        </div>
+                                            <label for="wilayah_{{ $value }}" style="display: flex; align-items: center; gap: 8px; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 10px 16px; cursor: pointer; font-weight: 600; font-size: 14px; color: #334155; transition: all 0.2s; flex: 1; min-width: 120px; min-height: 48px;">
+                                                <input class="form-check-input" type="radio" name="wilayah_kerja" id="wilayah_{{ $value }}" value="{{ $value }}" required style="width: 18px; height: 18px; margin: 0; flex-shrink: 0; accent-color: #004aad; cursor: pointer;">
+                                                {{ strtoupper($label) }}
+                                            </label>
                                         @endforeach
+                                        </div>
                                     </div>
 
                                     <div class="col-md-12 form-group mb-3">
@@ -290,9 +340,13 @@
 
                                     <div class="col-md-12 form-group mb-3">
                                         <label class="form-label font-weight-bold">Tanda Tangan Elektronik (E-Sign)</label>
-                                        <p class="text-muted small mb-2">Silakan bubuhkan tanda tangan Anda pada kotak di bawah ini sebagai persetujuan pernyataan.</p>
-                                        <div class="signature-wrapper">
+                                        <p class="text-muted small mb-2">✍️ Sentuh dan geser jari Anda pada kotak di bawah untuk membubuhkan tanda tangan.</p>
+                                        <div class="signature-wrapper" id="signatureContainer">
                                             <canvas id="signature-pad" class="signature-pad"></canvas>
+                                            <div class="signature-hint" id="signatureHint">
+                                                <i class="fas fa-pen" style="font-size: 24px; margin-bottom: 8px; display: block;"></i>
+                                                Tanda tangan di sini
+                                            </div>
                                         </div>
                                         <div class="signature-actions">
                                             <button type="button" id="clear-signature" class="btn-clear-sig">
@@ -335,6 +389,11 @@
                                     backgroundColor: 'rgba(255, 255, 255, 0)',
                                     penColor: 'rgb(0, 0, 0)'
                                 });
+
+                                // Sembunyikan hint saat mulai menandatangani
+                                const hint = document.getElementById('signatureHint');
+                                canvas.addEventListener('mousedown', () => { if(hint) hint.style.display = 'none'; });
+                                canvas.addEventListener('touchstart', () => { if(hint) hint.style.display = 'none'; }, {passive: true});
 
                                 function resizeCanvas() {
                                     const ratio = Math.max(window.devicePixelRatio || 1, 1);

@@ -84,7 +84,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <div class="hero-showcase-container wow fadeInRight" data-wow-delay="0.9s">
                                         <div class="main-mockup-wrapper">
-                                            <img src="{{ asset('uploads/slider/'.$slider->image_path) }}" alt="{{ $slider->title }}" class="hero-main-img">
+                                            <img src="{{ asset('uploads/slider/'.$slider->image_path) }}" alt="{{ $slider->title }}" class="hero-main-img" loading="eager">
                                             <!-- Floating Card 1 -->
                                             <div class="floating-data-card card-top">
                                                 <div class="icon-box"><i class="fas fa-chart-line"></i></div>
@@ -169,7 +169,7 @@
                         <!-- Photo Column -->
                         <div class="col-md-5">
                             <div class="member-photo-wrapper">
-                                <img src="{{ asset('uploads/member/'.$member->image_path) }}" alt="{{ $member->title }}" class="member-photo">
+                                <img src="{{ asset('uploads/member/'.$member->image_path) }}" alt="{{ $member->title }}" class="member-photo" loading="lazy">
                             </div>
 
                             <!-- Social Media removed for BRI Style parity -->
@@ -252,8 +252,30 @@
                         card.setAttribute('data-bs-toggle', 'modal');
                         card.setAttribute('data-bs-target', modalId);
                         
-                        // Direct click handler as fallback
+                        // Direct click handler with movement threshold to prevent swipe conflict
+                        let isMoving = false;
+                        let startX, startY;
+
+                        card.onmousedown = card.ontouchstart = function(e) {
+                            isMoving = false;
+                            startX = (e.touches ? e.touches[0].clientX : e.clientX);
+                            startY = (e.touches ? e.touches[0].clientY : e.clientY);
+                        };
+
+                        card.onmousemove = card.ontouchmove = function(e) {
+                            if (!startX) return;
+                            const curX = (e.touches ? e.touches[0].clientX : e.clientX);
+                            const curY = (e.touches ? e.touches[0].clientY : e.clientY);
+                            if (Math.abs(curX - startX) > 5 || Math.abs(curY - startY) > 5) {
+                                isMoving = true;
+                            }
+                        };
+
                         card.onclick = function(e) {
+                            if (isMoving) {
+                                e.preventDefault();
+                                return false;
+                            }
                             if (!document.querySelector('.modal-backdrop')) {
                                 try {
                                     if (window.jQuery && window.jQuery.fn.modal) {
@@ -278,31 +300,121 @@
             /* 1. Base Card Alignment & Shape */
             .team-section-wrapper .card-inner,
             #team-section-root .card-inner {
-                height: 520px !important;
-                min-height: 520px !important;
-                max-height: 520px !important;
-                border-radius: 24px !important;
+                height: 480px !important;
+                border-radius: 20px !important;
                 overflow: hidden !important;
                 display: flex !important;
                 flex-direction: column !important;
-                background: #103652 !important; /* Solid Premium Blue */
+                background: #103652 !important;
                 border: 1px solid rgba(255,255,255,0.1) !important;
                 box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
                 transition: all 0.3s ease !important;
             }
 
             @media (max-width: 768px) {
+                /* Hero Section Mobile Fix */
+                .banner-section.hero-enterprise-style {
+                    padding: 0 !important;
+                    min-height: 70vh !important;
+                    height: auto !important;
+                }
+                .banner-carousel .owl-nav {
+                    display: none !important; /* Hide navigation arrows on mobile */
+                }
+                .hero-enterprise-style .slide-item {
+                    padding-top: 100px !important;
+                    padding-bottom: 40px !important;
+                    min-height: 70vh !important;
+                }
+
+                .hero-content-box {
+                    text-align: left !important;
+                    padding: 0 20px !important;
+                    position: relative;
+                    z-index: 5;
+                }
+                .hero-content-box h1 {
+                    font-size: 34px !important;
+                    line-height: 1.1 !important;
+                    margin-bottom: 20px !important;
+                    color: #ffffff !important; /* Teks putih agar pop-out */
+                    /* Multi-layered shadow agar terbaca di background terang/gelap */
+                    text-shadow: 2px 2px 10px rgba(0,0,0,0.8), 0 0 5px rgba(0,0,0,1) !important;
+                }
+                .hero-content-box .text-accent {
+                    color: #f8be14 !important;
+                    text-shadow: 1px 1px 5px rgba(0,0,0,0.8) !important;
+                }
+                .hero-content-box .text-description p {
+                    font-size: 16px !important;
+                    color: #ffffff !important;
+                    font-weight: 700 !important;
+                    line-height: 1.6 !important;
+                    /* Kontras maksimal ala subtitle film (terbaca di background apapun) */
+                    text-shadow: 1px 1px 10px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1) !important;
+                    text-align: left !important;
+                    margin: 0 !important;
+                }
+                .hero-cta-group {
+                    text-align: left !important;
+                    margin-top: 25px !important;
+                    padding-left: 0 !important; /* Hapus padding tambahan agar sejajar teks */
+                }
+                .btn-whatsapp-hero {
+                    display: inline-flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    gap: 12px !important; /* Jarak icon & teks lebih lega */
+                    padding: 16px 36px !important;
+                    font-size: 15px !important;
+                }
+                .hero-showcase-container {
+                    margin-top: 25px !important;
+                    padding: 0 !important; /* Hilangkan padding agar gambar full-width */
+                    position: relative;
+                    z-index: 5;
+                }
+                .floating-data-card {
+                    display: none !important; /* Hide cards on mobile to prevent clutter */
+                }
+                .hero-main-img {
+                    max-width: 100% !important; /* Diperbesar maksimal */
+                    width: 100% !important;
+                    margin: 0 auto !important;
+                    border-radius: 20px !important;
+                    min-height: auto !important;
+                }
+
+                /* Team Section Mobile Fix */
                 .team-section-wrapper .card-inner,
                 #team-section-root .card-inner {
                     height: auto !important;
-                    min-height: auto !important;
-                    max-height: none !important;
+                    min-height: 380px !important;
+                    margin-bottom: 15px !important;
                 }
                 .team-section-wrapper .image-wrapper,
                 #team-section-root .image-wrapper {
-                    height: 300px !important;
-                    min-height: 300px !important;
-                    max-height: 300px !important;
+                    height: 260px !important;
+                }
+                #team-section-root .member-name {
+                    font-size: 18px !important;
+                }
+                #team-section-root .member-role {
+                    font-size: 12px !important;
+                }
+                .team-section-wrapper .card-content,
+                #team-section-root .card-content {
+                    height: auto !important;
+                    padding: 12px !important;
+                }
+
+                /* Hide Navigation Arrows on Mobile Team Section */
+                .team-section-wrapper .nav-container,
+                .team-section-wrapper .nav-btn,
+                #team-section-root .nav-container,
+                #team-section-root .nav-btn {
+                    display: none !important;
+                    visibility: hidden !important;
                 }
             }
 
@@ -312,15 +424,10 @@
                 background: #16466b !important;
             }
 
-            /* 2. Photo Area - Forced Consistency */
+            /* Photo Area */
             .team-section-wrapper .image-wrapper,
             #team-section-root .image-wrapper {
-                height: 380px !important;
-                min-height: 380px !important;
-                max-height: 380px !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                background: transparent !important;
+                height: 340px !important;
                 position: relative !important;
                 overflow: hidden !important;
             }
@@ -330,39 +437,25 @@
                 height: 100% !important;
                 object-fit: cover !important;
                 object-position: top !important;
-                position: absolute !important;
-                top: 0 !important;
-                left: 0 !important;
             }
 
-            /* 3. Content Area - CLEAN & VISIBLE */
+            /* Content Area */
             .card-content,
             .team-section-wrapper .card-content,
             #team-section-root .card-content {
-                height: 140px !important;
-                min-height: 140px !important;
-                padding: 10px 15px !important;
-                margin: 0 !important;
+                padding: 15px !important;
                 display: flex !important;
                 flex-direction: column !important;
                 justify-content: center !important;
                 align-items: center !important;
                 text-align: center !important;
-                background: transparent !important; /* Let card-inner color show */
-                background-image: none !important; /* KILL THE GRADIENT (THE SHADOW BAR) */
             }
 
-            /* 4. Typography - BOLD & CLEAR */
             #team-section-root .member-name {
                 color: #ffffff !important;
                 font-size: 20px !important;
                 font-weight: 700 !important;
-                margin: 0 0 5px 0 !important;
-                padding: 0 !important;
-                display: block !important;
-                line-height: 1.2 !important;
-                visibility: visible !important;
-                opacity: 1 !important;
+                margin-bottom: 5px !important;
             }
 
             #team-section-root .member-role {
@@ -370,21 +463,10 @@
                 font-size: 13px !important;
                 font-weight: 600 !important;
                 text-transform: uppercase !important;
-                letter-spacing: 1px !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                display: block !important;
-                line-height: 1.4 !important;
-                visibility: visible !important;
-                opacity: 1 !important;
             }
 
             /* Modal Fixes */
-            .btn-close-custom { 
-                z-index: 100000 !important; 
-                cursor: pointer !important; 
-                pointer-events: auto !important; 
-            }
+            .btn-close-custom { z-index: 100000 !important; cursor: pointer !important; }
             .modal-backdrop { z-index: 1040 !important; }
             .team-profile-modal { z-index: 1050 !important; }
         `;
@@ -715,24 +797,57 @@
         /* Portfolio and Section Title adjustments if needed */
     </style>
   @section('scripts')
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Bootstrap Tab Activation -->
+    <!-- Slider Initialization Fix for Mobile -->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        $(document).ready(function () {
+            // Re-initialize main banner for premium experience
+            if ($('.banner-carousel').length) {
+                $('.banner-carousel').owlCarousel({
+                    items: 1,
+                    loop: true,
+                    margin: 0,
+                    nav: false,
+                    dots: true,
+                    autoplay: true,
+                    autoplayTimeout: 7000,
+                    smartSpeed: 800,
+                    mouseDrag: true,
+                    touchDrag: true,
+                    pullDrag: true,
+                    responsive: {
+                        0: { dots: true, nav: false },
+                        768: { dots: true, nav: false }
+                    }
+                });
+            }
+
+            // Sponsors/Clients Carousel Fix
+            if ($('.sponsors-carousel').length) {
+                $('.sponsors-carousel').owlCarousel({
+                    loop: true,
+                    margin: 30,
+                    nav: false,
+                    autoplay: true,
+                    autoplayTimeout: 3000,
+                    mouseDrag: true,
+                    touchDrag: true,
+                    responsive: {
+                        0: { items: 2 },
+                        600: { items: 3 },
+                        1000: { items: 5 }
+                    }
+                });
+            }
+
+            // Team/Members Tab Activation
             var triggerTabList = [].slice.call(document.querySelectorAll('#teamTab button'))
             triggerTabList.forEach(function (triggerEl) {
                 var tabTrigger = new bootstrap.Tab(triggerEl)
-
                 triggerEl.addEventListener('click', function (event) {
                     event.preventDefault()
                     tabTrigger.show()
                 })
-            })
+            });
         });
     </script>
 @endsection

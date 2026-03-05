@@ -57,10 +57,20 @@
 <!-- Swiper CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 
-<!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <!-- Custom Premium Fixes for Mobile -->
+    <style>
+        /* Fix swipe pada owl carousel di mobile */
+        .owl-carousel, .owl-stage-outer, .owl-stage {
+            touch-action: pan-y !important;
+            -ms-touch-action: pan-y !important;
+        }
+        /* Memastikan gambar slider muncul & responsif */
+        .banner-carousel .slide-item img, 
+        .recent-portfolio-carousal .image img {
+            width: 100% !important;
+            height: auto !important;
+            object-fit: cover !important;
+        }
+    </style>
 
-<script src="{{ asset('web/js/jquery.js') }}"></script>
-<script src="{{ asset('web/js/owl.js') }}"></script>
-
-@yield('scripts')
+    @yield('scripts')

@@ -13,6 +13,19 @@
                 <div class="card-header bg-white border-bottom-0 pt-4 px-4 d-flex justify-content-between align-items-center">
                     <h4 class="header-title mb-0">{{ $title }}</h4>
                     <div class="d-flex" style="gap: 10px;">
+                        <div class="dropdown">
+                            <button class="btn btn-dark btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-file-export mr-1"></i> EXPORT
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right shadow border-0" style="border-radius: 8px;">
+                                <a class="dropdown-item py-2" href="{{ route($route.'.export-csv', request()->all()) }}">
+                                    <i class="fas fa-file-csv mr-2 text-success"></i> Download CSV
+                                </a>
+                                <a class="dropdown-item py-2" href="{{ route($route.'.export-pdf', request()->all()) }}" target="_blank">
+                                    <i class="fas fa-file-pdf mr-2 text-danger"></i> Print PDF (Rekap)
+                                </a>
+                            </div>
+                        </div>
                         <button class="btn btn-info btn-sm" type="button" data-toggle="collapse" data-target="#filterBox" aria-expanded="false">
                             <i class="fas fa-filter mr-1"></i> FILTER
                         </button>
@@ -119,11 +132,14 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <span class="text-primary font-weight-bold">{{ $row->order_number }}</span>
+                                    <span class="text-primary font-weight-bold" style="white-space: nowrap; font-size: 0.8rem;">{{ $row->order_number }}</span>
                                 </td>
                                 <td>
                                     <div class="font-weight-600 text-dark">{{ $row->customer_name }}</div>
-                                    <small class="text-muted">{{ $row->customer_contact }}</small>
+                                    <small class="text-muted"><i class="fas fa-phone-alt mr-1" style="font-size: 0.7rem; opacity: 0.6;"></i>{{ $row->customer_contact }}</small>
+                                    @if($row->npp || $row->customer_id_num)
+                                    <br><small class="text-muted"><i class="fas fa-id-card mr-1" style="font-size: 0.7rem; opacity: 0.6;"></i>{{ $row->npp ?: $row->customer_id_num }}</small>
+                                    @endif
                                 </td>
                                 <td class="font-weight-bold">
                                     <div class="text-dark">Rp {{ number_format($row->total_amount, 0, ',', '.') }}</div>
@@ -131,29 +147,29 @@
                                 </td>
                                 <td>
                                     @php
-                                        $detailStr = $row->unit_kerja_detail;
                                         $jsonDetail = json_decode($row->unit_kerja_detail, true);
-                                        if (json_last_error() === JSON_ERROR_NONE && is_array($jsonDetail)) {
-                                            $detailStr = implode(', ', array_filter($jsonDetail)); 
-                                        }
                                     @endphp
 
                                     @if(!empty($row->wilayah_kerja))
-                                        <span class="status-badge status-neutral">{{ ucwords(str_replace('_', ' ', $row->wilayah_kerja)) }}</span>
-                                        @if(!empty($detailStr))
-                                            <br><small class="text-muted d-block mt-1" style="line-height: 1.2;">{{ str_limit($detailStr, 50) }}</small>
-                                        @elseif(!empty($row->kdkc))
-                                            <br><small class="text-muted d-block mt-1" style="line-height: 1.2;">{{ $row->kdkc }}</small>
-                                        @endif
+                                        <span class="badge badge-secondary mb-1" style="font-size: 0.65rem; font-weight: 700; letter-spacing: 0.03em; border-radius: 4px; background: #e2e8f0; color: #475569; padding: 3px 7px;">
+                                            {{ strtoupper(str_replace('_', ' ', $row->wilayah_kerja)) }}
+                                        </span>
+                                    @endif
+
+                                    @if(is_array($jsonDetail) && !empty(array_filter($jsonDetail)))
+                                        <div class="mt-1" style="line-height: 1.5;">
+                                            @if(!empty($jsonDetail['kab_kota']))
+                                                <div class="text-muted" style="font-size: 0.73rem;"><i class="fas fa-map-marker-alt mr-1" style="opacity: 0.4; width: 10px;"></i>{{ $jsonDetail['kab_kota'] }}</div>
+                                            @endif
+                                            @if(!empty($jsonDetail['cabang']))
+                                                <div class="text-dark" style="font-size: 0.82rem; font-weight: 600;">{{ $jsonDetail['cabang'] }}</div>
+                                            @endif
+                                            @if(!empty($jsonDetail['deputi']))
+                                                <div class="text-muted" style="font-size: 0.73rem;">{{ $jsonDetail['deputi'] }}</div>
+                                            @endif
+                                        </div>
                                     @elseif(!empty($row->customer_unit))
-                                        <span class="status-badge status-neutral">{{ $row->customer_unit }}</span>
-                                        @if(!empty($detailStr))
-                                            <br><small class="text-muted d-block mt-1" style="line-height: 1.2;">{{ \Illuminate\Support\Str::limit($detailStr, 50) }}</small>
-                                        @elseif(!empty($row->kdkc))
-                                            <br><small class="text-muted d-block mt-1" style="line-height: 1.2;">{{ $row->kdkc }}</small>
-                                        @endif
-                                    @else
-                                        <span class="text-muted small">-</span>
+                                        <div class="text-dark mt-1" style="font-size: 0.82rem; font-weight: 600;">{{ $row->customer_unit }}</div>
                                     @endif
                                 </td>
                                 <td>
@@ -184,7 +200,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <div class="text-dark">{{ $row->created_at->format('d M Y') }}</div>
+                                    <div class="text-dark font-weight-600" style="font-size: 0.85rem;">{{ $row->created_at->format('d M Y') }}</div>
                                     <small class="text-muted">{{ $row->created_at->format('H:i') }} WIB</small>
                                 </td>
                                  <td class="text-center">

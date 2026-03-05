@@ -37,7 +37,7 @@ body {
 
 .main-header-premium.scrolled {
     background: var(--glass-bg);
-    padding: 12px 0;
+    padding: 10px 0;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
@@ -140,11 +140,16 @@ body {
 
 .mobile-nav-toggle {
     display: none;
-    background: none;
+    background: #004aad;
     border: none;
-    font-size: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    font-size: 20px;
     cursor: pointer;
     color: #ffffff;
+    align-items: center;
+    justify-content: center;
 }
 
 .main-header-premium.scrolled .mobile-nav-toggle {
@@ -358,24 +363,25 @@ body {
 .btn-whatsapp-hero {
     display: inline-flex;
     align-items: center;
-    padding: 20px 50px;
-    /* Wider for more impact */
-    background: #25d366 !important;
+    padding: 18px 45px;
+    background: #f8be14 !important;
+    /* Theme Yellow for Premium feel */
     border: none !important;
-    color: #ffffff !important;
+    color: #001f3f !important;
+    /* Dark text on Yellow */
     border-radius: 100px;
     font-weight: 800;
-    font-size: 17px;
+    font-size: 16px;
     transition: var(--transition-smooth);
     text-decoration: none !important;
-    box-shadow: 0 12px 30px rgba(37, 211, 102, 0.35) !important;
+    box-shadow: 0 10px 25px rgba(248, 190, 20, 0.3) !important;
 }
 
 .btn-whatsapp-hero:hover {
-    background: #128c7e !important;
+    background: #004aad !important;
     color: #ffffff !important;
     transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(18, 140, 126, 0.45) !important;
+    box-shadow: 0 15px 40px rgba(0, 74, 173, 0.4) !important;
 }
 
 /* Showcase Image & Cards */
@@ -688,17 +694,51 @@ body {
     background: var(--accent-yellow) !important;
     color: #000000 !important;
     padding: 16px 42px !important;
+    min-height: 48px !important;
+    /* Mobile accessibility */
     border-radius: 100px !important;
     font-weight: 900 !important;
     font-size: 16px !important;
     transition: var(--transition-smooth) !important;
     display: inline-flex !important;
     align-items: center !important;
+    justify-content: center !important;
     gap: 12px !important;
     border: none !important;
     box-shadow: 0 6px 20px rgba(248, 190, 20, 0.3) !important;
     text-transform: none !important;
     cursor: pointer;
+}
+
+/* Global Mobile Fixes */
+@media (max-width: 768px) {
+
+    /* Touch Target & Accessibility */
+    .btn,
+    button,
+    .cat-pill,
+    .premium-nav-link {
+        min-height: 44px !important;
+    }
+
+    /* Global Section Spacing */
+    section {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+    /* Prevent iOS Auto-Zoom */
+    input,
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+
+    /* Responsive Content Spacing */
+    .container {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
 }
 
 .btn-premium:hover,
@@ -4768,33 +4808,71 @@ body {
         font-size: 20px !important;
     }
 
+    /* Hero Home Mobile Enhancement */
+    .hero-content-box {
+        text-align: left !important;
+        padding: 0 20px !important;
+        margin: 0 !important;
+    }
+
+    /* Hide ALL Navigation Elements on Hero & Team Slider Mobile */
+    .banner-carousel .owl-nav,
+    .team-carousal .owl-nav,
+    .team-section-wrapper .nav-container,
+    .team-section-wrapper .nav-btn,
+    #team-section-root .nav-container,
+    .banner-carousel .owl-prev,
+    .banner-carousel .owl-next,
+    .hero-nav-lines {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+
     .hero-enterprise-style h1 {
-        font-size: 26px !important;
+        font-size: 32px !important;
+        /* Slightly larger for impact */
+        margin-bottom: 20px !important;
     }
 
-    .logo-box img {
-        height: 30px !important;
+    .text-description {
+        min-height: auto !important;
+        margin-bottom: 25px !important;
     }
 
-    .blog-image-wrapper {
-        height: 170px !important;
+    .text-description p {
+        font-size: 15px !important;
+        line-height: 1.5 !important;
+        max-width: 100% !important;
+        /* Allow full width for left align */
+        margin: 0 !important;
+        text-align: left !important;
     }
 
-    .portfolio-card-premium .image-box {
-        height: 130px !important;
+    .hero-cta-group {
+        text-align: left !important;
+        margin-top: 25px !important;
+        padding: 0 !important;
     }
 
-    .blog-detail-premium .image-box {
-        height: 180px !important;
+    .btn-whatsapp-hero {
+        padding: 16px 36px !important;
+        font-size: 15px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 12px !important;
+        /* Jarak antara icon dan teks */
+        margin-left: 0 !important;
     }
 
-    /* Contact Page Mobile Optimization */
     .contact-section {
-        padding: 30px 0 !important;
+        padding: 40px 0 !important;
     }
 
     .contact-section .sec-title h2 {
-        font-size: 24px !important;
+        font-size: 26px !important;
         margin-bottom: 15px !important;
         text-align: center !important;
     }

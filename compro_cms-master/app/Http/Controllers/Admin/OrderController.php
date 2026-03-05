@@ -227,4 +227,80 @@ class OrderController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * Export Orders to CSV
+     */
+    public function exportCsv(Request $request)
+    {
+        $rows = Order::orderBy('created_at', 'desc');
+
+        if (!empty($request->status)) $rows->where('status', $request->status);
+        if (!empty($request->wilayah)) $rows->where('wilayah_kerja', $request->wilayah);
+        if (!empty($request->payment)) $rows->where('payment_mechanism', $request->payment);
+
+        $orders = $rows->get();
+
+        $filename = "recap_orders_" . date('Y-m-d_H-i-s') . ".csv";
+        $headers = [
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$filename",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        ];
+
+        $callback = function() use($orders) {
+            $file = fopen('php://output', 'w');
+            // BOM UTF-8 agar Excel tidak salah encoding
+            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            fputcsv($file, ['Order #', 'Tanggal', 'Nama Pelanggan', 'NPP', 'No. WhatsApp', 'Wilayah', 'Kab/Kota', 'Cabang/As.Dep', 'Deputi/Bld/Wil', 'Total Bayar (Rp)', 'Mekanisme Bayar', 'Status']);
+
+            foreach ($orders as $order) {
+                $unit = json_decode($order->unit_kerja_detail, true) ?: [];
+                // Prefix dengan tanda kutip agar Excel perlakukan sebagai teks, bukan angka
+                $npp     = '="' . ($order->npp ?: ($order->customer_id_num ?: '-')) . '"';
+                $contact = '="' . ($order->customer_contact ?: '-') . '"';
+                fputcsv($file, [
+                    $order->order_number,
+                    $order->created_at->format('d/m/Y H:i'),
+                    $order->customer_name,
+                    $npp,
+                    $contact,
+                    strtoupper($order->wilayah_kerja),
+                    $unit['kab_kota'] ?? '-',
+                    $unit['cabang'] ?? '-',
+                    $unit['deputi'] ?? '-',
+                    number_format($order->total_amount, 0, ',', '.'),
+                    $order->payment_mechanism == 'transfer' ? 'VA Transfer' : 'Potong Gaji',
+                    strtoupper($order->status)
+                ]);
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    /**
+     * Export Orders to PDF (Print View)
+     */
+    public function exportPdf(Request $request)
+    {
+        $rows = Order::orderBy('created_at', 'desc');
+
+        if (!empty($request->status)) $rows->where('status', $request->status);
+        if (!empty($request->wilayah)) $rows->where('wilayah_kerja', $request->wilayah);
+        if (!empty($request->payment)) $rows->where('payment_mechanism', $request->payment);
+
+        $data['rows'] = $rows->get();
+        $data['title'] = "Recap Orders";
+        $data['filter'] = [
+            'status' => $request->status,
+            'wilayah' => $request->wilayah,
+            'payment' => $request->payment
+        ];
+
+        return view($this->view.'.recap_pdf', $data);
+    }
 }
